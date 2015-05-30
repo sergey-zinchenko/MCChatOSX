@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A53B85731AA5E7F300C191C2 /* MCChatCore.m in Sources */ = {isa = PBXBuildFile; fileRef = A53B85721AA5E7F300C191C2 /* MCChatCore.m */; };
 		A58C542B1AA5E25900059106 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A58C542A1AA5E25900059106 /* AppDelegate.m */; };
 		A58C542D1AA5E25900059106 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A58C542C1AA5E25900059106 /* main.m */; };
 		A58C54301AA5E25900059106 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A58C542F1AA5E25900059106 /* ViewController.m */; };
@@ -26,6 +27,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A53B85711AA5E7F300C191C2 /* MCChatCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCChatCore.h; sourceTree = "<group>"; };
+		A53B85721AA5E7F300C191C2 /* MCChatCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCChatCore.m; sourceTree = "<group>"; };
 		A58C54241AA5E25900059106 /* mchat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mchat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A58C54281AA5E25900059106 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A58C54291AA5E25900059106 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -81,6 +84,8 @@
 			children = (
 				A58C54291AA5E25900059106 /* AppDelegate.h */,
 				A58C542A1AA5E25900059106 /* AppDelegate.m */,
+				A53B85711AA5E7F300C191C2 /* MCChatCore.h */,
+				A53B85721AA5E7F300C191C2 /* MCChatCore.m */,
 				A58C542E1AA5E25900059106 /* ViewController.h */,
 				A58C542F1AA5E25900059106 /* ViewController.m */,
 				A58C54311AA5E25900059106 /* Images.xcassets */,
@@ -217,6 +222,7 @@
 			files = (
 				A58C54301AA5E25900059106 /* ViewController.m in Sources */,
 				A58C542D1AA5E25900059106 /* main.m in Sources */,
+				A53B85731AA5E7F300C191C2 /* MCChatCore.m in Sources */,
 				A58C542B1AA5E25900059106 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -404,6 +410,7 @@
 				A58C54461AA5E25A00059106 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A58C54471AA5E25A00059106 /* Build configuration list for PBXNativeTarget "mchatTests" */ = {
 			isa = XCConfigurationList;
@@ -412,6 +419,7 @@
 				A58C54491AA5E25A00059106 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

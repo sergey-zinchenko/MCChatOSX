@@ -7,8 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MCChatCore.h"
 
-@interface ViewController : NSViewController
+@interface ViewController : NSViewController <MCChatCoreDelegate>
 
 
 @end
