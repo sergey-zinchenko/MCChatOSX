@@ -8,20 +8,23 @@
 
 #define MESSAGE_FORMAT_EXCEPTION @"MessageFormatException"
 #define ERRONOUS_MESSAGE_PACKAGE @"ErronousMessagePackage"
+#define LOWLEVEL_ERROR @"LowLevelError"
 
 @class MCChatCore;
 
 @protocol MCChatCoreDelegate <NSObject>
 - (void)connectedToServerVersion:(NSUInteger)version
-                       forClient:(MCChatCore *)client;
-- (void)connectingFailedforClient:(MCChatCore *)client;
+                       forCore:(MCChatCore *)core;
+- (void)exception:(NSString *)exception
+    withReason:(NSString *)reason
+        forCore:(MCChatCore *)core;
 - (void)userConnected:(NSString *)user
-            forClient:(MCChatCore *)client;
+            forCore:(MCChatCore *)core;
 - (void)userDisconnected:(NSString *)user
-               forClient:(MCChatCore *)client;
+               forCore:(MCChatCore *)core;
 - (void)messageRecieved:(NSDictionary *)message
                fromUser:(NSString *)user
-              forClient:(MCChatCore *)client;
+              forCore:(MCChatCore *)core;
 @end
 
 @interface MCChatCore : NSObject

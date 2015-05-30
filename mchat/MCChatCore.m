@@ -10,7 +10,8 @@
 #include <CFNetwork/CFSocketStream.h>
 #import "MCChatCore.h"
 
-#define BUF_SIZE 4096
+#define BUF_SIZE 2048
+#define MAX_RECEIVER_SIZE 2048*1024
 
 #define kClientsField @"clients"
 #define kClientField @"client"
@@ -28,6 +29,8 @@
 @interface MCChatCore ()
 - (void)_closeStreamsAndClearBuffers;
 - (void)_releaseStream;
+- (void)_callOnErrorWithException:(NSException *)exception;
+- (void)_sendMoreData;
 @end
 
 @implementation MCChatCore
@@ -61,22 +64,22 @@
             [userList removeAllObjects];
             [userList addObjectsFromArray:message[kClientsField]];
             NSObject<MCChatCoreDelegate> *d = self.delegate;
-            if VALID_DELEGATE(d, @selector(connectedToServerVersion:forClient:))
-                [d connectedToServerVersion:[message[kVersionField] longValue] forClient:self];
+            if VALID_DELEGATE(d, @selector(connectedToServerVersion:forCore:))
+                [d connectedToServerVersion:[message[kVersionField] longValue] forCore:self];
         } else if ([message[kMessageTypeField] isEqualToString:kMessageTypeUserConnected]) {
             if (!MESSAGE_HAS_CLIENT_FIELD)
                 [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no valid client filed in 'connected' message" userInfo:NULL] raise];
             [userList addObject:message[@"client"]];
             NSObject<MCChatCoreDelegate> *d = self.delegate;
-            if VALID_DELEGATE(d, @selector(userConnected:forClient:))
-                [d userConnected:message[@"client"] forClient:self];
+            if VALID_DELEGATE(d, @selector(userConnected:forCore:))
+                [d userConnected:message[@"client"] forCore:self];
         } else if ([message[kMessageTypeField] isEqualToString:kMessageTypeUserDisconnected]) {
             if (!MESSAGE_HAS_CLIENT_FIELD)
                 [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no valid client filed in 'disconnected' message" userInfo:NULL] raise];
             [userList removeObject:message[@"client"]];
             NSObject<MCChatCoreDelegate> *d = self.delegate;
-            if VALID_DELEGATE(d, @selector(userConnected:forClient:))
-                [d userDisconnected:message[@"client"] forClient:self];
+            if VALID_DELEGATE(d, @selector(userConnected:forCore:))
+                [d userDisconnected:message[@"client"] forCore:self];
         }
     } else {
         if (![message[kMessageFromField] isKindOfClass:[NSString class]])
@@ -85,10 +88,10 @@
         NSString *from  = message[kMessageFromField];
         [mutableMessage removeObjectForKey:kMessageFromField];
         NSObject<MCChatCoreDelegate> *d = self.delegate;
-        if VALID_DELEGATE(d, @selector(messageRecieved:fromUser:forClient:))
+        if VALID_DELEGATE(d, @selector(messageRecieved:fromUser:forCore:))
             [d messageRecieved:mutableMessage
                       fromUser:from
-                     forClient:self];
+                     forCore:self];
         
     }
 }
@@ -97,29 +100,38 @@
           length:(CFIndex)bytesRead
 {
     LOG_SELECTOR()
-    [received appendBytes:bytes
-                   length:bytesRead];
-    NSData *pattern = [@"\r\n" dataUsingEncoding:NSASCIIStringEncoding];
-    NSRange range = [received rangeOfData:pattern options:0 range:NSMakeRange(0, received.length)];
-    while (range.location != NSNotFound) {
-        NSData *encodedMessageData = [received subdataWithRange:NSMakeRange(0, range.location)];
-        NSData *messageData = [[NSData alloc] initWithBase64EncodedData:encodedMessageData options:0];
-        if (messageData) {
+    @try {
+        [received appendBytes:bytes
+                       length:bytesRead];
+        NSData *pattern = [@"\r\n" dataUsingEncoding:NSASCIIStringEncoding];
+        NSRange range = [received rangeOfData:pattern options:0 range:NSMakeRange(0, received.length)];
+        while (range.location != NSNotFound) {
+            NSData *encodedMessageData = [received subdataWithRange:NSMakeRange(0, range.location)];
+            NSData *messageData = [[NSData alloc] initWithBase64EncodedData:encodedMessageData options:0];
+            if (!messageData)
+                [[NSException exceptionWithName:ERRONOUS_MESSAGE_PACKAGE reason:@"Message package format error" userInfo:NULL] raise];
             NSError *error;
             NSDictionary *message = [NSJSONSerialization JSONObjectWithData:messageData options:kNilOptions error:&error];
-            if (!error&&message&&([message isKindOfClass:[NSDictionary class]]))
-                [self processMessage:message];
+            if (error||!message||(![message isKindOfClass:[NSDictionary class]]))
+                [[NSException exceptionWithName:ERRONOUS_MESSAGE_PACKAGE reason:@"Message package format error" userInfo:NULL] raise];
+            [self processMessage:message];
+            [received replaceBytesInRange:NSMakeRange(0, range.location + range.length) withBytes:NULL length:0];
+            range = [received rangeOfData:pattern options:0 range:NSMakeRange(0, received.length)];
         }
-        [received replaceBytesInRange:NSMakeRange(0, range.location + range.length) withBytes:NULL length:0];
-        range = [received rangeOfData:pattern options:0 range:NSMakeRange(0, received.length)];
+        if ([received length] > MAX_RECEIVER_SIZE)
+            [[NSException exceptionWithName:ERRONOUS_MESSAGE_PACKAGE reason:@"Message package too long" userInfo:NULL] raise];
     }
+    @catch (NSException *exception) {
+        [self _callOnErrorWithException:exception];
+    }
+    
 }
 
 
 void readcb(CFReadStreamRef stream, CFStreamEventType eventType, void *clientCallBackInfo)
 {
     @autoreleasepool {
-        // @try {
+        MCChatCore * chatCore = (__bridge MCChatCore *)clientCallBackInfo;
         switch(eventType) {
             case kCFStreamEventOpenCompleted:
                 NSLog(@"Read stream open completed");
@@ -130,7 +142,7 @@ void readcb(CFReadStreamRef stream, CFStreamEventType eventType, void *clientCal
                 CFIndex bytesRead = CFReadStreamRead(stream, buf, BUF_SIZE);
                 NSLog(@"Received %ld bytes", bytesRead);
                 if (bytesRead > 0) {
-                    [(__bridge MCChatCore *)clientCallBackInfo bytesRead:buf length:bytesRead];
+                    [chatCore bytesRead:buf length:bytesRead];
                 }
                 break;
             }
@@ -138,44 +150,33 @@ void readcb(CFReadStreamRef stream, CFStreamEventType eventType, void *clientCal
                 NSLog(@"Read stream error occurred");
                 CFErrorRef err = CFReadStreamCopyError(stream);
                 CFStringRef desc = CFErrorCopyDescription(err);
-                CFStreamStatus status = CFReadStreamGetStatus(stream);
-                
-                NSLog(@"%@", desc);
-                
-                
+                [chatCore _callOnErrorWithException:[NSException exceptionWithName:LOWLEVEL_ERROR reason:(__bridge NSString *)(desc) userInfo:NULL]];
                 break;
             }
             case kCFStreamEventEndEncountered:
                 NSLog(@"Read stream end encountered");
+                [chatCore _closeStreamsAndClearBuffers];
                 break;
             default:
                 break;
         }
-        //  } @catch (NSException * e) {
-        //       NSLog(@"exception ->>>> %@", e);
-        //   }
-        
-        
-        
     }
 }
 
 void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *clientCallBackInfo )
 {
     @autoreleasepool {
+        MCChatCore * chatCore = (__bridge MCChatCore *)clientCallBackInfo;
         switch(eventType) {
             case kCFStreamEventCanAcceptBytes:
                 NSLog(@"Write stream can accept bytes");
-                
-                //CFWriteStreamWrite(stream, const UInt8 *buffer, <#CFIndex bufferLength#>)
+                [chatCore _sendMoreData];
                 break;
             case kCFStreamEventErrorOccurred:
                 NSLog(@"Write stream error occurred");
                 CFErrorRef err = CFWriteStreamCopyError(stream);
                 CFStringRef desc = CFErrorCopyDescription(err);
-                CFStreamStatus status = CFWriteStreamGetStatus(stream);
-                
-                NSLog(@"%@", desc);
+                [chatCore _callOnErrorWithException:[NSException exceptionWithName:LOWLEVEL_ERROR reason:(__bridge NSString *)(desc) userInfo:NULL]];
                 break;
             case kCFStreamEventOpenCompleted:
                 NSLog(@"Write stream open completed");
@@ -183,7 +184,7 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
                 break;
             case kCFStreamEventEndEncountered:
                 NSLog(@"Write stream end encountered");
-                
+                [chatCore _closeStreamsAndClearBuffers];
                 break;
             default:
                 break;
@@ -254,14 +255,26 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
                 NSData *base64Data = [base64String dataUsingEncoding:NSASCIIStringEncoding];
                 [toSend appendData:base64Data];
                 if (CFWriteStreamCanAcceptBytes(writeStream)) {
-                    UInt8 buf[BUF_SIZE];
-                    CFIndex len = MIN([toSend length], BUF_SIZE);
-                    [toSend getBytes:&buf length:BUF_SIZE];
-                    CFIndex writed = CFWriteStreamWrite(writeStream, buf, len);
-                    NSLog(@"%ld", writed);
+                    [self _sendMoreData];
                 }
             }
             
+        }
+    }
+}
+
+- (void)_sendMoreData
+{
+    LOG_SELECTOR();
+    NSUInteger length = [toSend length];
+    if (length > 0) {
+        UInt8 buf[BUF_SIZE];
+        CFIndex len = MIN(length, BUF_SIZE);
+        [toSend getBytes:&buf length:BUF_SIZE];
+        CFIndex sent = CFWriteStreamWrite(writeStream, buf, len);
+        if (sent > 0) {
+            NSLog(@"%ld bytes sent", sent);
+            [toSend replaceBytesInRange:NSMakeRange(0, sent) withBytes:NULL length:0];
         }
     }
 }
@@ -294,9 +307,20 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
         CFRelease(writeStream);
         writeStream = NULL;
     }
-    [received replaceBytesInRange:NSMakeRange(0, received.length - 1) withBytes:NULL length:0];
-    [toSend replaceBytesInRange:NSMakeRange(0, toSend.length - 1) withBytes:NULL length:0];
+    if (received.length > 0)
+        [received replaceBytesInRange:NSMakeRange(0, received.length - 1) withBytes:NULL length:0];
+    if (toSend.length > 0)
+        [toSend replaceBytesInRange:NSMakeRange(0, toSend.length - 1) withBytes:NULL length:0];
     [userList removeAllObjects];
+}
+
+- (void)_callOnErrorWithException:(NSException *)exception
+{
+    LOG_SELECTOR()
+    [self _closeStreamsAndClearBuffers];
+    NSObject<MCChatCoreDelegate> *d = self.delegate;
+    if VALID_DELEGATE(d, @selector(exception:withReason:forCore:))
+        [d exception:exception.name withReason:exception.reason forCore:self];
 }
 
 - (void)disconnect

@@ -33,31 +33,36 @@
 }
 
 - (void)connectedToServerVersion:(NSUInteger)version
-                       forClient:(MCChatCore *)client
+                       forCore:(MCChatCore *)core
 {
-    NSLog(@"users = %@", client.users);
+
 }
 
-- (void)connectingFailedforClient:(MCChatCore *)client
+- (void)exception:(NSString *)exception
+    withReason:(NSString *)reason
+           forCore:(MCChatCore *)core
 {
-   
+    NSLog(@"Exception = %@ : %@", exception, reason);
+    [core performSelector:@selector(connect) withObject:nil afterDelay:5.0];
 }
 
 - (void)userConnected:(NSString *)user
-            forClient:(MCChatCore *)client
+            forCore:(MCChatCore *)core
 {
-    NSLog(@"users = %@", client.users);
+    
+    NSLog(@"User %@ connected", user);
+    [core sendMessage:@{@"to":@[user],@"message":@"Yes!!!"}];
 }
 
 - (void)userDisconnected:(NSString *)user
-               forClient:(MCChatCore *)client
+               forCore:(MCChatCore *)core
 {
-     NSLog(@"users = %@", client.users);
+     NSLog(@"User %@ disconnected", user);
 }
 
 - (void)messageRecieved:(NSDictionary *)message
                fromUser:(NSString *)user
-              forClient:(MCChatCore *)client
+              forCore:(MCChatCore *)core
 {
     
 }
