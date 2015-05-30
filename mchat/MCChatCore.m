@@ -12,8 +12,21 @@
 
 #define BUF_SIZE 4096
 
+#define kClientsField @"clients"
+#define kClientField @"client"
+#define kMessageTypeField @"type"
+#define kVersionField @"version_int"
+#define kMessageTypeWelcome @"welcome"
+#define kMessageTypeUserConnected @"connected"
+#define kMessageTypeUserDisconnected @"disconnected"
+#define kMessageFromField @"from"
+
+#define LOG_SELECTOR()  NSLog(@"%@ > %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#define VALID_DELEGATE(obj, sel) (obj&&[obj conformsToProtocol:@protocol(MCChatCoreDelegate)]&&[obj respondsToSelector:sel])
+#define MESSAGE_HAS_CLIENT_FIELD ([[message allKeys] indexOfObject:kClientField] != NSNotFound&& [message[kClientField] isKindOfClass:[NSString class]])
+
 @interface MCChatCore ()
-- (void)_closeStreams;
+- (void)_closeStreamsAndClearBuffers;
 - (void)_releaseStream;
 @end
 
@@ -23,29 +36,67 @@
     CFWriteStreamRef writeStream;
     NSMutableData *received, *toSend;
     NSObject *connectionLock;
+    NSMutableArray *userList;
+}
+
+-(NSArray *)getUsers
+{
+    return [userList copy];
 }
 
 - (void)processMessage:(NSDictionary *)message
 {
-    if ([[message allKeys] indexOfObject:@"type"] != NSNotFound) {
-        if ([[message objectForKey:@"type"] isEqualToString:@"welcome"]) {
+    LOG_SELECTOR()
+    if ([[message allKeys] indexOfObject:kMessageFromField] == NSNotFound) {
+        if ([[message allKeys] indexOfObject:kMessageTypeField] == NSNotFound)
+            [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no type field in system message" userInfo:NULL] raise];
+        if ([message[kMessageTypeField] isEqualToString:kMessageTypeWelcome]) {
+            if (!(message[kClientsField]&&[message[kClientsField] isKindOfClass:[NSArray class]]))
+                [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no clients field in welcome message" userInfo:NULL] raise];
+            for (NSObject *obj in message[kClientsField])
+                if (![obj isKindOfClass:[NSString class]])
+                    [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"Wrong format of clients field of welcome message" userInfo:NULL] raise];
+            if (!(message[kVersionField]&&[message[kVersionField] isKindOfClass:[NSNumber class]]))
+                [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no valid server version field in welcome message" userInfo:NULL] raise];
+            [userList removeAllObjects];
+            [userList addObjectsFromArray:message[kClientsField]];
             NSObject<MCChatCoreDelegate> *d = self.delegate;
-            if (d&&[d conformsToProtocol:@protocol(MCChatCoreDelegate)]&&[d respondsToSelector:@selector(connectedToServerVersion:forClient:)]) {
-                [d connectedToServerVersion:[message[@"version_int"] longValue] forClient:self];
-            }
-        } else if ([[message objectForKey:@"type"] isEqualToString:@"connected"]) {
-            
-        } else if ([[message objectForKey:@"type"] isEqualToString:@"disconnected"]) {
-            
-        } else {
-            
+            if VALID_DELEGATE(d, @selector(connectedToServerVersion:forClient:))
+                [d connectedToServerVersion:[message[kVersionField] longValue] forClient:self];
+        } else if ([message[kMessageTypeField] isEqualToString:kMessageTypeUserConnected]) {
+            if (!MESSAGE_HAS_CLIENT_FIELD)
+                [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no valid client filed in 'connected' message" userInfo:NULL] raise];
+            [userList addObject:message[@"client"]];
+            NSObject<MCChatCoreDelegate> *d = self.delegate;
+            if VALID_DELEGATE(d, @selector(userConnected:forClient:))
+                [d userConnected:message[@"client"] forClient:self];
+        } else if ([message[kMessageTypeField] isEqualToString:kMessageTypeUserDisconnected]) {
+            if (!MESSAGE_HAS_CLIENT_FIELD)
+                [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no valid client filed in 'disconnected' message" userInfo:NULL] raise];
+            [userList removeObject:message[@"client"]];
+            NSObject<MCChatCoreDelegate> *d = self.delegate;
+            if VALID_DELEGATE(d, @selector(userConnected:forClient:))
+                [d userDisconnected:message[@"client"] forClient:self];
         }
+    } else {
+        if (![message[kMessageFromField] isKindOfClass:[NSString class]])
+            [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"Invalid format of 'from' filed in the user message" userInfo:NULL] raise];
+        NSMutableDictionary *mutableMessage = [message mutableCopy];
+        NSString *from  = message[kMessageFromField];
+        [mutableMessage removeObjectForKey:kMessageFromField];
+        NSObject<MCChatCoreDelegate> *d = self.delegate;
+        if VALID_DELEGATE(d, @selector(messageRecieved:fromUser:forClient:))
+            [d messageRecieved:mutableMessage
+                      fromUser:from
+                     forClient:self];
+        
     }
 }
 
 -(void)bytesRead:(void *)bytes
           length:(CFIndex)bytesRead
 {
+    LOG_SELECTOR()
     [received appendBytes:bytes
                    length:bytesRead];
     NSData *pattern = [@"\r\n" dataUsingEncoding:NSASCIIStringEncoding];
@@ -64,9 +115,11 @@
     }
 }
 
+
 void readcb(CFReadStreamRef stream, CFStreamEventType eventType, void *clientCallBackInfo)
 {
     @autoreleasepool {
+        // @try {
         switch(eventType) {
             case kCFStreamEventOpenCompleted:
                 NSLog(@"Read stream open completed");
@@ -75,6 +128,7 @@ void readcb(CFReadStreamRef stream, CFStreamEventType eventType, void *clientCal
                 NSLog(@"Read stream has bytes available");
                 UInt8 buf[BUF_SIZE];
                 CFIndex bytesRead = CFReadStreamRead(stream, buf, BUF_SIZE);
+                NSLog(@"Received %ld bytes", bytesRead);
                 if (bytesRead > 0) {
                     [(__bridge MCChatCore *)clientCallBackInfo bytesRead:buf length:bytesRead];
                 }
@@ -82,11 +136,13 @@ void readcb(CFReadStreamRef stream, CFStreamEventType eventType, void *clientCal
             }
             case kCFStreamEventErrorOccurred: {
                 NSLog(@"Read stream error occurred");
-                //                CFErrorRef err = CFReadStreamCopyError(stream);
-                //                CFStringRef desc = CFErrorCopyDescription(err);
-                //                CFStreamStatus status = CFReadStreamGetStatus(stream);
-                //
-                //                NSLog(@"%@", desc);
+                CFErrorRef err = CFReadStreamCopyError(stream);
+                CFStringRef desc = CFErrorCopyDescription(err);
+                CFStreamStatus status = CFReadStreamGetStatus(stream);
+                
+                NSLog(@"%@", desc);
+                
+                
                 break;
             }
             case kCFStreamEventEndEncountered:
@@ -95,6 +151,11 @@ void readcb(CFReadStreamRef stream, CFStreamEventType eventType, void *clientCal
             default:
                 break;
         }
+        //  } @catch (NSException * e) {
+        //       NSLog(@"exception ->>>> %@", e);
+        //   }
+        
+        
         
     }
 }
@@ -110,7 +171,11 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
                 break;
             case kCFStreamEventErrorOccurred:
                 NSLog(@"Write stream error occurred");
+                CFErrorRef err = CFWriteStreamCopyError(stream);
+                CFStringRef desc = CFErrorCopyDescription(err);
+                CFStreamStatus status = CFWriteStreamGetStatus(stream);
                 
+                NSLog(@"%@", desc);
                 break;
             case kCFStreamEventOpenCompleted:
                 NSLog(@"Write stream open completed");
@@ -130,7 +195,9 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
 
 - (instancetype)init;
 {
+    LOG_SELECTOR()
     if (self = [super init]) {
+        userList = [[NSMutableArray alloc] init];
         connectionLock = [[NSObject alloc] init];
         toSend = [[NSMutableData alloc] init];
         received = [[NSMutableData alloc] init];
@@ -140,6 +207,7 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
 
 - (BOOL)connect
 {
+    LOG_SELECTOR()
     @synchronized (connectionLock) {
         if (!(readStream || writeStream)) {
             static NSString *hostString = @"52.17.115.151";
@@ -164,7 +232,7 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
             CFReadStreamScheduleWithRunLoop(readStream, CFRunLoopGetMain(), kCFRunLoopCommonModes);
             CFWriteStreamScheduleWithRunLoop(writeStream, CFRunLoopGetMain(), kCFRunLoopCommonModes);
             if (!(CFReadStreamOpen(readStream)&&CFWriteStreamOpen(writeStream))) {
-                [self _closeStreams];
+                [self _closeStreamsAndClearBuffers];
             }
             return YES;
         } else
@@ -174,6 +242,7 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
 
 - (void)sendMessage:(NSDictionary *)message
 {
+    LOG_SELECTOR()
     @synchronized (connectionLock) {
         if (writeStream) {
             CFStreamStatus streamStatus = CFWriteStreamGetStatus(writeStream);
@@ -199,6 +268,7 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
 
 - (void)_releaseStream
 {
+    LOG_SELECTOR()
     if (readStream) {
         CFRelease(readStream);
         readStream = NULL;
@@ -209,8 +279,9 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
     }
 }
 
-- (void)_closeStreams
+- (void)_closeStreamsAndClearBuffers
 {
+    LOG_SELECTOR()
     if (readStream) {
         if (CFReadStreamGetStatus(readStream) != kCFStreamStatusClosed)
             CFReadStreamClose(readStream);
@@ -223,13 +294,16 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
         CFRelease(writeStream);
         writeStream = NULL;
     }
-    
+    [received replaceBytesInRange:NSMakeRange(0, received.length - 1) withBytes:NULL length:0];
+    [toSend replaceBytesInRange:NSMakeRange(0, toSend.length - 1) withBytes:NULL length:0];
+    [userList removeAllObjects];
 }
 
 - (void)disconnect
 {
+    LOG_SELECTOR()
     @synchronized (connectionLock) {
-        [self _closeStreams];
+        [self _closeStreamsAndClearBuffers];
     }
 }
 

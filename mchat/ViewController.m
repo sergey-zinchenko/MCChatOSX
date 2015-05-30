@@ -35,28 +35,30 @@
 - (void)connectedToServerVersion:(NSUInteger)version
                        forClient:(MCChatCore *)client
 {
-    [client sendMessage:@{@"to":@[@"bugaga"]}];
+    NSLog(@"users = %@", client.users);
 }
 
 - (void)connectingFailedforClient:(MCChatCore *)client
 {
-    
+   
 }
 
 - (void)userConnected:(NSString *)user
             forClient:(MCChatCore *)client
 {
-    
+    NSLog(@"users = %@", client.users);
 }
 
 - (void)userDisconnected:(NSString *)user
                forClient:(MCChatCore *)client
 {
-    
+     NSLog(@"users = %@", client.users);
 }
 
 - (void)messageRecieved:(NSDictionary *)message
-              forClient:(MCChatCore *)client{
+               fromUser:(NSString *)user
+              forClient:(MCChatCore *)client
+{
     
 }
 
