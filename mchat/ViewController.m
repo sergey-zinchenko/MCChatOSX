@@ -52,6 +52,7 @@
     
     NSLog(@"User %@ connected", user);
     [core sendMessage:@{@"to":@[user],@"message":@"Yes!!!"}];
+    [core disconnect];
 }
 
 - (void)userDisconnected:(NSString *)user

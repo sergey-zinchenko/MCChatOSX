@@ -211,6 +211,10 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
     LOG_SELECTOR()
     @synchronized (connectionLock) {
         if (!(readStream || writeStream)) {
+            if (received.length > 0)
+                [received replaceBytesInRange:NSMakeRange(0, received.length) withBytes:NULL length:0];
+            if (toSend.length > 0)
+                [toSend replaceBytesInRange:NSMakeRange(0, toSend.length) withBytes:NULL length:0];
             static NSString *hostString = @"52.17.115.151";
             CFHostRef host = CFHostCreateWithName(kCFAllocatorDefault, (__bridge CFStringRef)hostString);
             CFStreamCreatePairWithSocketToCFHost(kCFAllocatorDefault, host, 9000, &readStream, &writeStream);
@@ -269,9 +273,9 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
     NSUInteger length = [toSend length];
     if (length > 0) {
         UInt8 buf[BUF_SIZE];
-        CFIndex len = MIN(length, BUF_SIZE);
-        [toSend getBytes:&buf length:BUF_SIZE];
-        CFIndex sent = CFWriteStreamWrite(writeStream, buf, len);
+        CFIndex bytesToSend = MIN(length, BUF_SIZE);
+        [toSend getBytes:&buf length:bytesToSend];
+        CFIndex sent = CFWriteStreamWrite(writeStream, buf, bytesToSend);
         if (sent > 0) {
             NSLog(@"%ld bytes sent", sent);
             [toSend replaceBytesInRange:NSMakeRange(0, sent) withBytes:NULL length:0];
@@ -307,10 +311,6 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
         CFRelease(writeStream);
         writeStream = NULL;
     }
-    if (received.length > 0)
-        [received replaceBytesInRange:NSMakeRange(0, received.length - 1) withBytes:NULL length:0];
-    if (toSend.length > 0)
-        [toSend replaceBytesInRange:NSMakeRange(0, toSend.length - 1) withBytes:NULL length:0];
     [userList removeAllObjects];
 }
 
