@@ -35,7 +35,7 @@
 - (void)connectedToServerVersion:(NSUInteger)version
                        forCore:(MCChatCore *)core
 {
-
+    NSLog(@"Users = %@", core.users);
 }
 
 - (void)exception:(NSString *)exception
@@ -46,23 +46,23 @@
     [core performSelector:@selector(connect) withObject:nil afterDelay:5.0];
 }
 
-- (void)userConnected:(NSString *)user
+- (void)userConnected:(NSUUID *)user
             forCore:(MCChatCore *)core
 {
     
     NSLog(@"User %@ connected", user);
-    [core sendMessage:@{@"to":@[user],@"message":@"Yes!!!"}];
+    [core sendMessage:@{@"to":@[[user UUIDString]],@"message":@"Yes!!!"}];
     [core disconnect];
 }
 
-- (void)userDisconnected:(NSString *)user
+- (void)userDisconnected:(NSUUID *)user
                forCore:(MCChatCore *)core
 {
      NSLog(@"User %@ disconnected", user);
 }
 
 - (void)messageRecieved:(NSDictionary *)message
-               fromUser:(NSString *)user
+               fromUser:(NSUUID *)user
               forCore:(MCChatCore *)core
 {
     

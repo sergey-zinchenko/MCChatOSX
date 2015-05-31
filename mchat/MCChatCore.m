@@ -62,36 +62,46 @@
             if (!(message[kVersionField]&&[message[kVersionField] isKindOfClass:[NSNumber class]]))
                 [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no valid server version field in welcome message" userInfo:NULL] raise];
             [userList removeAllObjects];
-            [userList addObjectsFromArray:message[kClientsField]];
+            for (NSString *str in message[kClientsField]) {
+                [userList addObject:[[NSUUID alloc] initWithUUIDString:str]];
+            }
             NSObject<MCChatCoreDelegate> *d = self.delegate;
             if VALID_DELEGATE(d, @selector(connectedToServerVersion:forCore:))
                 [d connectedToServerVersion:[message[kVersionField] longValue] forCore:self];
         } else if ([message[kMessageTypeField] isEqualToString:kMessageTypeUserConnected]) {
             if (!MESSAGE_HAS_CLIENT_FIELD)
                 [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no valid client filed in 'connected' message" userInfo:NULL] raise];
-            [userList addObject:message[@"client"]];
+            NSUUID *client = [[NSUUID alloc] initWithUUIDString:message[@"client"]];
+            if (!client)
+                [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no valid client filed in 'disconnected' message" userInfo:NULL] raise];
+            [userList addObject:client];
             NSObject<MCChatCoreDelegate> *d = self.delegate;
             if VALID_DELEGATE(d, @selector(userConnected:forCore:))
-                [d userConnected:message[@"client"] forCore:self];
+                [d userConnected:client forCore:self];
         } else if ([message[kMessageTypeField] isEqualToString:kMessageTypeUserDisconnected]) {
             if (!MESSAGE_HAS_CLIENT_FIELD)
                 [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no valid client filed in 'disconnected' message" userInfo:NULL] raise];
-            [userList removeObject:message[@"client"]];
+            NSUUID *client = [[NSUUID alloc] initWithUUIDString:message[@"client"]];
+            if (!client)
+                [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no valid client filed in 'disconnected' message" userInfo:NULL] raise];
+            [userList removeObject:client];
             NSObject<MCChatCoreDelegate> *d = self.delegate;
             if VALID_DELEGATE(d, @selector(userConnected:forCore:))
-                [d userDisconnected:message[@"client"] forCore:self];
+                [d userDisconnected:client forCore:self];
         }
     } else {
         if (![message[kMessageFromField] isKindOfClass:[NSString class]])
             [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"Invalid format of 'from' filed in the user message" userInfo:NULL] raise];
         NSMutableDictionary *mutableMessage = [message mutableCopy];
-        NSString *from  = message[kMessageFromField];
+        NSUUID *from  = [[NSUUID alloc] initWithUUIDString:message[kMessageFromField]];
+        if (!from)
+            [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"Invalid format of 'from' filed in the user message" userInfo:NULL] raise];
         [mutableMessage removeObjectForKey:kMessageFromField];
         NSObject<MCChatCoreDelegate> *d = self.delegate;
         if VALID_DELEGATE(d, @selector(messageRecieved:fromUser:forCore:))
             [d messageRecieved:mutableMessage
                       fromUser:from
-                     forCore:self];
+                       forCore:self];
         
     }
 }
@@ -329,6 +339,17 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
     @synchronized (connectionLock) {
         [self _closeStreamsAndClearBuffers];
     }
+}
+
+- (void)sendMessage:(NSDictionary *)message
+             toUser:(NSUUID *)user
+{
+    
+}
+
+- (void)sendBroadcastMessage:(NSDictionary *)meesage
+{
+    
 }
 
 @end

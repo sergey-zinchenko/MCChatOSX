@@ -18,19 +18,23 @@
 - (void)exception:(NSString *)exception
     withReason:(NSString *)reason
         forCore:(MCChatCore *)core;
-- (void)userConnected:(NSString *)user
+- (void)userConnected:(NSUUID *)user
             forCore:(MCChatCore *)core;
-- (void)userDisconnected:(NSString *)user
+- (void)userDisconnected:(NSUUID *)user
                forCore:(MCChatCore *)core;
 - (void)messageRecieved:(NSDictionary *)message
-               fromUser:(NSString *)user
+               fromUser:(NSUUID *)user
               forCore:(MCChatCore *)core;
 @end
 
 @interface MCChatCore : NSObject
 - (void)disconnect;
 - (BOOL)connect;
-- (void)sendMessage:(NSDictionary*)meesage;
+- (void)sendMessage:(NSDictionary *)meesage;
+- (void)sendMessage:(NSDictionary *)message
+             toUser:(NSUUID *)user;
+- (void)sendBroadcastMessage:(NSDictionary *)meesage;
+
 @property (atomic, weak) id<MCChatCoreDelegate> delegate;
 @property (readonly, getter=getUsers) NSArray *users;
 @end
