@@ -31,6 +31,7 @@
 - (void)_releaseStream;
 - (void)_callOnErrorWithException:(NSException *)exception;
 - (void)_sendMoreData;
+- (void)_sendMessage:(NSDictionary *)meesage;
 @end
 
 @implementation MCChatCore
@@ -255,7 +256,7 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
     }
 }
 
-- (void)sendMessage:(NSDictionary *)message
+- (void)_sendMessage:(NSDictionary *)message
 {
     LOG_SELECTOR()
     @synchronized (connectionLock) {
@@ -344,12 +345,33 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
 - (void)sendMessage:(NSDictionary *)message
              toUser:(NSUUID *)user
 {
-    
+    if (!(message&&user&&[message isKindOfClass:[NSDictionary class]]&&[user isKindOfClass:[NSUUID class]]))
+        [[NSException exceptionWithName:ERRONOUS_PARAMETERS reason:@"Invalid parameters passed" userInfo:NULL] raise];
+    NSMutableDictionary *mutableMessage = [message mutableCopy];
+    [mutableMessage setObject:@[[user UUIDString]] forKey:@"to"];
+    [self _sendMessage:mutableMessage];
 }
 
-- (void)sendBroadcastMessage:(NSDictionary *)meesage
+- (void)sendBroadcastMessage:(NSDictionary *)message
 {
-    
+    [self sendMessage:message
+              toUsers:self.users];
+}
+
+- (void)sendMessage:(NSDictionary *)message
+            toUsers:(NSArray *)users
+{
+    if (!(message&&users&&[message isKindOfClass:[NSDictionary class]]&&[users isKindOfClass:[NSArray class]]))
+        [[NSException exceptionWithName:ERRONOUS_PARAMETERS reason:@"Invalid parameters passed" userInfo:NULL] raise];
+    NSMutableArray *strUsers = [[NSMutableArray alloc] init];
+    for (NSObject *obj in users) {
+        if ([obj isKindOfClass:[NSUUID class]])
+            [[NSException exceptionWithName:ERRONOUS_PARAMETERS reason:@"Invalid parameters passed" userInfo:NULL] raise];
+        [strUsers addObject:[(NSUUID*)obj UUIDString]];
+    }
+    NSMutableDictionary *mutableMessage = [message mutableCopy];
+    [mutableMessage setObject:strUsers forKey:@"to"];
+    [self _sendMessage:mutableMessage];
 }
 
 @end

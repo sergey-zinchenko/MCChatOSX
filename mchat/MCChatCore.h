@@ -9,6 +9,7 @@
 #define MESSAGE_FORMAT_EXCEPTION @"MessageFormatException"
 #define ERRONOUS_MESSAGE_PACKAGE @"ErronousMessagePackage"
 #define LOWLEVEL_ERROR @"LowLevelError"
+#define ERRONOUS_PARAMETERS @"ErronousParameters"
 
 @class MCChatCore;
 
@@ -30,10 +31,11 @@
 @interface MCChatCore : NSObject
 - (void)disconnect;
 - (BOOL)connect;
-- (void)sendMessage:(NSDictionary *)meesage;
 - (void)sendMessage:(NSDictionary *)message
              toUser:(NSUUID *)user;
-- (void)sendBroadcastMessage:(NSDictionary *)meesage;
+- (void)sendMessage:(NSDictionary *)message
+            toUsers:(NSArray *)users;
+- (void)sendBroadcastMessage:(NSDictionary *)message;
 
 @property (atomic, weak) id<MCChatCoreDelegate> delegate;
 @property (readonly, getter=getUsers) NSArray *users;

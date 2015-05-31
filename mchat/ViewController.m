@@ -51,8 +51,9 @@
 {
     
     NSLog(@"User %@ connected", user);
-    [core sendMessage:@{@"to":@[[user UUIDString]],@"message":@"Yes!!!"}];
-    [core disconnect];
+    [core sendMessage:@{@"message":@"Hi!"}
+               toUser:user];
+    //[core disconnect];
 }
 
 - (void)userDisconnected:(NSUUID *)user
