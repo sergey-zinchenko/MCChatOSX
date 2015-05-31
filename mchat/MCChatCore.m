@@ -365,7 +365,7 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
         [[NSException exceptionWithName:ERRONOUS_PARAMETERS reason:@"Invalid parameters passed" userInfo:NULL] raise];
     NSMutableArray *strUsers = [[NSMutableArray alloc] init];
     for (NSObject *obj in users) {
-        if ([obj isKindOfClass:[NSUUID class]])
+        if (![obj isKindOfClass:[NSUUID class]])
             [[NSException exceptionWithName:ERRONOUS_PARAMETERS reason:@"Invalid parameters passed" userInfo:NULL] raise];
         [strUsers addObject:[(NSUUID*)obj UUIDString]];
     }
