@@ -55,16 +55,18 @@
         if ([[message allKeys] indexOfObject:kMessageTypeField] == NSNotFound)
             [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no type field in system message" userInfo:NULL] raise];
         if ([message[kMessageTypeField] isEqualToString:kMessageTypeWelcome]) {
-            if (!(message[kClientsField]&&[message[kClientsField] isKindOfClass:[NSArray class]]))
-                [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no clients field in welcome message" userInfo:NULL] raise];
-            for (NSObject *obj in message[kClientsField])
-                if (![obj isKindOfClass:[NSString class]])
-                    [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"Wrong format of clients field of welcome message" userInfo:NULL] raise];
             if (!(message[kVersionField]&&[message[kVersionField] isKindOfClass:[NSNumber class]]))
                 [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no valid server version field in welcome message" userInfo:NULL] raise];
+            if (!(message[kClientsField]&&[message[kClientsField] isKindOfClass:[NSArray class]]))
+                [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no clients field in welcome message" userInfo:NULL] raise];
             [userList removeAllObjects];
-            for (NSString *str in message[kClientsField]) {
-                [userList addObject:[[NSUUID alloc] initWithUUIDString:str]];
+            for (NSObject *obj in message[kClientsField]) {
+                if (![obj isKindOfClass:[NSString class]])
+                    [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"Wrong format of clients field of welcome message" userInfo:NULL] raise];
+                NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:(NSString *)obj];
+                if (!uuid)
+                    [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"Wrong format of clients field of welcome message" userInfo:NULL] raise];
+                [userList addObject:uuid];
             }
             NSObject<MCChatCoreDelegate> *d = self.delegate;
             if VALID_DELEGATE(d, @selector(connectedToServerVersion:forCore:))
