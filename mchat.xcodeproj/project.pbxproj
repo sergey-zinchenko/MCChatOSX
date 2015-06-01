@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A52CE7AC1B1B01E2005020A5 /* MCChatClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A52CE7AB1B1B01E2005020A5 /* MCChatClient.m */; };
+		A52CE7B21B1B2AE9005020A5 /* MCChatUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A52CE7B11B1B2AE9005020A5 /* MCChatUser.m */; };
 		A53B85731AA5E7F300C191C2 /* MCChatCore.m in Sources */ = {isa = PBXBuildFile; fileRef = A53B85721AA5E7F300C191C2 /* MCChatCore.m */; };
 		A58C542B1AA5E25900059106 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A58C542A1AA5E25900059106 /* AppDelegate.m */; };
 		A58C542D1AA5E25900059106 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A58C542C1AA5E25900059106 /* main.m */; };
@@ -30,6 +31,8 @@
 /* Begin PBXFileReference section */
 		A52CE7AA1B1B01E2005020A5 /* MCChatClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCChatClient.h; sourceTree = "<group>"; };
 		A52CE7AB1B1B01E2005020A5 /* MCChatClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCChatClient.m; sourceTree = "<group>"; };
+		A52CE7B01B1B2AE9005020A5 /* MCChatUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCChatUser.h; sourceTree = "<group>"; };
+		A52CE7B11B1B2AE9005020A5 /* MCChatUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCChatUser.m; sourceTree = "<group>"; };
 		A53B85711AA5E7F300C191C2 /* MCChatCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCChatCore.h; sourceTree = "<group>"; };
 		A53B85721AA5E7F300C191C2 /* MCChatCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCChatCore.m; sourceTree = "<group>"; };
 		A58C54241AA5E25900059106 /* mchat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mchat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,6 +99,8 @@
 				A58C54271AA5E25900059106 /* Supporting Files */,
 				A52CE7AA1B1B01E2005020A5 /* MCChatClient.h */,
 				A52CE7AB1B1B01E2005020A5 /* MCChatClient.m */,
+				A52CE7B01B1B2AE9005020A5 /* MCChatUser.h */,
+				A52CE7B11B1B2AE9005020A5 /* MCChatUser.m */,
 			);
 			path = mchat;
 			sourceTree = "<group>";
@@ -227,6 +232,7 @@
 			files = (
 				A58C54301AA5E25900059106 /* ViewController.m in Sources */,
 				A58C542D1AA5E25900059106 /* main.m in Sources */,
+				A52CE7B21B1B2AE9005020A5 /* MCChatUser.m in Sources */,
 				A52CE7AC1B1B01E2005020A5 /* MCChatClient.m in Sources */,
 				A53B85731AA5E7F300C191C2 /* MCChatCore.m in Sources */,
 				A58C542B1AA5E25900059106 /* AppDelegate.m in Sources */,

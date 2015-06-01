@@ -7,6 +7,7 @@
 //
 
 #import "MCChatClient.h"
+#import "MCChatUser.h"
 
 #define LOG_SELECTOR()  NSLog(@"%@ > %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 
@@ -53,7 +54,7 @@
 {
     LOG_SELECTOR()
     [users removeAllObjects];
-    [c sendBroadcastMessage:@{@"my_name": self.name}];
+    [c sendBroadcastMessage:@{@"layer" : @"user", @"message" : @"who_are_you", @"my_name_is": self.name}];
 }
 
 - (void)exception:(NSString *)exception
@@ -74,13 +75,28 @@
                  forCore:(MCChatCore *)c
 {
     LOG_SELECTOR()
+    [users removeObjectForKey:user];
 }
 
 - (void)messageRecieved:(NSDictionary *)message
-               fromUser:(NSUUID *)user
+               fromUser:(NSUUID *)userid
                 forCore:(MCChatCore *)c
 {
     LOG_SELECTOR()
+    if ([[message allKeys] indexOfObject:@"layer"] != NSNotFound && [message[@"layer"] isKindOfClass:[NSString class]]) {
+        NSString *layer = message[@"layer"];
+        if ([layer isEqualToString:@"user"]) {
+            
+            
+        }
+        
+//        
+//        [c sendMessage:@{@"my_name" : self.name} toUser:userid];
+//        MCChatUser *user = [[MCChatUser alloc] initWithUUID:userid
+//                                                   userName:message[@"my_name"]
+//                                                  forClient:self];
+//        [users setObject:user forKey:userid];
+    }
 }
 
 @end

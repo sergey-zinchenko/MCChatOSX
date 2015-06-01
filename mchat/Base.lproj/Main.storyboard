@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -43,6 +43,26 @@
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <toolbar key="toolbar" implicitIdentifier="57EA1196-74AF-4F9F-906C-5B9140106558" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="sHL-Ld-uVz">
+                            <allowedToolbarItems>
+                                <toolbarItem implicitItemIdentifier="DBC4D217-E430-4DE9-8760-B177476F1461" label="Custom View" paletteLabel="Custom View" image="82340618-9635-463F-86A9-708DCFAD215A" id="lqj-Hj-hV3">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="61" height="18"/>
+                                    <size key="maxSize" width="61" height="18"/>
+                                    <button key="view" id="CIa-WJ-70t">
+                                        <rect key="frame" x="0.0" y="0.0" width="61" height="18"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="check" title="Check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="EmI-vS-e00">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                </toolbarItem>
+                            </allowedToolbarItems>
+                            <defaultToolbarItems>
+                                <toolbarItem reference="lqj-Hj-hV3"/>
+                            </defaultToolbarItems>
+                        </toolbar>
                     </window>
                     <connections>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
@@ -115,56 +135,6 @@
                     <view key="view" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qKQ-BJ-AyW">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="22"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="22" id="o63-z1-eFH"/>
-                                </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="8LA-aV-04f">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qkc-4T-dHo">
-                                <rect key="frame" x="0.0" y="20" width="480" height="250"/>
-                                <clipView key="contentView" id="Ykh-8y-hOa">
-                                    <rect key="frame" x="1" y="1" width="223" height="133"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <textView importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="8mg-7T-w2M">
-                                            <rect key="frame" x="0.0" y="0.0" width="223" height="248"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <size key="minSize" width="478" height="248"/>
-                                            <size key="maxSize" width="480" height="10000000"/>
-                                            <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="478" height="248"/>
-                                            <size key="maxSize" width="480" height="10000000"/>
-                                        </textView>
-                                    </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </clipView>
-                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="rbA-Xh-f2J">
-                                    <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </scroller>
-                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="ZXd-O7-ABY">
-                                    <rect key="frame" x="224" y="1" width="15" height="133"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </scroller>
-                            </scrollView>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="qkc-4T-dHo" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="LXa-h8-0vc"/>
-                            <constraint firstItem="qKQ-BJ-AyW" firstAttribute="top" secondItem="qkc-4T-dHo" secondAttribute="bottom" constant="-2" id="WyA-ZD-Bp5"/>
-                            <constraint firstAttribute="trailing" secondItem="qKQ-BJ-AyW" secondAttribute="trailing" id="aqg-ST-XnP"/>
-                            <constraint firstItem="qkc-4T-dHo" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="dEz-iK-Jsg"/>
-                            <constraint firstItem="qKQ-BJ-AyW" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="dlD-Gb-lgp"/>
-                            <constraint firstAttribute="trailing" secondItem="qkc-4T-dHo" secondAttribute="trailing" id="sbf-Td-iJg"/>
-                            <constraint firstAttribute="bottom" secondItem="qKQ-BJ-AyW" secondAttribute="bottom" id="tbR-Bo-Ahu"/>
-                        </constraints>
                     </view>
                     <connections>
                         <segue destination="jhj-vR-qcJ" kind="sheet" identifier="dialog" id="B9u-pi-yAe"/>
@@ -175,4 +145,25 @@
             <point key="canvasLocation" x="75" y="604"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="82340618-9635-463F-86A9-708DCFAD215A" width="18" height="18">
+            <mutableData key="keyedArchiveRepresentation">
+YnBsaXN0MDDUAQIDBAUGW1xYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QFwcI
+ERYbHCc0NTY3ODk6O0JDRElMT1VYVSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNS
+ZXBzV05TQ29sb3KAFhIAwwAAgAKAFNISCRMVWk5TLm9iamVjdHOhFIADgBPSEgkXGqIYGYAEgAWAEhAA
+1h0eHwkgISIbIyQlJlZOU1NpemVfEA9OU0JpdHNQZXJTYW1wbGVfEBBOU0NvbG9yU3BhY2VOYW1lWk5T
+SGFzQWxwaGFfEBROU0NvcmVVSUltYWdlT3B0aW9uc4APgBCAEQmABtMoEgkpLjNXTlMua2V5c6QqKywt
+gAeACIAJgAqkLxgxMoALgASADIANgA5Uc2l6ZVV2YWx1ZVVzdGF0ZVZ3aWRnZXRXcmVndWxhclZub3Jt
+YWxYY2hlY2tib3jSPD0+P1okY2xhc3NuYW1lWCRjbGFzc2VzXxATTlNNdXRhYmxlRGljdGlvbmFyeaM+
+QEFcTlNEaWN0aW9uYXJ5WE5TT2JqZWN0WHsxOCwgMTh9XxAZTlNDYWxpYnJhdGVkUkdCQ29sb3JTcGFj
+ZdI8PUVGXxAQTlNDb3JlVUlJbWFnZVJlcKNHSEFfEBBOU0NvcmVVSUltYWdlUmVwWk5TSW1hZ2VSZXDS
+PD1KS1dOU0FycmF5okpB0jw9TU5eTlNNdXRhYmxlQXJyYXmjTUpB01BRCVJTVFdOU1doaXRlXE5TQ29s
+b3JTcGFjZUQwIDAAEAOAFdI8PVZXV05TQ29sb3KiVkHSPD1ZWldOU0ltYWdlollBXxAPTlNLZXllZEFy
+Y2hpdmVy0V1eVHJvb3SAAQAIABEAGgAjAC0AMgA3AFEAVwBgAGcAdAB7AIMAhQCKAIwAjgCTAJ4AoACi
+AKQAqQCsAK4AsACyALQAwQDIANoA7QD4AQ8BEQETARUBFgEYAR8BJwEsAS4BMAEyATQBOQE7AT0BPwFB
+AUMBSAFOAVQBWwFjAWoBcwF4AYMBjAGiAaYBswG8AcUB4QHmAfkB/QIQAhsCIAIoAisCMAI/AkMCSgJS
+Al8CZAJmAmgCbQJ1AngCfQKFAogCmgKdAqIAAAAAAAACAQAAAAAAAABfAAAAAAAAAAAAAAAAAAACpA
+</mutableData>
+        </image>
+    </resources>
 </document>

@@ -13,9 +13,10 @@
     MCChatClient *cli;
 }
 
-- (void)viewDidAppear
+-(void)viewDidAppear
 {
-   [self performSegueWithIdentifier:@"dialog" sender:self];
+    self.view.window.titleVisibility = NSWindowTitleHidden;
+
 }
 
 - (void)viewDidLoad {

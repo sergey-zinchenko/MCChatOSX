@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import "MCChatCore.h"
 
 #define MC_CHAT_CLIENT_EXCEPTION @"MCChatClientException"
