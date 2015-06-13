@@ -13,12 +13,6 @@
     MCChatClient *cli;
 }
 
--(void)viewDidAppear
-{
-    self.view.window.titleVisibility = NSWindowTitleHidden;
-
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     cli = [[MCChatClient alloc] initWithName:@"Петрушка"];

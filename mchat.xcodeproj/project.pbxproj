@@ -67,6 +67,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A5830E6B1B2C36FC00183FAA /* MCChat */ = {
+			isa = PBXGroup;
+			children = (
+				A53B85711AA5E7F300C191C2 /* MCChatCore.h */,
+				A53B85721AA5E7F300C191C2 /* MCChatCore.m */,
+				A52CE7AA1B1B01E2005020A5 /* MCChatClient.h */,
+				A52CE7AB1B1B01E2005020A5 /* MCChatClient.m */,
+				A52CE7B01B1B2AE9005020A5 /* MCChatUser.h */,
+				A52CE7B11B1B2AE9005020A5 /* MCChatUser.m */,
+			);
+			name = MCChat;
+			sourceTree = "<group>";
+		};
 		A58C541B1AA5E25900059106 = {
 			isa = PBXGroup;
 			children = (
@@ -90,17 +103,12 @@
 			children = (
 				A58C54291AA5E25900059106 /* AppDelegate.h */,
 				A58C542A1AA5E25900059106 /* AppDelegate.m */,
-				A53B85711AA5E7F300C191C2 /* MCChatCore.h */,
-				A53B85721AA5E7F300C191C2 /* MCChatCore.m */,
+				A5830E6B1B2C36FC00183FAA /* MCChat */,
 				A58C542E1AA5E25900059106 /* ViewController.h */,
 				A58C542F1AA5E25900059106 /* ViewController.m */,
 				A58C54311AA5E25900059106 /* Images.xcassets */,
 				A58C54331AA5E25900059106 /* Main.storyboard */,
 				A58C54271AA5E25900059106 /* Supporting Files */,
-				A52CE7AA1B1B01E2005020A5 /* MCChatClient.h */,
-				A52CE7AB1B1B01E2005020A5 /* MCChatClient.m */,
-				A52CE7B01B1B2AE9005020A5 /* MCChatUser.h */,
-				A52CE7B11B1B2AE9005020A5 /* MCChatUser.m */,
 			);
 			path = mchat;
 			sourceTree = "<group>";
