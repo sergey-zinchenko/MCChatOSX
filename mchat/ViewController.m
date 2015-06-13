@@ -39,9 +39,15 @@
 }
 
 - (void)onConnectAttemptEndedSuccessfully:(BOOL)successfully
-                                ForClient:(MCChatClient *)client
+                                forClient:(MCChatClient *)client
 {
     progressIndicatorHolderView.hidden = YES;
+}
+
+- (void)onUserConnected:(MCChatUser *)user
+              forClient:(MCChatClient *)client
+{
+    
 }
 
 @end

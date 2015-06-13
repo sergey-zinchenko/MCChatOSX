@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "MCChatCore.h"
+#import "MCChatUser.h"
 
 #define MC_CHAT_CLIENT_EXCEPTION @"MCChatClientException"
 
@@ -17,7 +18,9 @@
 @protocol MCChatClientDeligate <NSObject>
 - (void)onConnectAttemptStartedForClient:(MCChatClient *)client;
 - (void)onConnectAttemptEndedSuccessfully:(BOOL)successfully
-                                ForClient:(MCChatClient *)client;
+                                forClient:(MCChatClient *)client;
+- (void)onUserConnected:(MCChatUser *)user
+              forClient:(MCChatClient *)client;
 @end
 
 @interface MCChatClient : NSObject<MCChatCoreDelegate>

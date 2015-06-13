@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MCChatClient.h"
+
+
+@class MCChatClient;
 
 @interface MCChatUser : NSObject
 

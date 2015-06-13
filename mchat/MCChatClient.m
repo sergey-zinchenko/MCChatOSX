@@ -108,8 +108,8 @@
     [c sendBroadcastMessage:@{@"layer" : @"handshake", @"hello": self.myName}];
     id<MCChatClientDeligate> d = self.deligate;
     if (connectingNow) {
-        if VALID_DELEGATE(d, @selector(onConnectAttemptEndedSuccessfully:ForClient:)) {
-            [d onConnectAttemptEndedSuccessfully:YES ForClient:self];
+        if VALID_DELEGATE(d, @selector(onConnectAttemptEndedSuccessfully:forClient:)) {
+            [d onConnectAttemptEndedSuccessfully:YES forClient:self];
         }
         connectingNow = NO;
     }
@@ -123,8 +123,8 @@
     NSLog(@"Exception > %@ : %@", exception, reason);
     id<MCChatClientDeligate> d = self.deligate;
     if (connectingNow) {
-        if VALID_DELEGATE(d, @selector(onConnectAttemptEndedSuccessfully:ForClient:)) {
-            [d onConnectAttemptEndedSuccessfully:NO ForClient:self];
+        if VALID_DELEGATE(d, @selector(onConnectAttemptEndedSuccessfully:forClient:)) {
+            [d onConnectAttemptEndedSuccessfully:NO forClient:self];
         }
         connectingNow = NO;
     }
