@@ -9,6 +9,9 @@
 #import <Cocoa/Cocoa.h>
 #import "MCChatClient.h"
 
+#define kConnectionAttemptStartedNotifcation @"kConnectionAttemptStartedNotifcation"
+#define kConnectionAttemptEndedNotifcation @"kConnectionAttemptEndedNotifcation"
+
 @interface ViewController : NSViewController<MCChatClientDeligate>
 
 

@@ -9,7 +9,8 @@
 #import "ViewController.h"
 
 @interface ViewController ()
-
+- (void)showProgressIndicator;
+- (void)hideProgressIndicator;
 @end
 
 @implementation ViewController
@@ -33,15 +34,27 @@
     [super setRepresentedObject:representedObject];
 }
 
-- (void)onConnectAttemptStartedForClient:(MCChatClient *)client
+- (void)showProgressIndicator
 {
     progressIndicatorHolderView.hidden = NO;
+    [[NSNotificationCenter defaultCenter] postNotificationName:kConnectionAttemptStartedNotifcation object:self userInfo:nil];
+}
+
+- (void)hideProgressIndicator
+{
+    progressIndicatorHolderView.hidden = YES;
+    [[NSNotificationCenter defaultCenter] postNotificationName:kConnectionAttemptEndedNotifcation object:self userInfo:@{@"successfully" : @YES}];
+}
+
+- (void)onConnectAttemptStartedForClient:(MCChatClient *)client
+{
+    [self showProgressIndicator];
 }
 
 - (void)onConnectAttemptEndedSuccessfully:(BOOL)successfully
                                 forClient:(MCChatClient *)client
 {
-    progressIndicatorHolderView.hidden = YES;
+    [self hideProgressIndicator];
 }
 
 - (void)onUserConnected:(MCChatUser *)user

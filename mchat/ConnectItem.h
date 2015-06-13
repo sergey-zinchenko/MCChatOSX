@@ -1,5 +1,5 @@
 //
-//  MainWindowController.h
+//  ConnectItem.h
 //  mchat
 //
 //  Created by Сергей Зинченко on 13.06.15.
@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface MainWindowController : NSWindowController
+@interface ConnectItem : NSToolbarItem
+
+@property (nonatomic) BOOL connectingNow;
 
 @end
