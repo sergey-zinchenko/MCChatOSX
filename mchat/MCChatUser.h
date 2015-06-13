@@ -14,5 +14,5 @@
 - (instancetype)initWithUUID:(NSUUID *)uuid
                     userName:(NSString *)name
                    forClient:(MCChatClient *)client;
-@property (readonly, strong) NSString *name;
+@property (readonly, nonatomic, strong) NSString *name;
 @end

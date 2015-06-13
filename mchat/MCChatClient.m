@@ -18,7 +18,7 @@
 @implementation MCChatClient
 {
     MCChatCore *core;
-    NSMutableDictionary *users;
+    NSMutableDictionary *companions;
 }
 
 - (instancetype)initWithName:(NSString *)name
@@ -27,7 +27,7 @@
     self = [super init];
     if (self) {
         _name = name;
-        users = [[NSMutableDictionary alloc] init];
+        companions = [[NSMutableDictionary alloc] init];
         core = [[MCChatCore alloc] init];
         core.delegate = self;
     }
@@ -53,7 +53,7 @@
                          forCore:(MCChatCore *)c
 {
     LOG_SELECTOR()
-    [users removeAllObjects];
+    [companions removeAllObjects];
     [c sendBroadcastMessage:@{@"layer" : @"handshake", @"hello": self.name}];
 }
 
@@ -75,7 +75,7 @@
                  forCore:(MCChatCore *)c
 {
     LOG_SELECTOR()
-    [users removeObjectForKey:user];
+    [companions removeObjectForKey:user];
 }
 
 - (void)messageRecieved:(NSDictionary *)message
@@ -88,18 +88,26 @@
         NSString *layer = message[@"layer"];
         if ([layer isEqualToString:@"handshake"]) {
             if ([[message allKeys] indexOfObject:@"hello"] != NSNotFound && [message[@"hello"] isKindOfClass:[NSString class]]) {
-                NSString *name = message[@"hello"];
-                [c sendMessage:@{@"hi" : self.name}
-                        toUser:userid];
+                NSString *companionName = message[@"hello"];
+                NSUUID *companionId = userid;
+                
+                NSLog(@"before %ld", CFGetRetainCount((__bridge CFTypeRef)(self)));
+                MCChatUser *companion = [[MCChatUser alloc] initWithUUID:companionId userName:companionName forClient:self];
+                NSLog(@"after %ld", CFGetRetainCount((__bridge CFTypeRef)(self)));
+                
+                [companions setObject:companion forKey:companionId];
+                [c sendMessage:@{@"layer" : @"handshake", @"hi" : self.name}
+                        toUser:companionId];
+            } else if ([[message allKeys] indexOfObject:@"hi"] != NSNotFound && [message[@"hi"] isKindOfClass:[NSString class]]) {
+                NSString *companionName = message[@"hi"];
+                NSUUID *companionId = userid;
+                NSLog(@"before %ld", CFGetRetainCount((__bridge CFTypeRef)(self)));
+                MCChatUser *companion = [[MCChatUser alloc] initWithUUID:companionId userName:companionName forClient:self];
+                NSLog(@"after %ld", CFGetRetainCount((__bridge CFTypeRef)(self)));
+                [companions setObject:companion forKey:companionId];
             }
         }
         
-//        
-//        [c sendMessage:@{@"my_name" : self.name} toUser:userid];
-//        MCChatUser *user = [[MCChatUser alloc] initWithUUID:userid
-//                                                   userName:message[@"my_name"]
-//                                                  forClient:self];
-//        [users setObject:user forKey:userid];
     }
 }
 

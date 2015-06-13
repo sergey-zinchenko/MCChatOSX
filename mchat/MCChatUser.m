@@ -11,7 +11,7 @@
 @implementation MCChatUser
 {
     NSUUID *userId;
-    MCChatClient *userClient;
+    __weak MCChatClient *userClient;
 }
 
 - (instancetype)initWithUUID:(NSUUID *)uuid
