@@ -18,11 +18,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [MCChatClient sharedInstance].deligate = self;
 }
 
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];
+}
 
+- (void)onConnectAttemptStartedForClient:(MCChatClient *)client
+{
+    
+}
+
+- (void)onConnectAttemptEndedSuccessfully:(BOOL)successfully
+                                ForClient:(MCChatClient *)client
+{
+    
 }
 
 @end

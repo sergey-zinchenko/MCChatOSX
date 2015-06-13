@@ -10,6 +10,7 @@
 #import "MCChatUser.h"
 
 #define LOG_SELECTOR()  NSLog(@"%@ > %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#define VALID_DELEGATE(obj, sel) (obj&&[obj conformsToProtocol:@protocol(MCChatClientDeligate)]&&[obj respondsToSelector:sel])
 
 @interface MCChatClient ()
 
@@ -20,6 +21,7 @@
     MCChatCore *core;
     NSMutableDictionary *companions;
     NSString *_myName;
+    BOOL connectingNow;
 }
 
 - (NSString *)getMyName
@@ -70,6 +72,7 @@
     LOG_SELECTOR()
     self = [super init];
     if (self) {
+        connectingNow = NO;
         companions = [[NSMutableDictionary alloc] init];
         core = [[MCChatCore alloc] init];
         core.delegate = self;
@@ -81,6 +84,11 @@
 {
     LOG_SELECTOR()
     if (self.myName) {
+        id<MCChatClientDeligate> d = self.deligate;
+        connectingNow = YES;
+        if VALID_DELEGATE(d, @selector(onConnectAttemptStartedForClient:)) {
+            [d onConnectAttemptStartedForClient:self];
+        }
         [core connect];
     } else
         [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"Name was not specifyed" userInfo:nil] raise];
@@ -98,6 +106,13 @@
     LOG_SELECTOR()
     [companions removeAllObjects];
     [c sendBroadcastMessage:@{@"layer" : @"handshake", @"hello": self.myName}];
+    id<MCChatClientDeligate> d = self.deligate;
+    if (connectingNow) {
+        if VALID_DELEGATE(d, @selector(onConnectAttemptEndedSuccessfully:ForClient:)) {
+            [d onConnectAttemptEndedSuccessfully:YES ForClient:self];
+        }
+        connectingNow = NO;
+    }
 }
 
 - (void)exception:(NSString *)exception
@@ -106,6 +121,13 @@
 {
     LOG_SELECTOR()
     NSLog(@"Exception > %@ : %@", exception, reason);
+    id<MCChatClientDeligate> d = self.deligate;
+    if (connectingNow) {
+        if VALID_DELEGATE(d, @selector(onConnectAttemptEndedSuccessfully:ForClient:)) {
+            [d onConnectAttemptEndedSuccessfully:NO ForClient:self];
+        }
+        connectingNow = NO;
+    }
 }
 
 - (void)userConnected:(NSUUID *)user

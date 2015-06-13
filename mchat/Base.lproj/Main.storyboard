@@ -84,20 +84,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="189" height="120"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BRY-EX-8C3">
-                                <rect key="frame" x="53" y="13" width="82" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="Tuh-2E-IZs"/>
-                                    <constraint firstAttribute="width" constant="70" id="d65-Pj-22L"/>
-                                </constraints>
-                                <buttonCell key="cell" type="push" title="Ok" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tjV-DA-6bA">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="okClicked:" target="jhj-vR-qcJ" id="QKf-Me-sO1"/>
-                                </connections>
-                            </button>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="E6t-A0-xeu">
                                 <rect key="frame" x="20" y="49" width="149" height="22"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="lUc-So-PY5">
@@ -118,6 +104,20 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BRY-EX-8C3">
+                                <rect key="frame" x="53" y="13" width="82" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="Tuh-2E-IZs"/>
+                                    <constraint firstAttribute="width" constant="70" id="d65-Pj-22L"/>
+                                </constraints>
+                                <buttonCell key="cell" type="push" title="Ok" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tjV-DA-6bA">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="okClicked:" target="yKp-Wl-ecl" id="adF-lU-1Tb"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="E6t-A0-xeu" firstAttribute="leading" secondItem="Ofv-XL-Cet" secondAttribute="leading" constant="20" id="1OW-Qa-rzp"/>

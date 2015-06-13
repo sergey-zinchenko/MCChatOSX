@@ -39,7 +39,6 @@
     CFReadStreamRef readStream;
     CFWriteStreamRef writeStream;
     NSMutableData *received, *toSend;
-    NSObject *connectionLock;
     NSMutableArray *userList;
 }
 
@@ -212,7 +211,6 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
     LOG_SELECTOR()
     if (self = [super init]) {
         userList = [[NSMutableArray alloc] init];
-        connectionLock = [[NSObject alloc] init];
         toSend = [[NSMutableData alloc] init];
         received = [[NSMutableData alloc] init];
     }
@@ -222,62 +220,62 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
 - (BOOL)connect
 {
     LOG_SELECTOR()
-    @synchronized (connectionLock) {
-        if (!(readStream || writeStream)) {
-            if (received.length > 0)
-                [received replaceBytesInRange:NSMakeRange(0, received.length) withBytes:NULL length:0];
-            if (toSend.length > 0)
-                [toSend replaceBytesInRange:NSMakeRange(0, toSend.length) withBytes:NULL length:0];
-            static NSString *hostString = @"52.17.115.151";
-            CFHostRef host = CFHostCreateWithName(kCFAllocatorDefault, (__bridge CFStringRef)hostString);
-            CFStreamCreatePairWithSocketToCFHost(kCFAllocatorDefault, host, 9000, &readStream, &writeStream);
-            CFRelease(host);
-            CFStreamClientContext clientContext = {
-                0,
-                (__bridge void *)(self),
-                (void *(*)(void *info))CFRetain,
-                (void (*)(void *info))CFRelease,
-                (CFStringRef (*)(void *info))CFCopyDescription
-            };
-            
-            static CFOptionFlags readStreamEvents = kCFStreamEventErrorOccurred | kCFStreamEventEndEncountered | kCFStreamEventOpenCompleted | kCFStreamEventHasBytesAvailable;
-            static CFOptionFlags writeStreamEvents = kCFStreamEventErrorOccurred | kCFStreamEventEndEncountered | kCFStreamEventOpenCompleted | kCFStreamEventCanAcceptBytes;
-            
-            if (!(CFReadStreamSetClient(readStream, readStreamEvents, readcb, &clientContext)&&CFWriteStreamSetClient(writeStream, writeStreamEvents, writecb, &clientContext))) {
-                [self _releaseStream];
-                return NO;
-            }
-            CFReadStreamScheduleWithRunLoop(readStream, CFRunLoopGetMain(), kCFRunLoopCommonModes);
-            CFWriteStreamScheduleWithRunLoop(writeStream, CFRunLoopGetMain(), kCFRunLoopCommonModes);
-            if (!(CFReadStreamOpen(readStream)&&CFWriteStreamOpen(writeStream))) {
-                [self _closeStreamsAndClearBuffers];
-            }
-            return YES;
-        } else
-            return YES;
-    }
+    
+    if (!(readStream || writeStream)) {
+        if (received.length > 0)
+            [received replaceBytesInRange:NSMakeRange(0, received.length) withBytes:NULL length:0];
+        if (toSend.length > 0)
+            [toSend replaceBytesInRange:NSMakeRange(0, toSend.length) withBytes:NULL length:0];
+        static NSString *hostString = @"52.17.115.151";
+        CFHostRef host = CFHostCreateWithName(kCFAllocatorDefault, (__bridge CFStringRef)hostString);
+        CFStreamCreatePairWithSocketToCFHost(kCFAllocatorDefault, host, 9000, &readStream, &writeStream);
+        CFRelease(host);
+        CFStreamClientContext clientContext = {
+            0,
+            (__bridge void *)(self),
+            (void *(*)(void *info))CFRetain,
+            (void (*)(void *info))CFRelease,
+            (CFStringRef (*)(void *info))CFCopyDescription
+        };
+        
+        static CFOptionFlags readStreamEvents = kCFStreamEventErrorOccurred | kCFStreamEventEndEncountered | kCFStreamEventOpenCompleted | kCFStreamEventHasBytesAvailable;
+        static CFOptionFlags writeStreamEvents = kCFStreamEventErrorOccurred | kCFStreamEventEndEncountered | kCFStreamEventOpenCompleted | kCFStreamEventCanAcceptBytes;
+        
+        if (!(CFReadStreamSetClient(readStream, readStreamEvents, readcb, &clientContext)&&CFWriteStreamSetClient(writeStream, writeStreamEvents, writecb, &clientContext))) {
+            [self _releaseStream];
+            return NO;
+        }
+        CFReadStreamScheduleWithRunLoop(readStream, CFRunLoopGetMain(), kCFRunLoopCommonModes);
+        CFWriteStreamScheduleWithRunLoop(writeStream, CFRunLoopGetMain(), kCFRunLoopCommonModes);
+        if (!(CFReadStreamOpen(readStream)&&CFWriteStreamOpen(writeStream))) {
+            [self _closeStreamsAndClearBuffers];
+        }
+        return YES;
+    } else
+        return YES;
+    
 }
 
 - (void)_sendMessage:(NSDictionary *)message
 {
     LOG_SELECTOR()
-    @synchronized (connectionLock) {
-        if (writeStream) {
-            CFStreamStatus streamStatus = CFWriteStreamGetStatus(writeStream);
-            if (streamStatus == kCFStreamStatusOpen||streamStatus == kCFStreamStatusWriting) {
-                NSError *err;
-                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:message options:kNilOptions error:&err];
-                NSMutableString *base64String = [[jsonData base64EncodedStringWithOptions:kNilOptions] mutableCopy];
-                [base64String appendString:@"\r\n"];
-                NSData *base64Data = [base64String dataUsingEncoding:NSASCIIStringEncoding];
-                [toSend appendData:base64Data];
-                if (CFWriteStreamCanAcceptBytes(writeStream)) {
-                    [self _sendMoreData];
-                }
+    
+    if (writeStream) {
+        CFStreamStatus streamStatus = CFWriteStreamGetStatus(writeStream);
+        if (streamStatus == kCFStreamStatusOpen||streamStatus == kCFStreamStatusWriting) {
+            NSError *err;
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:message options:kNilOptions error:&err];
+            NSMutableString *base64String = [[jsonData base64EncodedStringWithOptions:kNilOptions] mutableCopy];
+            [base64String appendString:@"\r\n"];
+            NSData *base64Data = [base64String dataUsingEncoding:NSASCIIStringEncoding];
+            [toSend appendData:base64Data];
+            if (CFWriteStreamCanAcceptBytes(writeStream)) {
+                [self _sendMoreData];
             }
-            
         }
+        
     }
+    
 }
 
 - (void)_sendMoreData
@@ -339,9 +337,8 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
 - (void)disconnect
 {
     LOG_SELECTOR()
-    @synchronized (connectionLock) {
-        [self _closeStreamsAndClearBuffers];
-    }
+    [self _closeStreamsAndClearBuffers];
+    
 }
 
 - (void)sendMessage:(NSDictionary *)message
