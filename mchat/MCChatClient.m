@@ -54,7 +54,7 @@
 {
     LOG_SELECTOR()
     [users removeAllObjects];
-    [c sendBroadcastMessage:@{@"layer" : @"user", @"message" : @"who_are_you", @"my_name_is": self.name}];
+    [c sendBroadcastMessage:@{@"layer" : @"handshake", @"hello": self.name}];
 }
 
 - (void)exception:(NSString *)exception
@@ -83,11 +83,15 @@
                 forCore:(MCChatCore *)c
 {
     LOG_SELECTOR()
+    NSLog(@"%@", message);
     if ([[message allKeys] indexOfObject:@"layer"] != NSNotFound && [message[@"layer"] isKindOfClass:[NSString class]]) {
         NSString *layer = message[@"layer"];
-        if ([layer isEqualToString:@"user"]) {
-            
-            
+        if ([layer isEqualToString:@"handshake"]) {
+            if ([[message allKeys] indexOfObject:@"hello"] != NSNotFound && [message[@"hello"] isKindOfClass:[NSString class]]) {
+                NSString *name = message[@"hello"];
+                [c sendMessage:@{@"hi" : self.name}
+                        toUser:userid];
+            }
         }
         
 //        
