@@ -37,30 +37,34 @@
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
-                <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
+                <windowController id="B8D-0N-5wS" customClass="MainWindowController" sceneMemberID="viewController">
                     <window key="window" title="Chat" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-                        <toolbar key="toolbar" implicitIdentifier="57EA1196-74AF-4F9F-906C-5B9140106558" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="sHL-Ld-uVz">
+                        <toolbar key="toolbar" implicitIdentifier="A6E9893E-C643-48AE-800B-D5C7B5EE97D4" autosavesConfiguration="NO" displayMode="iconOnly" sizeMode="regular" id="2fy-EX-1JH">
                             <allowedToolbarItems>
-                                <toolbarItem implicitItemIdentifier="DBC4D217-E430-4DE9-8760-B177476F1461" label="Custom View" paletteLabel="Custom View" image="82340618-9635-463F-86A9-708DCFAD215A" id="lqj-Hj-hV3">
+                                <toolbarItem implicitItemIdentifier="4E5FEE59-7551-4C7F-BE1B-5E0C51C0D3FB" label="Connection" paletteLabel="Connection" id="wYl-2z-UJL">
                                     <nil key="toolTip"/>
-                                    <size key="minSize" width="61" height="18"/>
-                                    <size key="maxSize" width="61" height="18"/>
-                                    <button key="view" id="CIa-WJ-70t">
-                                        <rect key="frame" x="0.0" y="0.0" width="61" height="18"/>
+                                    <size key="minSize" width="82" height="32"/>
+                                    <size key="maxSize" width="105" height="43"/>
+                                    <button key="view" verticalHuggingPriority="750" id="fYj-ea-fMR">
+                                        <rect key="frame" x="0.0" y="14" width="105" height="43"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" title="Check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="EmI-vS-e00">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <buttonCell key="cell" type="push" title="Connect" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3GU-iL-29X">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                     </button>
+                                    <connections>
+                                        <action selector="connectClicked:" target="B8D-0N-5wS" id="7kX-Bd-EqP"/>
+                                        <segue destination="jhj-vR-qcJ" kind="sheet" id="3Y8-50-NZs"/>
+                                    </connections>
                                 </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
-                                <toolbarItem reference="lqj-Hj-hV3"/>
+                                <toolbarItem reference="wYl-2z-UJL"/>
                             </defaultToolbarItems>
                         </toolbar>
                     </window>
@@ -72,10 +76,10 @@
             </objects>
             <point key="canvasLocation" x="75" y="250"/>
         </scene>
-        <!--View Controller-->
+        <!--Enter Your Name Controller-->
         <scene sceneID="ax2-8E-bAF">
             <objects>
-                <viewController id="jhj-vR-qcJ" sceneMemberID="viewController">
+                <viewController id="jhj-vR-qcJ" customClass="EnterYourNameController" sceneMemberID="viewController">
                     <view key="view" id="Ofv-XL-Cet">
                         <rect key="frame" x="0.0" y="0.0" width="189" height="120"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -90,6 +94,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="okClicked:" target="jhj-vR-qcJ" id="QKf-Me-sO1"/>
+                                </connections>
                             </button>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="E6t-A0-xeu">
                                 <rect key="frame" x="20" y="49" width="149" height="22"/>
@@ -100,12 +107,12 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ext-eh-kZc">
-                                <rect key="frame" x="40" y="79" width="109" height="17"/>
+                                <rect key="frame" x="25" y="79" width="140" height="17"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="105" id="TL6-aJ-X6O"/>
+                                    <constraint firstAttribute="width" constant="136" id="TL6-aJ-X6O"/>
                                     <constraint firstAttribute="height" constant="17" id="qv0-dM-4j9"/>
                                 </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Enter name pls..." id="9SK-5h-TnB">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Enter your name pls..." id="9SK-5h-TnB">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -123,6 +130,9 @@
                             <constraint firstItem="BRY-EX-8C3" firstAttribute="top" secondItem="E6t-A0-xeu" secondAttribute="bottom" constant="8" id="y5w-hY-Vjc"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="nameTextField" destination="E6t-A0-xeu" id="QQU-e0-zEP"/>
+                    </connections>
                 </viewController>
                 <customObject id="yKp-Wl-ecl" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -136,34 +146,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </view>
-                    <connections>
-                        <segue destination="jhj-vR-qcJ" kind="sheet" identifier="dialog" id="B9u-pi-yAe"/>
-                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="604"/>
+            <point key="canvasLocation" x="75" y="648"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="82340618-9635-463F-86A9-708DCFAD215A" width="18" height="18">
-            <mutableData key="keyedArchiveRepresentation">
-YnBsaXN0MDDUAQIDBAUGW1xYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QFwcI
-ERYbHCc0NTY3ODk6O0JDRElMT1VYVSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNS
-ZXBzV05TQ29sb3KAFhIAwwAAgAKAFNISCRMVWk5TLm9iamVjdHOhFIADgBPSEgkXGqIYGYAEgAWAEhAA
-1h0eHwkgISIbIyQlJlZOU1NpemVfEA9OU0JpdHNQZXJTYW1wbGVfEBBOU0NvbG9yU3BhY2VOYW1lWk5T
-SGFzQWxwaGFfEBROU0NvcmVVSUltYWdlT3B0aW9uc4APgBCAEQmABtMoEgkpLjNXTlMua2V5c6QqKywt
-gAeACIAJgAqkLxgxMoALgASADIANgA5Uc2l6ZVV2YWx1ZVVzdGF0ZVZ3aWRnZXRXcmVndWxhclZub3Jt
-YWxYY2hlY2tib3jSPD0+P1okY2xhc3NuYW1lWCRjbGFzc2VzXxATTlNNdXRhYmxlRGljdGlvbmFyeaM+
-QEFcTlNEaWN0aW9uYXJ5WE5TT2JqZWN0WHsxOCwgMTh9XxAZTlNDYWxpYnJhdGVkUkdCQ29sb3JTcGFj
-ZdI8PUVGXxAQTlNDb3JlVUlJbWFnZVJlcKNHSEFfEBBOU0NvcmVVSUltYWdlUmVwWk5TSW1hZ2VSZXDS
-PD1KS1dOU0FycmF5okpB0jw9TU5eTlNNdXRhYmxlQXJyYXmjTUpB01BRCVJTVFdOU1doaXRlXE5TQ29s
-b3JTcGFjZUQwIDAAEAOAFdI8PVZXV05TQ29sb3KiVkHSPD1ZWldOU0ltYWdlollBXxAPTlNLZXllZEFy
-Y2hpdmVy0V1eVHJvb3SAAQAIABEAGgAjAC0AMgA3AFEAVwBgAGcAdAB7AIMAhQCKAIwAjgCTAJ4AoACi
-AKQAqQCsAK4AsACyALQAwQDIANoA7QD4AQ8BEQETARUBFgEYAR8BJwEsAS4BMAEyATQBOQE7AT0BPwFB
-AUMBSAFOAVQBWwFjAWoBcwF4AYMBjAGiAaYBswG8AcUB4QHmAfkB/QIQAhsCIAIoAisCMAI/AkMCSgJS
-Al8CZAJmAmgCbQJ1AngCfQKFAogCmgKdAqIAAAAAAAACAQAAAAAAAABfAAAAAAAAAAAAAAAAAAACpA
-</mutableData>
-        </image>
-    </resources>
 </document>

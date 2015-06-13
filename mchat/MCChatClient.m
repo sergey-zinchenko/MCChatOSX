@@ -19,6 +19,40 @@
 {
     MCChatCore *core;
     NSMutableDictionary *companions;
+    NSString *_myName;
+}
+
+- (NSString *)getMyName
+{
+    LOG_SELECTOR()
+    return _myName;
+}
+
+- (void)setMyName:(NSString *)myName
+{
+    LOG_SELECTOR()
+    if (myName&&![myName isEqualToString:@""]&&![myName isEqualToString:_myName]) {
+        [self disconnect];
+        _myName = myName;
+        [self connect];
+    }
+}
+
++ (MCChatClient *)sharedInstance
+{
+    LOG_SELECTOR()
+    static dispatch_once_t once;
+    static id sharedInstance;
+    dispatch_once(&once, ^{
+                      sharedInstance = [[MCChatClient alloc] init];
+                  });
+    return sharedInstance;
+}
+
+- (NSArray *)getCompanions
+{
+    LOG_SELECTOR()
+    return [companions allValues];
 }
 
 - (instancetype)initWithName:(NSString *)name
@@ -26,7 +60,16 @@
     LOG_SELECTOR()
     self = [super init];
     if (self) {
-        _name = name;
+        _myName = name;
+    }
+    return self;
+}
+
+- (instancetype)init
+{
+    LOG_SELECTOR()
+    self = [super init];
+    if (self) {
         companions = [[NSMutableDictionary alloc] init];
         core = [[MCChatCore alloc] init];
         core.delegate = self;
@@ -37,7 +80,7 @@
 - (void)connect
 {
     LOG_SELECTOR()
-    if (self.name) {
+    if (self.myName) {
         [core connect];
     } else
         [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"Name was not specifyed" userInfo:nil] raise];
@@ -54,7 +97,7 @@
 {
     LOG_SELECTOR()
     [companions removeAllObjects];
-    [c sendBroadcastMessage:@{@"layer" : @"handshake", @"hello": self.name}];
+    [c sendBroadcastMessage:@{@"layer" : @"handshake", @"hello": self.myName}];
 }
 
 - (void)exception:(NSString *)exception
@@ -90,20 +133,14 @@
             if ([[message allKeys] indexOfObject:@"hello"] != NSNotFound && [message[@"hello"] isKindOfClass:[NSString class]]) {
                 NSString *companionName = message[@"hello"];
                 NSUUID *companionId = userid;
-                
-                NSLog(@"before %ld", CFGetRetainCount((__bridge CFTypeRef)(self)));
                 MCChatUser *companion = [[MCChatUser alloc] initWithUUID:companionId userName:companionName forClient:self];
-                NSLog(@"after %ld", CFGetRetainCount((__bridge CFTypeRef)(self)));
-                
                 [companions setObject:companion forKey:companionId];
-                [c sendMessage:@{@"layer" : @"handshake", @"hi" : self.name}
+                [c sendMessage:@{@"layer" : @"handshake", @"hi" : self.myName}
                         toUser:companionId];
             } else if ([[message allKeys] indexOfObject:@"hi"] != NSNotFound && [message[@"hi"] isKindOfClass:[NSString class]]) {
                 NSString *companionName = message[@"hi"];
                 NSUUID *companionId = userid;
-                NSLog(@"before %ld", CFGetRetainCount((__bridge CFTypeRef)(self)));
                 MCChatUser *companion = [[MCChatUser alloc] initWithUUID:companionId userName:companionName forClient:self];
-                NSLog(@"after %ld", CFGetRetainCount((__bridge CFTypeRef)(self)));
                 [companions setObject:companion forKey:companionId];
             }
         }

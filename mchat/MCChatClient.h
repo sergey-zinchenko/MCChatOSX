@@ -16,5 +16,10 @@
 - (instancetype)initWithName:(NSString *)name;
 - (void)connect;
 - (void)disconnect;
-@property (readonly, nonatomic, strong) NSString* name;
+
++ (MCChatClient *)sharedInstance;
+
+@property (getter=getMyName, setter=setMyName:) NSString* myName;
+@property (readonly, getter=getCompanions) NSArray* companions;
+
 @end

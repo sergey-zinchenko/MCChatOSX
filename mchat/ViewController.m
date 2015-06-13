@@ -8,28 +8,21 @@
 
 #import "ViewController.h"
 
+@interface ViewController ()
+
+@end
+
 @implementation ViewController
 {
-    MCChatClient *cli;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    cli = [[MCChatClient alloc] initWithName:@"Петрушка"];
-    [cli connect];
 }
 
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];
 
 }
-
--(void)prepareForSegue:(NSStoryboardSegue *)segue sender:(id)sender
-{
-    
-}
-
-
-
 
 @end
