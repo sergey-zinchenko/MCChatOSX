@@ -145,7 +145,46 @@
                     <view key="view" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hqQ-Pm-Q13" propertyAccessControl="none">
+                                <rect key="frame" x="159" y="87" width="163" height="96"/>
+                                <subviews>
+                                    <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="CUw-Su-QgT">
+                                        <rect key="frame" x="65" y="32" width="32" height="32"/>
+                                    </progressIndicator>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="H1G-yl-ZRi">
+                                        <rect key="frame" x="44" y="7" width="75" height="17"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="71" id="KTW-xf-uf1"/>
+                                            <constraint firstAttribute="height" constant="17" id="ifj-jU-pVO"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Connecting" id="c5O-Wf-sFt">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="CUw-Su-QgT" secondAttribute="centerX" id="2ry-CL-t0V"/>
+                                    <constraint firstAttribute="centerY" secondItem="CUw-Su-QgT" secondAttribute="centerY" id="8s8-eS-bO6"/>
+                                    <constraint firstAttribute="centerX" secondItem="H1G-yl-ZRi" secondAttribute="centerX" id="D5P-wN-zMx"/>
+                                    <constraint firstAttribute="height" constant="96" id="n4W-xE-JrO"/>
+                                    <constraint firstItem="H1G-yl-ZRi" firstAttribute="top" secondItem="CUw-Su-QgT" secondAttribute="bottom" constant="8" id="stW-Y0-Xgt"/>
+                                    <constraint firstAttribute="width" constant="163" id="tQi-4d-TnT"/>
+                                </constraints>
+                            </customView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="hqQ-Pm-Q13" secondAttribute="centerX" id="ES4-dx-pZx"/>
+                            <constraint firstAttribute="centerY" secondItem="hqQ-Pm-Q13" secondAttribute="centerY" id="lgU-HM-Euq"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="progressIndicatorHolderView" destination="hqQ-Pm-Q13" id="MjS-9s-ERp"/>
+                        <outlet property="progressIndicatorLabelView" destination="H1G-yl-ZRi" id="o3m-oz-lbx"/>
+                        <outlet property="progressIndicatorView" destination="CUw-Su-QgT" id="oLW-7v-nx5"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
