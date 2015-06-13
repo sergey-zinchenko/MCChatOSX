@@ -21,6 +21,8 @@
                                 forClient:(MCChatClient *)client;
 - (void)onUserConnected:(MCChatUser *)user
               forClient:(MCChatClient *)client;
+- (void)onUserDisconnected:(MCChatUser *)user
+              forClient:(MCChatClient *)client;
 @end
 
 @interface MCChatClient : NSObject<MCChatCoreDelegate>

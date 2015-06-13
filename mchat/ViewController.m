@@ -50,4 +50,10 @@
     
 }
 
+- (void)onUserDisconnected:(MCChatUser *)user
+                 forClient:(MCChatClient *)client
+{
+    
+}
+
 @end
