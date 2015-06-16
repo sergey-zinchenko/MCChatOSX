@@ -11,11 +11,12 @@
 
 @interface EnterYourNameController ()
 - (IBAction)okClicked:(id)sender;
+- (IBAction)cancelClicked:(id)sender;
 @end
 
 @implementation EnterYourNameController
 {
-    IBOutlet  NSTextField *nameTextField;
+    __weak IBOutlet  NSTextField *nameTextField;
 }
 
 - (void)viewDidLoad {
@@ -26,7 +27,12 @@
 {
     MCChatClient *cli = [MCChatClient sharedInstance];
     cli.myName = [nameTextField stringValue];
-    [self.view.window close];
+    [self dismissController:self];
+}
+
+- (IBAction)cancelClicked:(id)sender
+{
+    [self dismissController:self];
 }
 
 @end
