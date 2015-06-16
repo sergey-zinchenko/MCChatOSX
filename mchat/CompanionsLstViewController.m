@@ -22,20 +22,14 @@
     __weak IBOutlet NSTextField *progressIndicatorLabelView;
     NSMutableArray *companions;
     AVAudioPlayer *player;
-    CLLocationManager *locationManager;
-    CLGeocoder *geocoder;
+    LocationMonitor *locationMonitor;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
-    BOOL en = [CLLocationManager locationServicesEnabled];
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.distanceFilter = 500;
-    locationManager.delegate = self;
-    geocoder = [[CLGeocoder alloc] init];
-    [locationManager startUpdatingLocation];
-    
+    locationMonitor = [[LocationMonitor alloc] init];
+    locationMonitor.delegate = self;
+    [locationMonitor start];
     companions = [[NSMutableArray alloc] init];
     [companions addObjectsFromArray:[MCChatClient sharedInstance].companions];
     [MCChatClient sharedInstance].deligate = self;
@@ -112,20 +106,9 @@
 }
 
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+- (void)locationDidChangedTo:(NSString *)locationString
 {
-    if (locations&&([locations count] > 0)) {
-        CLLocation *mostRecentLocation = [locations lastObject];
-        if (!geocoder.isGeocoding) {
-            [geocoder reverseGeocodeLocation:mostRecentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
-                if (placemarks&&!error&&([placemarks count] > 0)) {
-                    CLPlacemark *lp = [placemarks lastObject];
-                    NSString *locationString = [NSString stringWithFormat:@"%@, %@, %@", lp.country, lp.administrativeArea, lp.subAdministrativeArea];
-                    NSLog(@"%@", locationString);
-                }
-            }];
-        }
-    }
+    NSLog(@"%@", locationString);
 }
 
 - (void)playDingSound
