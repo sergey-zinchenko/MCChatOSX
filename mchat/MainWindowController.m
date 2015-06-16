@@ -7,7 +7,7 @@
 //
 
 #import "MainWindowController.h"
-#import "ViewController.h"
+#import "CompanionsLstViewController.h"
 #import "ConnectItem.h"
 
 @interface MainWindowController ()

@@ -6,16 +6,16 @@
 //  Copyright (c) 2015 Sergey Zinchenko. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "CompanionsLstViewController.h"
 #import <AVFoundation/AVFoundation.h>
 
-@interface ViewController ()
+@interface CompanionsLstViewController ()
 - (void)showProgressIndicator;
 - (void)hideProgressIndicator;
 - (void)playDingSound;
 @end
 
-@implementation ViewController
+@implementation CompanionsLstViewController
 {
     __weak IBOutlet NSTableView *tblView;
     __weak IBOutlet NSView *progressIndicatorHolderView;

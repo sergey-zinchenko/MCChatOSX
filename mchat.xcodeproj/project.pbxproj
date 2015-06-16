@@ -18,7 +18,7 @@
 		A53B85731AA5E7F300C191C2 /* MCChatCore.m in Sources */ = {isa = PBXBuildFile; fileRef = A53B85721AA5E7F300C191C2 /* MCChatCore.m */; };
 		A58C542B1AA5E25900059106 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A58C542A1AA5E25900059106 /* AppDelegate.m */; };
 		A58C542D1AA5E25900059106 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A58C542C1AA5E25900059106 /* main.m */; };
-		A58C54301AA5E25900059106 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A58C542F1AA5E25900059106 /* ViewController.m */; };
+		A58C54301AA5E25900059106 /* CompanionsLstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A58C542F1AA5E25900059106 /* CompanionsLstViewController.m */; };
 		A58C54321AA5E25900059106 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A58C54311AA5E25900059106 /* Images.xcassets */; };
 		A58C54351AA5E25900059106 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A58C54331AA5E25900059106 /* Main.storyboard */; };
 		A58C54411AA5E25A00059106 /* mchatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A58C54401AA5E25A00059106 /* mchatTests.m */; };
@@ -56,8 +56,8 @@
 		A58C54291AA5E25900059106 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A58C542A1AA5E25900059106 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		A58C542C1AA5E25900059106 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		A58C542E1AA5E25900059106 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		A58C542F1AA5E25900059106 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		A58C542E1AA5E25900059106 /* CompanionsLstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CompanionsLstViewController.h; sourceTree = "<group>"; };
+		A58C542F1AA5E25900059106 /* CompanionsLstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CompanionsLstViewController.m; sourceTree = "<group>"; };
 		A58C54311AA5E25900059106 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A58C54341AA5E25900059106 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A58C543A1AA5E25A00059106 /* mchatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mchatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,34 +84,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A50F67EC1B30519A00B75059 /* resources */ = {
+		A50F67EC1B30519A00B75059 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				A50F67ED1B3051B200B75059 /* ding-sound.mp3 */,
 			);
-			name = resources;
+			name = Resources;
 			sourceTree = "<group>";
 		};
-		A5187E061B2C5551007D8B7A /* Main window */ = {
+		A5187E061B2C5551007D8B7A /* Main Window */ = {
 			isa = PBXGroup;
 			children = (
-				A58C542E1AA5E25900059106 /* ViewController.h */,
-				A58C542F1AA5E25900059106 /* ViewController.m */,
+				A58C542E1AA5E25900059106 /* CompanionsLstViewController.h */,
+				A58C542F1AA5E25900059106 /* CompanionsLstViewController.m */,
 				A5187E071B2C568D007D8B7A /* MainWindowController.h */,
 				A5187E081B2C568D007D8B7A /* MainWindowController.m */,
 				A5187E0E1B2C903E007D8B7A /* ConnectItem.h */,
 				A5187E0F1B2C903E007D8B7A /* ConnectItem.m */,
 			);
-			name = "Main window";
+			name = "Main Window";
 			sourceTree = "<group>";
 		};
-		A5187E0A1B2C6148007D8B7A /* Enter name sheet */ = {
+		A5187E0A1B2C6148007D8B7A /* Enter Name Sheet */ = {
 			isa = PBXGroup;
 			children = (
 				A5187E0B1B2C6194007D8B7A /* EnterYourNameController.h */,
 				A5187E0C1B2C6194007D8B7A /* EnterYourNameController.m */,
 			);
-			name = "Enter name sheet";
+			name = "Enter Name Sheet";
 			sourceTree = "<group>";
 		};
 		A5830E6B1B2C36FC00183FAA /* MCChat */ = {
@@ -151,9 +151,9 @@
 		A58C54261AA5E25900059106 /* mchat */ = {
 			isa = PBXGroup;
 			children = (
-				A50F67EC1B30519A00B75059 /* resources */,
-				A5187E0A1B2C6148007D8B7A /* Enter name sheet */,
-				A5187E061B2C5551007D8B7A /* Main window */,
+				A50F67EC1B30519A00B75059 /* Resources */,
+				A5187E0A1B2C6148007D8B7A /* Enter Name Sheet */,
+				A5187E061B2C5551007D8B7A /* Main Window */,
 				A58C54291AA5E25900059106 /* AppDelegate.h */,
 				A58C542A1AA5E25900059106 /* AppDelegate.m */,
 				A5830E6B1B2C36FC00183FAA /* MCChat */,
@@ -291,7 +291,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A58C54301AA5E25900059106 /* ViewController.m in Sources */,
+				A58C54301AA5E25900059106 /* CompanionsLstViewController.m in Sources */,
 				A58C542D1AA5E25900059106 /* main.m in Sources */,
 				A52CE7B21B1B2AE9005020A5 /* MCChatUser.m in Sources */,
 				A5187E091B2C568D007D8B7A /* MainWindowController.m in Sources */,
