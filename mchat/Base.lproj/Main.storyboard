@@ -139,11 +139,7 @@ DQ
                                 </constraints>
                             </customView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ext-eh-kZc">
-                                <rect key="frame" x="18" y="79" width="140" height="17"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="17" id="Byv-mW-ZEm"/>
-                                    <constraint firstAttribute="width" constant="136" id="aeV-PW-9Np"/>
-                                </constraints>
+                                <rect key="frame" x="18" y="79" width="153" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Enter your name pls..." id="9SK-5h-TnB">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -152,14 +148,15 @@ DQ
                             </textField>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="E6t-A0-xeu" firstAttribute="leading" secondItem="Ext-eh-kZc" secondAttribute="trailing" constant="-136" id="2hS-Hb-bAt"/>
                             <constraint firstAttribute="trailing" secondItem="E6t-A0-xeu" secondAttribute="trailing" constant="20" symbolic="YES" id="7Dl-az-PpE"/>
                             <constraint firstAttribute="centerX" secondItem="sE2-5p-7Vc" secondAttribute="centerX" id="9X4-rJ-mAa"/>
+                            <constraint firstItem="Ext-eh-kZc" firstAttribute="leading" secondItem="E6t-A0-xeu" secondAttribute="leading" id="Gff-Wc-Bb6"/>
                             <constraint firstItem="sE2-5p-7Vc" firstAttribute="top" secondItem="E6t-A0-xeu" secondAttribute="bottom" constant="8" symbolic="YES" id="UQ8-MJ-W14"/>
                             <constraint firstItem="E6t-A0-xeu" firstAttribute="leading" secondItem="Ofv-XL-Cet" secondAttribute="leading" constant="20" symbolic="YES" id="chq-ES-GGY"/>
                             <constraint firstItem="E6t-A0-xeu" firstAttribute="centerY" secondItem="Ofv-XL-Cet" secondAttribute="centerY" id="h7q-yA-BVZ"/>
-                            <constraint firstItem="E6t-A0-xeu" firstAttribute="top" secondItem="Ext-eh-kZc" secondAttribute="bottom" constant="8" id="rT7-S5-5ap"/>
+                            <constraint firstItem="Ext-eh-kZc" firstAttribute="trailing" secondItem="E6t-A0-xeu" secondAttribute="trailing" id="pEl-nL-jW4"/>
                             <constraint firstAttribute="bottom" secondItem="sE2-5p-7Vc" secondAttribute="bottom" constant="9" id="vmd-ak-zDg"/>
+                            <constraint firstItem="E6t-A0-xeu" firstAttribute="top" secondItem="Ext-eh-kZc" secondAttribute="bottom" constant="8" symbolic="YES" id="wOT-uo-bmr"/>
                         </constraints>
                     </view>
                     <connections>
@@ -299,11 +296,14 @@ DQ
                                     </subviews>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </clipView>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="342" id="fI3-Vm-Cq7"/>
+                                </constraints>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="A8D-wp-YRd">
                                     <rect key="frame" x="1" y="95.388471841812134" width="186" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="0.32356305883713182" horizontal="NO" id="II2-d3-CNt">
+                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="II2-d3-CNt">
                                     <rect key="frame" x="224" y="17" width="15" height="102"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
@@ -324,11 +324,25 @@ DQ
                         <outlet property="progressIndicatorView" destination="CUw-Su-QgT" id="oLW-7v-nx5"/>
                         <outlet property="tblView" destination="vh3-UZ-15P" id="BVV-sC-j3K"/>
                         <segue destination="DXf-fl-k2V" kind="show" identifier="openchat" id="Ehz-m0-H7B"/>
+                        <segue destination="tBb-lw-LaY" kind="show" identifier="seg" id="l8Q-is-AeW"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="6" y="648"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="S1s-Iw-dZl">
+            <objects>
+                <viewController id="tBb-lw-LaY" sceneMemberID="viewController">
+                    <view key="view" id="S3N-l2-10G">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </view>
+                </viewController>
+                <customObject id="k4J-zB-2qx" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="252" y="1064"/>
         </scene>
     </scenes>
 </document>

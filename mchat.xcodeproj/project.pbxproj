@@ -87,6 +87,8 @@
 		A50F67EC1B30519A00B75059 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A58C54311AA5E25900059106 /* Images.xcassets */,
+				A58C54331AA5E25900059106 /* Main.storyboard */,
 				A50F67ED1B3051B200B75059 /* ding-sound.mp3 */,
 			);
 			name = Resources;
@@ -151,14 +153,12 @@
 		A58C54261AA5E25900059106 /* mchat */ = {
 			isa = PBXGroup;
 			children = (
+				A5830E6B1B2C36FC00183FAA /* MCChat */,
 				A50F67EC1B30519A00B75059 /* Resources */,
 				A5187E0A1B2C6148007D8B7A /* Enter Name Sheet */,
 				A5187E061B2C5551007D8B7A /* Main Window */,
 				A58C54291AA5E25900059106 /* AppDelegate.h */,
 				A58C542A1AA5E25900059106 /* AppDelegate.m */,
-				A5830E6B1B2C36FC00183FAA /* MCChat */,
-				A58C54311AA5E25900059106 /* Images.xcassets */,
-				A58C54331AA5E25900059106 /* Main.storyboard */,
 				A58C54271AA5E25900059106 /* Supporting Files */,
 			);
 			path = mchat;

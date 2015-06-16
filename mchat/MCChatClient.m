@@ -11,6 +11,7 @@
 
 #define LOG_SELECTOR()  NSLog(@"%@ > %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #define VALID_DELEGATE(obj, sel) (obj&&[obj conformsToProtocol:@protocol(MCChatClientDeligate)]&&[obj respondsToSelector:sel])
+#define VALID_MESSAGE_FIELD(msg, field, cls) ([[msg allKeys] indexOfObject:field] != NSNotFound && [msg[field] isKindOfClass:[cls class]])
 
 @interface MCChatClient ()
 - (void)addCompanionWithUUID:(NSUUID *)uuid andName:(NSString *)name;
@@ -85,10 +86,9 @@
 {
     LOG_SELECTOR()
     if (self.myName) {
-        id<MCChatClientDeligate> d = self.deligate;
         connectingNow = YES;
-        if VALID_DELEGATE(d, @selector(onConnectAttemptStartedForClient:)) {
-            [d onConnectAttemptStartedForClient:self];
+        if VALID_DELEGATE(self.deligate, @selector(onConnectAttemptStartedForClient:)) {
+            [self.deligate onConnectAttemptStartedForClient:self];
         }
         [core connect];
     } else
@@ -107,10 +107,9 @@
     LOG_SELECTOR()
     [companions removeAllObjects];
     [c sendBroadcastMessage:@{@"layer" : @"handshake", @"hello": self.myName}];
-    id<MCChatClientDeligate> d = self.deligate;
     if (connectingNow) {
-        if VALID_DELEGATE(d, @selector(onConnectAttemptEndedSuccessfully:forClient:)) {
-            [d onConnectAttemptEndedSuccessfully:YES forClient:self];
+        if VALID_DELEGATE(self.deligate, @selector(onConnectAttemptEndedSuccessfully:forClient:)) {
+            [self.deligate onConnectAttemptEndedSuccessfully:YES forClient:self];
         }
         connectingNow = NO;
     }
@@ -122,10 +121,9 @@
 {
     LOG_SELECTOR()
     NSLog(@"Exception > %@ : %@", exception, reason);
-    id<MCChatClientDeligate> d = self.deligate;
     if (connectingNow) {
-        if VALID_DELEGATE(d, @selector(onConnectAttemptEndedSuccessfully:forClient:)) {
-            [d onConnectAttemptEndedSuccessfully:NO forClient:self];
+        if VALID_DELEGATE(self.deligate, @selector(onConnectAttemptEndedSuccessfully:forClient:)) {
+            [self.deligate onConnectAttemptEndedSuccessfully:NO forClient:self];
         }
         connectingNow = NO;
     }
@@ -152,9 +150,8 @@
                                                     userName:name
                                                    forClient:self];
     [companions setObject:companion forKey:uuid];
-    id<MCChatClientDeligate> d = self.deligate;
-    if VALID_DELEGATE(d, @selector(onUserConnected:forClient:)) {
-        [d onUserConnected:companion forClient:self];
+    if VALID_DELEGATE(self.deligate, @selector(onUserConnected:forClient:)) {
+        [self.deligate onUserConnected:companion forClient:self];
     }
 }
 
@@ -164,9 +161,8 @@
     if ([[companions allKeys] indexOfObject:uuid] != NSNotFound) {
         MCChatUser *companion = companions[uuid];
         [companions removeObjectForKey:uuid];
-        id<MCChatClientDeligate> d = self.deligate;
-        if VALID_DELEGATE(d, @selector(onUserDisconnected:forClient:)) {
-            [d onUserDisconnected:companion forClient:self];
+        if VALID_DELEGATE(self.deligate, @selector(onUserDisconnected:forClient:)) {
+            [self.deligate onUserDisconnected:companion forClient:self];
         }
     }
 }
@@ -177,18 +173,23 @@
 {
     LOG_SELECTOR()
     NSLog(@"%@ >> %@", [userid UUIDString], message);
-    if ([[message allKeys] indexOfObject:@"layer"] != NSNotFound && [message[@"layer"] isKindOfClass:[NSString class]]) {
+    if VALID_MESSAGE_FIELD(message, @"layer", NSString) {
         NSString *layer = message[@"layer"];
         if ([layer isEqualToString:@"handshake"]) {
-            if ([[message allKeys] indexOfObject:@"hello"] != NSNotFound && [message[@"hello"] isKindOfClass:[NSString class]]) {
+            if VALID_MESSAGE_FIELD(message, @"hello", NSString) {
                 [c sendMessage:@{@"layer" : @"handshake", @"hi" : self.myName}
                         toUser:userid];
                 [self addCompanionWithUUID:userid
                                    andName:message[@"hello"]];
-            } else if ([[message allKeys] indexOfObject:@"hi"] != NSNotFound && [message[@"hi"] isKindOfClass:[NSString class]]) {
+            } else if VALID_MESSAGE_FIELD(message, @"hi", NSString) {
                 [self addCompanionWithUUID:userid
                                    andName:message[@"hi"]];
             }
+        } else if ([layer isEqualToString:@"user"]) {
+            if VALID_MESSAGE_FIELD(message, @"user", NSString) {
+                
+            }
+            
         }
         
     }
