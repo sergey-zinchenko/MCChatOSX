@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A50F67EB1B30405400B75059 /* MCChatChat.m in Sources */ = {isa = PBXBuildFile; fileRef = A50F67EA1B30405400B75059 /* MCChatChat.m */; };
 		A5187E091B2C568D007D8B7A /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5187E081B2C568D007D8B7A /* MainWindowController.m */; };
 		A5187E0D1B2C6194007D8B7A /* EnterYourNameController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5187E0C1B2C6194007D8B7A /* EnterYourNameController.m */; };
 		A5187E101B2C903E007D8B7A /* ConnectItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A5187E0F1B2C903E007D8B7A /* ConnectItem.m */; };
@@ -32,6 +33,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A50F67E91B30405400B75059 /* MCChatChat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCChatChat.h; sourceTree = "<group>"; };
+		A50F67EA1B30405400B75059 /* MCChatChat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCChatChat.m; sourceTree = "<group>"; };
 		A5187E071B2C568D007D8B7A /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
 		A5187E081B2C568D007D8B7A /* MainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = "<group>"; };
 		A5187E0B1B2C6194007D8B7A /* EnterYourNameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterYourNameController.h; sourceTree = "<group>"; };
@@ -107,6 +110,8 @@
 				A52CE7AB1B1B01E2005020A5 /* MCChatClient.m */,
 				A52CE7B01B1B2AE9005020A5 /* MCChatUser.h */,
 				A52CE7B11B1B2AE9005020A5 /* MCChatUser.m */,
+				A50F67E91B30405400B75059 /* MCChatChat.h */,
+				A50F67EA1B30405400B75059 /* MCChatChat.m */,
 			);
 			name = MCChat;
 			sourceTree = "<group>";
@@ -279,6 +284,7 @@
 				A5187E0D1B2C6194007D8B7A /* EnterYourNameController.m in Sources */,
 				A58C542B1AA5E25900059106 /* AppDelegate.m in Sources */,
 				A5187E101B2C903E007D8B7A /* ConnectItem.m in Sources */,
+				A50F67EB1B30405400B75059 /* MCChatChat.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

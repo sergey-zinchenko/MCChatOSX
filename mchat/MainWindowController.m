@@ -35,7 +35,7 @@
 //    NSButton *closeButton = [self.window standardWindowButton:NSWindowCloseButton];
 //    closeButton.enabled = YES;
     self.window.delegate = self;
-    self.window.titleVisibility = NSWindowTitleHidden;
+    //self.window.titleVisibility = NSWindowTitleHidden;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectionAttemptStartedNotifcation:) name:kConnectionAttemptStartedNotifcation object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectionAttemptEndedNotifcation:) name:kConnectionAttemptEndedNotifcation object:nil];
     connectItem.connectingNow = NO;

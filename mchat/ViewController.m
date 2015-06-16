@@ -89,4 +89,12 @@
     return cell;
 }
 
+- (void)tableViewSelectionDidChange:(NSNotification *)notification
+{
+//    if (tblView.numberOfSelectedRows > 0) {
+//        [self performSegueWithIdentifier:@"openchat" sender:self];
+//        [tblView deselectRow:tblView.selectedRow];
+//    }
+}
+
 @end
