@@ -7,7 +7,6 @@
 //
 
 #import "CompanionsLstViewController.h"
-#import <AVFoundation/AVFoundation.h>
 
 @interface CompanionsLstViewController ()
 - (void)showProgressIndicator;
@@ -23,10 +22,20 @@
     __weak IBOutlet NSTextField *progressIndicatorLabelView;
     NSMutableArray *companions;
     AVAudioPlayer *player;
+    CLLocationManager *locationManager;
+    CLGeocoder *geocoder;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+    BOOL en = [CLLocationManager locationServicesEnabled];
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.distanceFilter = 500;
+    locationManager.delegate = self;
+    geocoder = [[CLGeocoder alloc] init];
+    [locationManager startUpdatingLocation];
+    
     companions = [[NSMutableArray alloc] init];
     [companions addObjectsFromArray:[MCChatClient sharedInstance].companions];
     [MCChatClient sharedInstance].deligate = self;
@@ -99,6 +108,23 @@
     if (tblView.numberOfSelectedRows > 0) {
         [self performSegueWithIdentifier:@"openchat" sender:self];
         [tblView deselectRow:tblView.selectedRow];
+    }
+}
+
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    if (locations&&([locations count] > 0)) {
+        CLLocation *mostRecentLocation = [locations lastObject];
+        if (!geocoder.isGeocoding) {
+            [geocoder reverseGeocodeLocation:mostRecentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
+                if (placemarks&&!error&&([placemarks count] > 0)) {
+                    CLPlacemark *lp = [placemarks lastObject];
+                    NSString *locationString = [NSString stringWithFormat:@"%@, %@, %@", lp.country, lp.administrativeArea, lp.subAdministrativeArea];
+                    NSLog(@"%@", locationString);
+                }
+            }];
+        }
     }
 }
 

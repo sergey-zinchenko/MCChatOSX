@@ -186,8 +186,9 @@
                                    andName:message[@"hi"]];
             }
         } else if ([layer isEqualToString:@"user"]) {
-            if VALID_MESSAGE_FIELD(message, @"user", NSString) {
-                
+            if VALID_MESSAGE_FIELD(message, @"location", NSString) {
+               // NSString *userLocation = message[@"location"];
+               // NSTimeZone
             }
             
         }

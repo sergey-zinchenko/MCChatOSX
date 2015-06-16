@@ -16,6 +16,7 @@
 @class MCChatClient;
 
 @protocol MCChatClientDeligate <NSObject>
+@optional
 - (void)onConnectAttemptStartedForClient:(MCChatClient *)client;
 - (void)onConnectAttemptEndedSuccessfully:(BOOL)successfully
                                 forClient:(MCChatClient *)client;
