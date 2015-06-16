@@ -12,7 +12,7 @@
 #define kConnectionAttemptStartedNotifcation @"kConnectionAttemptStartedNotifcation"
 #define kConnectionAttemptEndedNotifcation @"kConnectionAttemptEndedNotifcation"
 
-@interface ViewController : NSViewController<MCChatClientDeligate>
+@interface ViewController : NSViewController<MCChatClientDeligate, NSTableViewDataSource, NSTableViewDelegate>
 
 
 

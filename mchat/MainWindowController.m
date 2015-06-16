@@ -17,7 +17,7 @@
 
 @implementation MainWindowController
 {
-    IBOutlet ConnectItem *connectItem;
+    __weak IBOutlet ConnectItem *connectItem;
 }
 
 - (void)connectionAttemptStartedNotifcation:(NSNotification*)notif
@@ -43,7 +43,7 @@
 
 - (BOOL)windowShouldClose:(id)sender
 {
-    [self.window orderBack:self];
+    [self.window miniaturize:self];
     return NO;
 }
 

@@ -13,7 +13,8 @@
 #define VALID_DELEGATE(obj, sel) (obj&&[obj conformsToProtocol:@protocol(MCChatClientDeligate)]&&[obj respondsToSelector:sel])
 
 @interface MCChatClient ()
-
+- (void)addCompanionWithUUID:(NSUUID *)uuid andName:(NSString *)name;
+- (void)removeCompanionWithUUID:(NSUUID *)uuid;
 @end
 
 @implementation MCChatClient
@@ -140,7 +141,34 @@
                  forCore:(MCChatCore *)c
 {
     LOG_SELECTOR()
-    [companions removeObjectForKey:user];
+    [self removeCompanionWithUUID:user];
+}
+
+- (void)addCompanionWithUUID:(NSUUID *)uuid
+                     andName:(NSString *)name
+{
+    LOG_SELECTOR()
+    MCChatUser *companion = [[MCChatUser alloc] initWithUUID:uuid
+                                                    userName:name
+                                                   forClient:self];
+    [companions setObject:companion forKey:uuid];
+    id<MCChatClientDeligate> d = self.deligate;
+    if VALID_DELEGATE(d, @selector(onUserConnected:forClient:)) {
+        [d onUserConnected:companion forClient:self];
+    }
+}
+
+- (void)removeCompanionWithUUID:(NSUUID *)uuid
+{
+    LOG_SELECTOR()
+    if ([[companions allKeys] indexOfObject:uuid] != NSNotFound) {
+        MCChatUser *companion = companions[uuid];
+        [companions removeObjectForKey:uuid];
+        id<MCChatClientDeligate> d = self.deligate;
+        if VALID_DELEGATE(d, @selector(onUserDisconnected:forClient:)) {
+            [d onUserDisconnected:companion forClient:self];
+        }
+    }
 }
 
 - (void)messageRecieved:(NSDictionary *)message
@@ -148,22 +176,18 @@
                 forCore:(MCChatCore *)c
 {
     LOG_SELECTOR()
-    NSLog(@"%@", message);
+    NSLog(@"%@ >> %@", [userid UUIDString], message);
     if ([[message allKeys] indexOfObject:@"layer"] != NSNotFound && [message[@"layer"] isKindOfClass:[NSString class]]) {
         NSString *layer = message[@"layer"];
         if ([layer isEqualToString:@"handshake"]) {
             if ([[message allKeys] indexOfObject:@"hello"] != NSNotFound && [message[@"hello"] isKindOfClass:[NSString class]]) {
-                NSString *companionName = message[@"hello"];
-                NSUUID *companionId = userid;
-                MCChatUser *companion = [[MCChatUser alloc] initWithUUID:companionId userName:companionName forClient:self];
-                [companions setObject:companion forKey:companionId];
                 [c sendMessage:@{@"layer" : @"handshake", @"hi" : self.myName}
-                        toUser:companionId];
+                        toUser:userid];
+                [self addCompanionWithUUID:userid
+                                   andName:message[@"hello"]];
             } else if ([[message allKeys] indexOfObject:@"hi"] != NSNotFound && [message[@"hi"] isKindOfClass:[NSString class]]) {
-                NSString *companionName = message[@"hi"];
-                NSUUID *companionId = userid;
-                MCChatUser *companion = [[MCChatUser alloc] initWithUUID:companionId userName:companionName forClient:self];
-                [companions setObject:companion forKey:companionId];
+                [self addCompanionWithUUID:userid
+                                   andName:message[@"hi"]];
             }
         }
         

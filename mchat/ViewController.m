@@ -15,13 +15,17 @@
 
 @implementation ViewController
 {
-    IBOutlet NSView *progressIndicatorHolderView;
-    IBOutlet NSProgressIndicator *progressIndicatorView;
-    IBOutlet NSTextField *progressIndicatorLabelView;
+    __weak IBOutlet NSTableView *tblView;
+    __weak IBOutlet NSView *progressIndicatorHolderView;
+    __weak IBOutlet NSProgressIndicator *progressIndicatorView;
+    __weak IBOutlet NSTextField *progressIndicatorLabelView;
+    NSMutableArray *companions;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    companions = [[NSMutableArray alloc] init];
+    [companions addObjectsFromArray:[MCChatClient sharedInstance].companions];
     [MCChatClient sharedInstance].deligate = self;
     [progressIndicatorView startAnimation:self];
     progressIndicatorHolderView.alphaValue = 0.8;
@@ -48,6 +52,7 @@
 
 - (void)onConnectAttemptStartedForClient:(MCChatClient *)client
 {
+    [companions removeAllObjects];
     [self showProgressIndicator];
 }
 
@@ -60,13 +65,28 @@
 - (void)onUserConnected:(MCChatUser *)user
               forClient:(MCChatClient *)client
 {
-    
+    [companions addObject:user];
+    [tblView reloadData];
 }
 
 - (void)onUserDisconnected:(MCChatUser *)user
                  forClient:(MCChatClient *)client
 {
-    
+    [companions removeObject:user];
+    [tblView reloadData];
+}
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
+{
+    return [companions count];
+}
+
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+    static NSString *viewIdentifier = @"companionCell";
+    NSTableCellView *cell = [tblView makeViewWithIdentifier:viewIdentifier owner:self];
+    [cell.textField setStringValue:((MCChatUser *)companions[row]).name];
+    return cell;
 }
 
 @end
