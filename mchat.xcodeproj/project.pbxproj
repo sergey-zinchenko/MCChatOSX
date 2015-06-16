@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A50F67EB1B30405400B75059 /* MCChatChat.m in Sources */ = {isa = PBXBuildFile; fileRef = A50F67EA1B30405400B75059 /* MCChatChat.m */; };
+		A50F67EE1B3051B200B75059 /* ding-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A50F67ED1B3051B200B75059 /* ding-sound.mp3 */; };
+		A50F67F01B30526900B75059 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A50F67EF1B30526900B75059 /* AVFoundation.framework */; };
 		A5187E091B2C568D007D8B7A /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5187E081B2C568D007D8B7A /* MainWindowController.m */; };
 		A5187E0D1B2C6194007D8B7A /* EnterYourNameController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5187E0C1B2C6194007D8B7A /* EnterYourNameController.m */; };
 		A5187E101B2C903E007D8B7A /* ConnectItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A5187E0F1B2C903E007D8B7A /* ConnectItem.m */; };
@@ -35,6 +37,8 @@
 /* Begin PBXFileReference section */
 		A50F67E91B30405400B75059 /* MCChatChat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCChatChat.h; sourceTree = "<group>"; };
 		A50F67EA1B30405400B75059 /* MCChatChat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCChatChat.m; sourceTree = "<group>"; };
+		A50F67ED1B3051B200B75059 /* ding-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "ding-sound.mp3"; sourceTree = "<group>"; };
+		A50F67EF1B30526900B75059 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		A5187E071B2C568D007D8B7A /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
 		A5187E081B2C568D007D8B7A /* MainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = "<group>"; };
 		A5187E0B1B2C6194007D8B7A /* EnterYourNameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterYourNameController.h; sourceTree = "<group>"; };
@@ -66,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A50F67F01B30526900B75059 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +84,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A50F67EC1B30519A00B75059 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				A50F67ED1B3051B200B75059 /* ding-sound.mp3 */,
+			);
+			name = resources;
+			sourceTree = "<group>";
+		};
 		A5187E061B2C5551007D8B7A /* Main window */ = {
 			isa = PBXGroup;
 			children = (
@@ -119,6 +132,7 @@
 		A58C541B1AA5E25900059106 = {
 			isa = PBXGroup;
 			children = (
+				A50F67EF1B30526900B75059 /* AVFoundation.framework */,
 				A58C54261AA5E25900059106 /* mchat */,
 				A58C543D1AA5E25A00059106 /* mchatTests */,
 				A58C54251AA5E25900059106 /* Products */,
@@ -137,6 +151,7 @@
 		A58C54261AA5E25900059106 /* mchat */ = {
 			isa = PBXGroup;
 			children = (
+				A50F67EC1B30519A00B75059 /* resources */,
 				A5187E0A1B2C6148007D8B7A /* Enter name sheet */,
 				A5187E061B2C5551007D8B7A /* Main window */,
 				A58C54291AA5E25900059106 /* AppDelegate.h */,
@@ -256,6 +271,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A50F67EE1B3051B200B75059 /* ding-sound.mp3 in Resources */,
 				A58C54321AA5E25900059106 /* Images.xcassets in Resources */,
 				A58C54351AA5E25900059106 /* Main.storyboard in Resources */,
 			);

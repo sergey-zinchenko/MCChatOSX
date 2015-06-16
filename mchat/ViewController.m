@@ -7,10 +7,12 @@
 //
 
 #import "ViewController.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface ViewController ()
 - (void)showProgressIndicator;
 - (void)hideProgressIndicator;
+- (void)playDingSound;
 @end
 
 @implementation ViewController
@@ -20,6 +22,7 @@
     __weak IBOutlet NSProgressIndicator *progressIndicatorView;
     __weak IBOutlet NSTextField *progressIndicatorLabelView;
     NSMutableArray *companions;
+    AVAudioPlayer *player;
 }
 
 - (void)viewDidLoad {
@@ -67,6 +70,7 @@
 {
     [companions addObject:user];
     [tblView reloadData];
+    [self playDingSound];
 }
 
 - (void)onUserDisconnected:(MCChatUser *)user
@@ -74,6 +78,7 @@
 {
     [companions removeObject:user];
     [tblView reloadData];
+    [self playDingSound];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
@@ -95,6 +100,17 @@
 //        [self performSegueWithIdentifier:@"openchat" sender:self];
 //        [tblView deselectRow:tblView.selectedRow];
 //    }
+}
+
+- (void)playDingSound
+{
+    NSString *soundFilePath =
+    [[NSBundle mainBundle] pathForResource:@"ding-sound"
+                                    ofType:@"mp3"];
+    NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:soundFilePath];
+    player = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL
+                                           error:nil];
+    [player play];
 }
 
 @end
