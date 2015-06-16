@@ -9,7 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
+#define kLocationManagerException @"LocationManagerException"
+
 @protocol LocationManagerDelegate <NSObject>
+@required
 - (void)locationDidChangedTo:(NSString *)locationString;
 @end
 
