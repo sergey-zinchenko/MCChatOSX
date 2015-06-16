@@ -206,11 +206,11 @@ DQ
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="CompanionsLstViewController" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="342" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hqQ-Pm-Q13" propertyAccessControl="none">
-                                <rect key="frame" x="159" y="87" width="163" height="96"/>
+                                <rect key="frame" x="90" y="87" width="163" height="96"/>
                                 <subviews>
                                     <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="CUw-Su-QgT">
                                         <rect key="frame" x="65" y="32" width="32" height="32"/>
@@ -238,7 +238,7 @@ DQ
                                 </constraints>
                             </customView>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="47" horizontalPageScroll="10" verticalLineScroll="47" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VcJ-XH-uji">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                                <rect key="frame" x="0.0" y="0.0" width="342" height="270"/>
                                 <clipView key="contentView" id="Jtz-Tg-vlU">
                                     <rect key="frame" x="1" y="17" width="238" height="117"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -250,7 +250,7 @@ DQ
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn width="475" minWidth="40" maxWidth="1000" id="eXM-RP-BVT">
+                                                <tableColumn width="337" minWidth="40" maxWidth="1000" id="eXM-RP-BVT">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -264,11 +264,11 @@ DQ
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="companionCell" id="vQI-gK-TSG">
-                                                            <rect key="frame" x="1" y="1" width="475" height="45"/>
+                                                            <rect key="frame" x="1" y="1" width="337" height="45"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1Yu-f9-30i">
-                                                                    <rect key="frame" x="1" y="8" width="473" height="29"/>
+                                                                    <rect key="frame" x="1" y="8" width="335" height="29"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="29" id="kdV-EQ-oFU"/>
                                                                     </constraints>
@@ -328,7 +328,7 @@ DQ
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="648"/>
+            <point key="canvasLocation" x="6" y="648"/>
         </scene>
     </scenes>
 </document>
