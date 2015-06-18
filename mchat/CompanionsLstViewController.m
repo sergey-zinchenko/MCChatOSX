@@ -7,6 +7,7 @@
 //
 
 #import "CompanionsLstViewController.h"
+#import "CompanionTableCellView.h"
 
 @interface CompanionsLstViewController ()
 - (void)showProgressIndicator;
@@ -87,15 +88,15 @@
 - (void)onUserDisconnected:(MCChatUser *)user
                  forClient:(MCChatClient *)client
 {
+    [tblView removeRowsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange([companions indexOfObject:user], 1)] withAnimation:NSTableViewAnimationSlideRight];
     [companions removeObject:user];
-    [tblView reloadData];
-    //[self playDingSound];
 }
 
 - (void)onUserInfoChanged:(MCChatUser *)user
                 forClient:(MCChatClient *)client
 {
-    
+    [tblView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:[companions indexOfObject:user]]
+                       columnIndexes:[NSIndexSet indexSetWithIndex:0]];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
@@ -106,8 +107,10 @@
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
     static NSString *viewIdentifier = @"companionCell";
-    NSTableCellView *cell = [tblView makeViewWithIdentifier:viewIdentifier owner:self];
-    [cell.textField setStringValue:((MCChatUser *)companions[row]).name];
+    CompanionTableCellView *cell = (CompanionTableCellView *)[tblView makeViewWithIdentifier:viewIdentifier owner:self];
+    MCChatUser *companion = companions[row];
+    [cell setName:companion.name];
+    [cell setLocation:companion.location];
     return cell;
 }
 

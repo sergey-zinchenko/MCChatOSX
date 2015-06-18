@@ -12,6 +12,7 @@
 		A50F67F01B30526900B75059 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A50F67EF1B30526900B75059 /* AVFoundation.framework */; };
 		A50F67F31B307E8200B75059 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A50F67F21B307E8200B75059 /* CoreLocation.framework */; };
 		A50F67F71B30C16500B75059 /* LocationMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = A50F67F61B30C16500B75059 /* LocationMonitor.m */; };
+		A50F67FA1B333BFA00B75059 /* CompanionTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = A50F67F91B333BFA00B75059 /* CompanionTableCellView.m */; };
 		A5187E091B2C568D007D8B7A /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5187E081B2C568D007D8B7A /* MainWindowController.m */; };
 		A5187E0D1B2C6194007D8B7A /* EnterYourNameController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5187E0C1B2C6194007D8B7A /* EnterYourNameController.m */; };
 		A5187E101B2C903E007D8B7A /* ConnectItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A5187E0F1B2C903E007D8B7A /* ConnectItem.m */; };
@@ -44,6 +45,8 @@
 		A50F67F21B307E8200B75059 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A50F67F51B30C16500B75059 /* LocationMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationMonitor.h; sourceTree = "<group>"; };
 		A50F67F61B30C16500B75059 /* LocationMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationMonitor.m; sourceTree = "<group>"; };
+		A50F67F81B333BFA00B75059 /* CompanionTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompanionTableCellView.h; sourceTree = "<group>"; };
+		A50F67F91B333BFA00B75059 /* CompanionTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompanionTableCellView.m; sourceTree = "<group>"; };
 		A5187E071B2C568D007D8B7A /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
 		A5187E081B2C568D007D8B7A /* MainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = "<group>"; };
 		A5187E0B1B2C6194007D8B7A /* EnterYourNameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterYourNameController.h; sourceTree = "<group>"; };
@@ -118,6 +121,8 @@
 				A5187E081B2C568D007D8B7A /* MainWindowController.m */,
 				A5187E0E1B2C903E007D8B7A /* ConnectItem.h */,
 				A5187E0F1B2C903E007D8B7A /* ConnectItem.m */,
+				A50F67F81B333BFA00B75059 /* CompanionTableCellView.h */,
+				A50F67F91B333BFA00B75059 /* CompanionTableCellView.m */,
 			);
 			name = "Main Window";
 			sourceTree = "<group>";
@@ -327,6 +332,7 @@
 			files = (
 				A58C54301AA5E25900059106 /* CompanionsLstViewController.m in Sources */,
 				A58C542D1AA5E25900059106 /* main.m in Sources */,
+				A50F67FA1B333BFA00B75059 /* CompanionTableCellView.m in Sources */,
 				A52CE7B21B1B2AE9005020A5 /* MCChatUser.m in Sources */,
 				A5187E091B2C568D007D8B7A /* MainWindowController.m in Sources */,
 				A50F67F71B30C16500B75059 /* LocationMonitor.m in Sources */,

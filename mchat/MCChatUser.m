@@ -20,6 +20,7 @@
 {
     self = [super init];
     if (self) {
+        _location = @"Unknown";
         _name = name;
         userId = uuid;
         userClient = client;

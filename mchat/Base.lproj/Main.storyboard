@@ -241,7 +241,7 @@ DQ
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="45" viewBased="YES" id="vh3-UZ-15P">
-                                            <rect key="frame" x="0.0" y="0.0" width="478" height="0.0"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="248" height="0.0"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -261,7 +261,7 @@ DQ
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="companionCell" id="vQI-gK-TSG">
+                                                        <tableCellView identifier="companionCell" id="vQI-gK-TSG" customClass="CompanionTableCellView">
                                                             <rect key="frame" x="1" y="1" width="245" height="45"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
@@ -294,7 +294,9 @@ DQ
                                                                 <constraint firstItem="QSj-wI-tgW" firstAttribute="top" secondItem="1Yu-f9-30i" secondAttribute="bottom" constant="-4" id="zdJ-R7-tBj"/>
                                                             </constraints>
                                                             <connections>
+                                                                <outlet property="locationField" destination="QSj-wI-tgW" id="iTF-xk-5Ry"/>
                                                                 <outlet property="textField" destination="1Yu-f9-30i" id="EgJ-b5-6Ur"/>
+                                                                <outlet property="userNameField" destination="1Yu-f9-30i" id="GFg-8I-aeE"/>
                                                             </connections>
                                                         </tableCellView>
                                                     </prototypeCellViews>

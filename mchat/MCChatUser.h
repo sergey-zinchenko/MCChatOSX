@@ -17,4 +17,5 @@
                     userName:(NSString *)name
                    forClient:(MCChatClient *)client;
 @property (readonly, nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *location;
 @end

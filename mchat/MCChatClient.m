@@ -24,6 +24,7 @@
     NSMutableDictionary *companions;
     NSString *_myName;
     BOOL connectingNow;
+    NSString *myLocation;
 }
 
 - (NSString *)getMyName
@@ -103,7 +104,9 @@
 
 - (void)updateMyLocation:(NSString *)locationString
 {
-    NSLog(@"%@", locationString);
+    myLocation = locationString;
+    [core sendMessage:@{@"layer":@"user", @"location": locationString}
+              toUsers:[companions allKeys]];
 }
 
 - (void)connectedToServerVersion:(NSUInteger)version
@@ -186,14 +189,26 @@
                         toUser:userid];
                 [self addCompanionWithUUID:userid
                                    andName:message[@"hello"]];
+                if (myLocation)
+                    [c sendMessage:@{@"layer":@"user", @"location":myLocation}
+                            toUser:userid];
             } else if VALID_MESSAGE_FIELD(message, @"hi", NSString) {
                 [self addCompanionWithUUID:userid
                                    andName:message[@"hi"]];
+                if (myLocation)
+                    [c sendMessage:@{@"layer":@"user", @"location":myLocation}
+                            toUser:userid];
             }
         } else if ([layer isEqualToString:@"user"]) {
             if VALID_MESSAGE_FIELD(message, @"location", NSString) {
-               // NSString *userLocation = message[@"location"];
-               // NSTimeZone
+                MCChatUser *companion = companions[userid];
+                if (companion) {
+                    companion.location = message[@"location"];
+                    if VALID_DELEGATE(self.deligate, @selector(onUserInfoChanged:forClient:)) {
+                        [self.deligate onUserInfoChanged:companion
+                                               forClient:self];
+                    }
+                }
             }
             
         }
