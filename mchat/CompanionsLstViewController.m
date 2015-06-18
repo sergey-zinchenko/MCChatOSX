@@ -29,7 +29,6 @@
     [super viewDidLoad];
     locationMonitor = [[LocationMonitor alloc] init];
     locationMonitor.delegate = self;
-    [locationMonitor start];
     companions = [[NSMutableArray alloc] init];
     [companions addObjectsFromArray:[MCChatClient sharedInstance].companions];
     [MCChatClient sharedInstance].deligate = self;
@@ -66,6 +65,15 @@
                                 forClient:(MCChatClient *)client
 {
     [self hideProgressIndicator];
+    @try {
+        if (successfully) {
+            [locationMonitor start];
+        }
+    }
+    @catch (NSException *exception) {
+        
+    }
+    
 }
 
 - (void)onUserConnected:(MCChatUser *)user
@@ -81,7 +89,13 @@
 {
     [companions removeObject:user];
     [tblView reloadData];
-    [self playDingSound];
+    //[self playDingSound];
+}
+
+- (void)onUserInfoChanged:(MCChatUser *)user
+                forClient:(MCChatClient *)client
+{
+    
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
@@ -108,7 +122,7 @@
 
 - (void)locationDidChangedTo:(NSString *)locationString
 {
-    NSLog(@"%@", locationString);
+    [[MCChatClient sharedInstance] updateMyLocation:locationString];
 }
 
 - (void)playDingSound

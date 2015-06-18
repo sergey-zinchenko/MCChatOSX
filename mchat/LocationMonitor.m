@@ -93,7 +93,7 @@ typedef NS_ENUM(NSInteger, LMState) {
             [geocoder reverseGeocodeLocation:mostRecentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
                 if (placemarks&&!error&&([placemarks count] > 0)) {
                     CLPlacemark *lp = [placemarks lastObject];
-                    NSString *locationString = [NSString stringWithFormat:@"%@, %@, %@", lp.country, lp.administrativeArea, lp.subAdministrativeArea];
+                    NSString *locationString = [NSString stringWithFormat:@"%@, %@, %@, %@ %@", lp.country, lp.administrativeArea, lp.subAdministrativeArea, lp.thoroughfare, lp.subThoroughfare];
                     if (self.delegate&&[self.delegate conformsToProtocol:@protocol(LocationManagerDelegate)])
                         [self.delegate locationDidChangedTo:locationString];
                 }

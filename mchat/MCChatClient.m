@@ -101,6 +101,11 @@
     [core disconnect];
 }
 
+- (void)updateMyLocation:(NSString *)locationString
+{
+    NSLog(@"%@", locationString);
+}
+
 - (void)connectedToServerVersion:(NSUInteger)version
                          forCore:(MCChatCore *)c
 {
