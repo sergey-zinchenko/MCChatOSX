@@ -190,13 +190,13 @@
                 [self addCompanionWithUUID:userid
                                    andName:message[@"hello"]];
                 if (myLocation)
-                    [c sendMessage:@{@"layer":@"user", @"location":myLocation}
+                    [c sendMessage:@{@"layer" : @"user", @"location" : myLocation}
                             toUser:userid];
             } else if VALID_MESSAGE_FIELD(message, @"hi", NSString) {
                 [self addCompanionWithUUID:userid
                                    andName:message[@"hi"]];
                 if (myLocation)
-                    [c sendMessage:@{@"layer":@"user", @"location":myLocation}
+                    [c sendMessage:@{@"layer" : @"user", @"location" : myLocation}
                             toUser:userid];
             }
         } else if ([layer isEqualToString:@"user"]) {

@@ -249,6 +249,7 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
         CFWriteStreamScheduleWithRunLoop(writeStream, CFRunLoopGetMain(), kCFRunLoopCommonModes);
         if (!(CFReadStreamOpen(readStream)&&CFWriteStreamOpen(writeStream))) {
             [self _closeStreamsAndClearBuffers];
+            return NO;
         }
         return YES;
     } else
