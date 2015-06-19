@@ -59,6 +59,7 @@
 - (void)onConnectAttemptStartedForClient:(MCChatClient *)client
 {
     [companions removeAllObjects];
+    [tblView reloadData];
     [self showProgressIndicator];
 }
 
@@ -81,7 +82,7 @@
               forClient:(MCChatClient *)client
 {
     [companions addObject:user];
-    [tblView reloadData];
+    [tblView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:([companions count] - 1)] withAnimation:NSTableViewAnimationSlideLeft];
     [self playDingSound];
 }
 
@@ -117,7 +118,7 @@
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
 {
     if (tblView.numberOfSelectedRows > 0) {
-        [self performSegueWithIdentifier:@"openchat" sender:self];
+       // [self performSegueWithIdentifier:@"openchat" sender:self];
         [tblView deselectRow:tblView.selectedRow];
     }
 }
