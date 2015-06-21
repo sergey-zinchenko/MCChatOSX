@@ -52,19 +52,19 @@
     LOG_SELECTOR()
     if ([[message allKeys] indexOfObject:kMessageFromField] == NSNotFound) {
         if ([[message allKeys] indexOfObject:kMessageTypeField] == NSNotFound)
-            [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no type field in system message" userInfo:NULL] raise];
+            [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no type field in system message" userInfo:nil] raise];
         if ([message[kMessageTypeField] isEqualToString:kMessageTypeWelcome]) {
             if (!(message[kVersionField]&&[message[kVersionField] isKindOfClass:[NSNumber class]]))
-                [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no valid server version field in welcome message" userInfo:NULL] raise];
+                [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no valid server version field in welcome message" userInfo:nil] raise];
             if (!(message[kClientsField]&&[message[kClientsField] isKindOfClass:[NSArray class]]))
-                [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no clients field in welcome message" userInfo:NULL] raise];
+                [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no clients field in welcome message" userInfo:nil] raise];
             [userList removeAllObjects];
             for (NSObject *obj in message[kClientsField]) {
                 if (![obj isKindOfClass:[NSString class]])
-                    [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"Wrong format of clients field of welcome message" userInfo:NULL] raise];
+                    [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"Wrong format of clients field of welcome message" userInfo:nil] raise];
                 NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:(NSString *)obj];
                 if (!uuid)
-                    [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"Wrong format of clients field of welcome message" userInfo:NULL] raise];
+                    [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"Wrong format of clients field of welcome message" userInfo:nil] raise];
                 [userList addObject:uuid];
             }
             NSObject<MCChatCoreDelegate> *d = self.delegate;
@@ -72,20 +72,20 @@
                 [d connectedToServerVersion:[message[kVersionField] longValue] forCore:self];
         } else if ([message[kMessageTypeField] isEqualToString:kMessageTypeUserConnected]) {
             if (!MESSAGE_HAS_CLIENT_FIELD)
-                [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no valid client filed in 'connected' message" userInfo:NULL] raise];
+                [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no valid client filed in 'connected' message" userInfo:nil] raise];
             NSUUID *client = [[NSUUID alloc] initWithUUIDString:message[@"client"]];
             if (!client)
-                [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no valid client filed in 'disconnected' message" userInfo:NULL] raise];
+                [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no valid client filed in 'disconnected' message" userInfo:nil] raise];
             [userList addObject:client];
             NSObject<MCChatCoreDelegate> *d = self.delegate;
             if VALID_DELEGATE(d, @selector(userConnected:forCore:))
                 [d userConnected:client forCore:self];
         } else if ([message[kMessageTypeField] isEqualToString:kMessageTypeUserDisconnected]) {
             if (!MESSAGE_HAS_CLIENT_FIELD)
-                [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no valid client filed in 'disconnected' message" userInfo:NULL] raise];
+                [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no valid client filed in 'disconnected' message" userInfo:nil] raise];
             NSUUID *client = [[NSUUID alloc] initWithUUIDString:message[@"client"]];
             if (!client)
-                [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no valid client filed in 'disconnected' message" userInfo:NULL] raise];
+                [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no valid client filed in 'disconnected' message" userInfo:nil] raise];
             [userList removeObject:client];
             NSObject<MCChatCoreDelegate> *d = self.delegate;
             if VALID_DELEGATE(d, @selector(userConnected:forCore:))
@@ -93,11 +93,11 @@
         }
     } else {
         if (![message[kMessageFromField] isKindOfClass:[NSString class]])
-            [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"Invalid format of 'from' filed in the user message" userInfo:NULL] raise];
+            [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"Invalid format of 'from' filed in the user message" userInfo:nil] raise];
         NSMutableDictionary *mutableMessage = [message mutableCopy];
         NSUUID *from  = [[NSUUID alloc] initWithUUIDString:message[kMessageFromField]];
         if (!from)
-            [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"Invalid format of 'from' filed in the user message" userInfo:NULL] raise];
+            [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"Invalid format of 'from' filed in the user message" userInfo:nil] raise];
         [mutableMessage removeObjectForKey:kMessageFromField];
         NSObject<MCChatCoreDelegate> *d = self.delegate;
         if VALID_DELEGATE(d, @selector(messageRecieved:fromUser:forCore:))
@@ -121,17 +121,17 @@
             NSData *encodedMessageData = [received subdataWithRange:NSMakeRange(0, range.location)];
             NSData *messageData = [[NSData alloc] initWithBase64EncodedData:encodedMessageData options:0];
             if (!messageData)
-                [[NSException exceptionWithName:ERRONOUS_MESSAGE_PACKAGE reason:@"Message package format error" userInfo:NULL] raise];
+                [[NSException exceptionWithName:ERRONOUS_MESSAGE_PACKAGE reason:@"Message package format error" userInfo:nil] raise];
             NSError *error;
             NSDictionary *message = [NSJSONSerialization JSONObjectWithData:messageData options:kNilOptions error:&error];
             if (error||!message||(![message isKindOfClass:[NSDictionary class]]))
-                [[NSException exceptionWithName:ERRONOUS_MESSAGE_PACKAGE reason:@"Message package format error" userInfo:NULL] raise];
+                [[NSException exceptionWithName:ERRONOUS_MESSAGE_PACKAGE reason:@"Message package format error" userInfo:nil] raise];
             [self processMessage:message];
             [received replaceBytesInRange:NSMakeRange(0, range.location + range.length) withBytes:NULL length:0];
             range = [received rangeOfData:pattern options:0 range:NSMakeRange(0, received.length)];
         }
         if ([received length] > MAX_RECEIVER_SIZE)
-            [[NSException exceptionWithName:ERRONOUS_MESSAGE_PACKAGE reason:@"Message package too long" userInfo:NULL] raise];
+            [[NSException exceptionWithName:ERRONOUS_MESSAGE_PACKAGE reason:@"Message package too long" userInfo:nil] raise];
     }
     @catch (NSException *exception) {
         [self _callOnErrorWithException:exception];
@@ -162,7 +162,7 @@ void readcb(CFReadStreamRef stream, CFStreamEventType eventType, void *clientCal
                 NSLog(@"Read stream error occurred");
                 CFErrorRef err = CFReadStreamCopyError(stream);
                 CFStringRef desc = CFErrorCopyDescription(err);
-                [chatCore _callOnErrorWithException:[NSException exceptionWithName:LOWLEVEL_ERROR reason:(__bridge NSString *)(desc) userInfo:NULL]];
+                [chatCore _callOnErrorWithException:[NSException exceptionWithName:LOWLEVEL_ERROR reason:(__bridge NSString *)(desc) userInfo:nil]];
                 break;
             }
             case kCFStreamEventEndEncountered:
@@ -188,7 +188,7 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
                 NSLog(@"Write stream error occurred");
                 CFErrorRef err = CFWriteStreamCopyError(stream);
                 CFStringRef desc = CFErrorCopyDescription(err);
-                [chatCore _callOnErrorWithException:[NSException exceptionWithName:LOWLEVEL_ERROR reason:(__bridge NSString *)(desc) userInfo:NULL]];
+                [chatCore _callOnErrorWithException:[NSException exceptionWithName:LOWLEVEL_ERROR reason:(__bridge NSString *)(desc) userInfo:nil]];
                 break;
             case kCFStreamEventOpenCompleted:
                 NSLog(@"Write stream open completed");
@@ -347,7 +347,7 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
              toUser:(NSUUID *)user
 {
     if (!(message&&user&&[message isKindOfClass:[NSDictionary class]]&&[user isKindOfClass:[NSUUID class]]))
-        [[NSException exceptionWithName:ERRONOUS_PARAMETERS reason:@"Invalid parameters passed" userInfo:NULL] raise];
+        [[NSException exceptionWithName:ERRONOUS_PARAMETERS reason:@"Invalid parameters passed" userInfo:nil] raise];
     NSMutableDictionary *mutableMessage = [message mutableCopy];
     [mutableMessage setObject:@[[user UUIDString]] forKey:@"to"];
     [self _sendMessage:mutableMessage];
@@ -363,11 +363,11 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
             toUsers:(NSArray *)users
 {
     if (!(message&&users&&[message isKindOfClass:[NSDictionary class]]&&[users isKindOfClass:[NSArray class]]))
-        [[NSException exceptionWithName:ERRONOUS_PARAMETERS reason:@"Invalid parameters passed" userInfo:NULL] raise];
+        [[NSException exceptionWithName:ERRONOUS_PARAMETERS reason:@"Invalid parameters passed" userInfo:nil] raise];
     NSMutableArray *strUsers = [[NSMutableArray alloc] init];
     for (NSObject *obj in users) {
         if (![obj isKindOfClass:[NSUUID class]])
-            [[NSException exceptionWithName:ERRONOUS_PARAMETERS reason:@"Invalid parameters passed" userInfo:NULL] raise];
+            [[NSException exceptionWithName:ERRONOUS_PARAMETERS reason:@"Invalid parameters passed" userInfo:nil] raise];
         [strUsers addObject:[(NSUUID*)obj UUIDString]];
     }
     NSMutableDictionary *mutableMessage = [message mutableCopy];
