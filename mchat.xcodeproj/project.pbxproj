@@ -24,6 +24,7 @@
 		A58C54321AA5E25900059106 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A58C54311AA5E25900059106 /* Images.xcassets */; };
 		A58C54351AA5E25900059106 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A58C54331AA5E25900059106 /* Main.storyboard */; };
 		A58C54411AA5E25A00059106 /* mchatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A58C54401AA5E25A00059106 /* mchatTests.m */; };
+		A5FE2AE91B36FEE600F9490F /* MainContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FE2AE81B36FEE600F9490F /* MainContainerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,8 @@
 		A58C543A1AA5E25A00059106 /* mchatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mchatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A58C543F1AA5E25A00059106 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A58C54401AA5E25A00059106 /* mchatTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mchatTests.m; sourceTree = "<group>"; };
+		A5FE2AE71B36FEE600F9490F /* MainContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainContainerViewController.h; sourceTree = "<group>"; };
+		A5FE2AE81B36FEE600F9490F /* MainContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainContainerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +121,8 @@
 				A5187E081B2C568D007D8B7A /* MainWindowController.m */,
 				A50F67F81B333BFA00B75059 /* CompanionTableCellView.h */,
 				A50F67F91B333BFA00B75059 /* CompanionTableCellView.m */,
+				A5FE2AE71B36FEE600F9490F /* MainContainerViewController.h */,
+				A5FE2AE81B36FEE600F9490F /* MainContainerViewController.m */,
 			);
 			name = "Main Window";
 			sourceTree = "<group>";
@@ -336,6 +341,7 @@
 				A5187E0D1B2C6194007D8B7A /* EnterYourNameController.m in Sources */,
 				A58C542B1AA5E25900059106 /* AppDelegate.m in Sources */,
 				A50F67EB1B30405400B75059 /* MCChatChat.m in Sources */,
+				A5FE2AE91B36FEE600F9490F /* MainContainerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

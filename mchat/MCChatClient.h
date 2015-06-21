@@ -11,6 +11,10 @@
 #import "MCChatCore.h"
 #import "MCChatUser.h"
 
+#define kConnectionAttemptStartedNotifcation @"kConnectionAttemptStartedNotifcation"
+#define kConnectionAttemptEndedNotifcation @"kConnectionAttemptEndedNotifcation"
+#define kSuccessFlag @"kSuccessFlag"
+
 #define MC_CHAT_CLIENT_EXCEPTION @"MCChatClientException"
 
 @class MCChatClient;
@@ -37,6 +41,7 @@
 
 + (MCChatClient *)sharedInstance;
 
+@property (assign, nonatomic) BOOL useNotifications;
 @property (weak, nonatomic) id<MCChatClientDeligate> deligate;
 @property (getter=getMyName, setter=setMyName:) NSString* myName;
 @property (readonly, getter=getCompanions) NSArray* companions;

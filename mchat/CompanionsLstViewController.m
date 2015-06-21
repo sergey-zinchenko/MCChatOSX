@@ -10,17 +10,14 @@
 #import "CompanionTableCellView.h"
 
 @interface CompanionsLstViewController ()
-- (void)showProgressIndicator;
-- (void)hideProgressIndicator;
+
 - (void)playDingSound;
 @end
 
 @implementation CompanionsLstViewController
 {
     __weak IBOutlet NSTableView *tblView;
-    __weak IBOutlet NSView *progressIndicatorHolderView;
-    __weak IBOutlet NSProgressIndicator *progressIndicatorView;
-    __weak IBOutlet NSTextField *progressIndicatorLabelView;
+    
     NSMutableArray *companions;
     AVAudioPlayer *player;
     LocationMonitor *locationMonitor;
@@ -33,40 +30,24 @@
     companions = [[NSMutableArray alloc] init];
     [companions addObjectsFromArray:[MCChatClient sharedInstance].companions];
     [MCChatClient sharedInstance].deligate = self;
-    [progressIndicatorView startAnimation:self];
-    progressIndicatorHolderView.alphaValue = 0.8;
-    progressIndicatorHolderView.layer.backgroundColor = [[NSColor lightGrayColor] CGColor];
-    progressIndicatorHolderView.layer.cornerRadius = 10;
-    progressIndicatorHolderView.hidden = YES;
+    
 }
 
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];
 }
 
-- (void)showProgressIndicator
-{
-    progressIndicatorHolderView.hidden = NO;
-    [[NSNotificationCenter defaultCenter] postNotificationName:kConnectionAttemptStartedNotifcation object:self userInfo:nil];
-}
 
-- (void)hideProgressIndicator
-{
-    progressIndicatorHolderView.hidden = YES;
-    [[NSNotificationCenter defaultCenter] postNotificationName:kConnectionAttemptEndedNotifcation object:self userInfo:@{@"successfully" : @YES}];
-}
 
 - (void)onConnectAttemptStartedForClient:(MCChatClient *)client
 {
     [companions removeAllObjects];
     [tblView reloadData];
-    [self showProgressIndicator];
 }
 
 - (void)onConnectAttemptEndedSuccessfully:(BOOL)successfully
                                 forClient:(MCChatClient *)client
 {
-    [self hideProgressIndicator];
     @try {
         if (successfully) {
             [locationMonitor start];

@@ -12,9 +12,6 @@
 #import "MCChatClient.h"
 #import "LocationMonitor.h"
 
-#define kConnectionAttemptStartedNotifcation @"kConnectionAttemptStartedNotifcation"
-#define kConnectionAttemptEndedNotifcation @"kConnectionAttemptEndedNotifcation"
-
 @interface CompanionsLstViewController : NSViewController<MCChatClientDeligate, NSTableViewDataSource, NSTableViewDelegate, LocationManagerDelegate>
 
 

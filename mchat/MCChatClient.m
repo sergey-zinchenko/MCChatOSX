@@ -75,6 +75,7 @@
     LOG_SELECTOR()
     self = [super init];
     if (self) {
+        self.useNotifications = NO;
         connectingNow = NO;
         companions = [[NSMutableDictionary alloc] init];
         core = [[MCChatCore alloc] init];
@@ -88,6 +89,8 @@
     LOG_SELECTOR()
     if (self.myName) {
         connectingNow = YES;
+        if (self.useNotifications)
+            [[NSNotificationCenter defaultCenter] postNotificationName:kConnectionAttemptStartedNotifcation object:self];
         if VALID_DELEGATE(self.deligate, @selector(onConnectAttemptStartedForClient:)) {
             [self.deligate onConnectAttemptStartedForClient:self];
         }
@@ -116,6 +119,8 @@
     [companions removeAllObjects];
     [c sendBroadcastMessage:@{@"layer" : @"handshake", @"hello": self.myName}];
     if (connectingNow) {
+        if (self.useNotifications)
+            [[NSNotificationCenter defaultCenter] postNotificationName:kConnectionAttemptEndedNotifcation object:self userInfo:@{kSuccessFlag : @YES}];
         if VALID_DELEGATE(self.deligate, @selector(onConnectAttemptEndedSuccessfully:forClient:)) {
             [self.deligate onConnectAttemptEndedSuccessfully:YES forClient:self];
         }
@@ -130,6 +135,8 @@
     LOG_SELECTOR()
     NSLog(@"Exception > %@ : %@", exception, reason);
     if (connectingNow) {
+        if (self.useNotifications)
+            [[NSNotificationCenter defaultCenter] postNotificationName:kConnectionAttemptEndedNotifcation object:self userInfo:@{kSuccessFlag : @NO}];
         if VALID_DELEGATE(self.deligate, @selector(onConnectAttemptEndedSuccessfully:forClient:)) {
             [self.deligate onConnectAttemptEndedSuccessfully:NO forClient:self];
         }

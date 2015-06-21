@@ -58,7 +58,7 @@
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                     </window>
                     <connections>
-                        <segue destination="7Zd-wp-BRy" kind="relationship" relationship="window.shadowedContentViewController" id="d9E-HG-290"/>
+                        <segue destination="yBL-jf-stO" kind="relationship" relationship="window.shadowedContentViewController" id="xCu-Qq-nX1"/>
                     </connections>
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -163,34 +163,6 @@ DQ
                         <rect key="frame" x="0.0" y="0.0" width="250" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hqQ-Pm-Q13" propertyAccessControl="none">
-                                <rect key="frame" x="44" y="87" width="163" height="96"/>
-                                <subviews>
-                                    <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="CUw-Su-QgT">
-                                        <rect key="frame" x="65" y="32" width="32" height="32"/>
-                                    </progressIndicator>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="H1G-yl-ZRi">
-                                        <rect key="frame" x="44" y="7" width="75" height="17"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="71" id="KTW-xf-uf1"/>
-                                            <constraint firstAttribute="height" constant="17" id="ifj-jU-pVO"/>
-                                        </constraints>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Connecting" id="c5O-Wf-sFt">
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="centerX" secondItem="CUw-Su-QgT" secondAttribute="centerX" id="2ry-CL-t0V"/>
-                                    <constraint firstAttribute="centerY" secondItem="CUw-Su-QgT" secondAttribute="centerY" id="8s8-eS-bO6"/>
-                                    <constraint firstAttribute="centerX" secondItem="H1G-yl-ZRi" secondAttribute="centerX" id="D5P-wN-zMx"/>
-                                    <constraint firstAttribute="height" constant="96" id="n4W-xE-JrO"/>
-                                    <constraint firstItem="H1G-yl-ZRi" firstAttribute="top" secondItem="CUw-Su-QgT" secondAttribute="bottom" constant="8" id="stW-Y0-Xgt"/>
-                                    <constraint firstAttribute="width" constant="163" id="tQi-4d-TnT"/>
-                                </constraints>
-                            </customView>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="47" horizontalPageScroll="10" verticalLineScroll="47" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VcJ-XH-uji">
                                 <rect key="frame" x="0.0" y="0.0" width="250" height="270"/>
                                 <clipView key="contentView" id="Jtz-Tg-vlU">
@@ -281,24 +253,81 @@ DQ
                             </scrollView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="hqQ-Pm-Q13" secondAttribute="centerX" id="ES4-dx-pZx"/>
                             <constraint firstAttribute="bottom" secondItem="VcJ-XH-uji" secondAttribute="bottom" id="Eb3-cZ-2e3"/>
                             <constraint firstAttribute="trailing" secondItem="VcJ-XH-uji" secondAttribute="trailing" id="V4f-sc-uMG"/>
                             <constraint firstItem="VcJ-XH-uji" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="Z3N-8S-cSy"/>
                             <constraint firstItem="VcJ-XH-uji" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="kiW-kt-e31"/>
-                            <constraint firstAttribute="centerY" secondItem="hqQ-Pm-Q13" secondAttribute="centerY" id="lgU-HM-Euq"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="progressIndicatorHolderView" destination="hqQ-Pm-Q13" id="MjS-9s-ERp"/>
-                        <outlet property="progressIndicatorLabelView" destination="H1G-yl-ZRi" id="o3m-oz-lbx"/>
-                        <outlet property="progressIndicatorView" destination="CUw-Su-QgT" id="oLW-7v-nx5"/>
                         <outlet property="tblView" destination="vh3-UZ-15P" id="BVV-sC-j3K"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="1182"/>
+            <point key="canvasLocation" x="-147" y="1650"/>
+        </scene>
+        <!--Main Container View Controller-->
+        <scene sceneID="sJp-iq-PDa">
+            <objects>
+                <viewController id="yBL-jf-stO" customClass="MainContainerViewController" sceneMemberID="viewController">
+                    <view key="view" id="ZKi-bK-hlf">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="bwz-6L-b0d">
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                                <connections>
+                                    <segue destination="7Zd-wp-BRy" kind="embed" id="sce-sZ-uqu"/>
+                                </connections>
+                            </containerView>
+                            <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wsY-wv-adT" propertyAccessControl="none">
+                                <rect key="frame" x="143" y="102" width="163" height="96"/>
+                                <subviews>
+                                    <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="Ah3-TD-Yoc">
+                                        <rect key="frame" x="65" y="32" width="32" height="32"/>
+                                    </progressIndicator>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Pqr-2u-Ned">
+                                        <rect key="frame" x="44" y="7" width="75" height="17"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="71" id="gUb-AA-qDF"/>
+                                            <constraint firstAttribute="height" constant="17" id="nI1-xm-lKn"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Connecting" id="npW-2n-ZYK">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="Pqr-2u-Ned" secondAttribute="centerX" id="CpZ-0w-t6i"/>
+                                    <constraint firstItem="Pqr-2u-Ned" firstAttribute="top" secondItem="Ah3-TD-Yoc" secondAttribute="bottom" constant="8" id="NtE-j8-0r9"/>
+                                    <constraint firstAttribute="centerX" secondItem="Ah3-TD-Yoc" secondAttribute="centerX" id="cIu-wA-Vrc"/>
+                                    <constraint firstAttribute="width" constant="163" id="kIF-aV-xzz"/>
+                                    <constraint firstAttribute="height" constant="96" id="kU9-gH-Nr4"/>
+                                    <constraint firstAttribute="centerY" secondItem="Ah3-TD-Yoc" secondAttribute="centerY" id="u5u-cw-Dpo"/>
+                                </constraints>
+                            </customView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="wsY-wv-adT" secondAttribute="centerX" id="JFi-tS-pAe"/>
+                            <constraint firstItem="bwz-6L-b0d" firstAttribute="top" secondItem="ZKi-bK-hlf" secondAttribute="top" id="VFh-kg-Ltj"/>
+                            <constraint firstAttribute="centerY" secondItem="wsY-wv-adT" secondAttribute="centerY" id="b7N-aQ-z3f"/>
+                            <constraint firstAttribute="bottom" secondItem="bwz-6L-b0d" secondAttribute="bottom" id="ieH-Wy-MWq"/>
+                            <constraint firstItem="bwz-6L-b0d" firstAttribute="leading" secondItem="ZKi-bK-hlf" secondAttribute="leading" id="pNv-HY-Oti"/>
+                            <constraint firstAttribute="trailing" secondItem="bwz-6L-b0d" secondAttribute="trailing" id="xkt-He-zx0"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="progressIndicatorHolderView" destination="wsY-wv-adT" id="3x3-fJ-ZgV"/>
+                        <outlet property="progressIndicatorLabelView" destination="Pqr-2u-Ned" id="9zw-0h-lXw"/>
+                        <outlet property="progressIndicatorView" destination="Ah3-TD-Yoc" id="a3Y-WG-Z3T"/>
+                    </connections>
+                </viewController>
+                <customObject id="OtY-50-kIi" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-47" y="754"/>
         </scene>
         <!--Tab View Controller-->
         <scene sceneID="N5t-q5-7X7">
@@ -321,7 +350,7 @@ DQ
                 </tabViewController>
                 <customObject id="wje-L0-aie" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="708"/>
+            <point key="canvasLocation" x="-47" y="1216"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Q4p-BA-Dll">
@@ -334,7 +363,7 @@ DQ
                 </viewController>
                 <customObject id="yy7-3D-Ukb" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="778" y="708"/>
+            <point key="canvasLocation" x="515" y="1056"/>
         </scene>
     </scenes>
 </document>
