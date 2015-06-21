@@ -15,7 +15,6 @@
 		A50F67FA1B333BFA00B75059 /* CompanionTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = A50F67F91B333BFA00B75059 /* CompanionTableCellView.m */; };
 		A5187E091B2C568D007D8B7A /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5187E081B2C568D007D8B7A /* MainWindowController.m */; };
 		A5187E0D1B2C6194007D8B7A /* EnterYourNameController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5187E0C1B2C6194007D8B7A /* EnterYourNameController.m */; };
-		A5187E101B2C903E007D8B7A /* ConnectItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A5187E0F1B2C903E007D8B7A /* ConnectItem.m */; };
 		A52CE7AC1B1B01E2005020A5 /* MCChatClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A52CE7AB1B1B01E2005020A5 /* MCChatClient.m */; };
 		A52CE7B21B1B2AE9005020A5 /* MCChatUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A52CE7B11B1B2AE9005020A5 /* MCChatUser.m */; };
 		A53B85731AA5E7F300C191C2 /* MCChatCore.m in Sources */ = {isa = PBXBuildFile; fileRef = A53B85721AA5E7F300C191C2 /* MCChatCore.m */; };
@@ -51,8 +50,6 @@
 		A5187E081B2C568D007D8B7A /* MainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = "<group>"; };
 		A5187E0B1B2C6194007D8B7A /* EnterYourNameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterYourNameController.h; sourceTree = "<group>"; };
 		A5187E0C1B2C6194007D8B7A /* EnterYourNameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterYourNameController.m; sourceTree = "<group>"; };
-		A5187E0E1B2C903E007D8B7A /* ConnectItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectItem.h; sourceTree = "<group>"; };
-		A5187E0F1B2C903E007D8B7A /* ConnectItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectItem.m; sourceTree = "<group>"; };
 		A52CE7AA1B1B01E2005020A5 /* MCChatClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCChatClient.h; sourceTree = "<group>"; };
 		A52CE7AB1B1B01E2005020A5 /* MCChatClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCChatClient.m; sourceTree = "<group>"; };
 		A52CE7B01B1B2AE9005020A5 /* MCChatUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCChatUser.h; sourceTree = "<group>"; };
@@ -119,8 +116,6 @@
 				A58C542F1AA5E25900059106 /* CompanionsLstViewController.m */,
 				A5187E071B2C568D007D8B7A /* MainWindowController.h */,
 				A5187E081B2C568D007D8B7A /* MainWindowController.m */,
-				A5187E0E1B2C903E007D8B7A /* ConnectItem.h */,
-				A5187E0F1B2C903E007D8B7A /* ConnectItem.m */,
 				A50F67F81B333BFA00B75059 /* CompanionTableCellView.h */,
 				A50F67F91B333BFA00B75059 /* CompanionTableCellView.m */,
 			);
@@ -340,7 +335,6 @@
 				A53B85731AA5E7F300C191C2 /* MCChatCore.m in Sources */,
 				A5187E0D1B2C6194007D8B7A /* EnterYourNameController.m in Sources */,
 				A58C542B1AA5E25900059106 /* AppDelegate.m in Sources */,
-				A5187E101B2C903E007D8B7A /* ConnectItem.m in Sources */,
 				A50F67EB1B30405400B75059 /* MCChatChat.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -455,11 +449,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = mchat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "5ff66f8f-a3ce-4f8e-86fa-d267cbc8d1d2";
 			};
 			name = Debug;
 		};
@@ -467,11 +462,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = mchat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "d92c7936-51d9-4ab0-9ee7-87c17aa3f342";
 			};
 			name = Release;
 		};

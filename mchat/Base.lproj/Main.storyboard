@@ -25,6 +25,19 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Connection" id="JHB-Wv-hnE">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Connection" id="r7N-DC-jAZ">
+                                    <items>
+                                        <menuItem title="Connect" keyEquivalent="c" id="UDJ-AK-1zo">
+                                            <modifierMask key="keyEquivalentModifierMask" control="YES"/>
+                                            <connections>
+                                                <action selector="onConnectMenuClicked:" target="Voe-Tx-rLC" id="hJM-0h-JqV"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                         </items>
                     </menu>
                     <connections>
@@ -32,7 +45,7 @@
                     </connections>
                 </application>
             </objects>
-            <point key="canvasLocation" x="75" y="0.0"/>
+            <point key="canvasLocation" x="335" y="137"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
@@ -43,44 +56,19 @@
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-                        <toolbar key="toolbar" implicitIdentifier="A6E9893E-C643-48AE-800B-D5C7B5EE97D4" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconOnly" sizeMode="regular" id="2fy-EX-1JH">
-                            <allowedToolbarItems>
-                                <toolbarItem implicitItemIdentifier="4E5FEE59-7551-4C7F-BE1B-5E0C51C0D3FB" label="Connection" paletteLabel="Connection" id="wYl-2z-UJL" customClass="ConnectItem">
-                                    <nil key="toolTip"/>
-                                    <size key="minSize" width="82" height="32"/>
-                                    <size key="maxSize" width="105" height="43"/>
-                                    <button key="view" verticalHuggingPriority="750" id="fYj-ea-fMR">
-                                        <rect key="frame" x="0.0" y="14" width="105" height="43"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="push" title="Connect" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3GU-iL-29X">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                    </button>
-                                    <connections>
-                                        <action selector="connectClicked:" target="B8D-0N-5wS" id="7kX-Bd-EqP"/>
-                                        <segue destination="jhj-vR-qcJ" kind="sheet" id="3Y8-50-NZs"/>
-                                    </connections>
-                                </toolbarItem>
-                            </allowedToolbarItems>
-                            <defaultToolbarItems>
-                                <toolbarItem reference="wYl-2z-UJL"/>
-                            </defaultToolbarItems>
-                        </toolbar>
                     </window>
                     <connections>
-                        <outlet property="connectItem" destination="wYl-2z-UJL" id="NmJ-uf-sIV"/>
-                        <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
+                        <segue destination="7Zd-wp-BRy" kind="relationship" relationship="window.shadowedContentViewController" id="d9E-HG-290"/>
                     </connections>
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="250"/>
+            <point key="canvasLocation" x="-47" y="288"/>
         </scene>
-        <!--Enter Your Name Controller-->
+        <!--Enter a name-->
         <scene sceneID="ax2-8E-bAF">
             <objects>
-                <viewController id="jhj-vR-qcJ" customClass="EnterYourNameController" sceneMemberID="viewController">
+                <viewController title="Enter a name" storyboardIdentifier="EnterNameController" id="jhj-vR-qcJ" customClass="EnterYourNameController" sceneMemberID="viewController">
                     <view key="view" id="Ofv-XL-Cet">
                         <rect key="frame" x="0.0" y="0.0" width="189" height="120"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -90,7 +78,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="149" id="oSO-va-j1i"/>
                                 </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="lUc-So-PY5">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="lUc-So-PY5">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -125,7 +113,7 @@ DQ
 </string>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="okClicked:" target="yKp-Wl-ecl" id="adF-lU-1Tb"/>
+                                            <action selector="okClicked:" target="jhj-vR-qcJ" id="fhI-Ul-2lh"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -165,38 +153,7 @@ DQ
                 </viewController>
                 <customObject id="yKp-Wl-ecl" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="584.5" y="265"/>
-        </scene>
-        <!--Window Controller-->
-        <scene sceneID="yeN-fi-dR9">
-            <objects>
-                <windowController id="DXf-fl-k2V" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="gRS-T1-TAv">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="480" height="270"/>
-                        <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
-                    </window>
-                    <connections>
-                        <segue destination="Kg0-52-eJc" kind="relationship" relationship="window.shadowedContentViewController" id="bMy-3G-1nm"/>
-                    </connections>
-                </windowController>
-                <customObject id="GUJ-3y-nzE" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="761" y="653"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="XJS-j0-OLs">
-            <objects>
-                <viewController id="Kg0-52-eJc" sceneMemberID="viewController">
-                    <view key="view" id="tHU-bc-jFG">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </view>
-                </viewController>
-                <customObject id="C3l-Vk-Pfm" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="761" y="1141"/>
+            <point key="canvasLocation" x="335" y="272"/>
         </scene>
         <!--Companions Lst View Controller-->
         <scene sceneID="hIz-AP-VOD">
@@ -248,7 +205,7 @@ DQ
                                             <tableViewGridLines key="gridStyleMask" horizontal="YES"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn width="245.34642502059705" minWidth="40" maxWidth="1000" id="eXM-RP-BVT">
+                                                <tableColumn width="244.65799263233336" minWidth="40" maxWidth="1000" id="eXM-RP-BVT">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -262,7 +219,7 @@ DQ
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="companionCell" id="vQI-gK-TSG" customClass="CompanionTableCellView">
-                                                            <rect key="frame" x="1" y="1" width="245" height="45"/>
+                                                            <rect key="frame" x="1" y="1" width="244.62013689678312" height="45"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QSj-wI-tgW">
@@ -313,7 +270,7 @@ DQ
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="fI3-Vm-Cq7"/>
                                 </constraints>
-                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="0.82678748970147353" horizontal="YES" id="A8D-wp-YRd">
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="A8D-wp-YRd">
                                     <rect key="frame" x="1" y="95.388471841812134" width="186" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
@@ -337,26 +294,47 @@ DQ
                         <outlet property="progressIndicatorLabelView" destination="H1G-yl-ZRi" id="o3m-oz-lbx"/>
                         <outlet property="progressIndicatorView" destination="CUw-Su-QgT" id="oLW-7v-nx5"/>
                         <outlet property="tblView" destination="vh3-UZ-15P" id="BVV-sC-j3K"/>
-                        <segue destination="DXf-fl-k2V" kind="show" identifier="openchat" id="Ehz-m0-H7B"/>
-                        <segue destination="tBb-lw-LaY" kind="show" identifier="seg" id="l8Q-is-AeW"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-73" y="648"/>
+            <point key="canvasLocation" x="75" y="1182"/>
+        </scene>
+        <!--Tab View Controller-->
+        <scene sceneID="N5t-q5-7X7">
+            <objects>
+                <tabViewController selectedTabViewItemIndex="0" id="7Zd-wp-BRy" sceneMemberID="viewController">
+                    <tabViewItems>
+                        <tabViewItem label="Users" id="60e-nu-8PK"/>
+                        <tabViewItem label="Chats" identifier="" id="OVK-0Y-d0q"/>
+                    </tabViewItems>
+                    <tabView key="tabView" focusRingType="exterior" drawsBackground="NO" type="noTabsNoBorder" id="S08-Kl-8su" userLabel="No Shadow Tab View">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <font key="font" metaFont="message"/>
+                        <tabViewItems/>
+                    </tabView>
+                    <connections>
+                        <segue destination="XfG-lQ-9wD" kind="relationship" relationship="tabItems" id="pCU-6G-HZC"/>
+                        <segue destination="Mo8-L4-fsR" kind="relationship" relationship="tabItems" id="829-Ka-MmS"/>
+                    </connections>
+                </tabViewController>
+                <customObject id="wje-L0-aie" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="75" y="708"/>
         </scene>
         <!--View Controller-->
-        <scene sceneID="S1s-Iw-dZl">
+        <scene sceneID="Q4p-BA-Dll">
             <objects>
-                <viewController id="tBb-lw-LaY" sceneMemberID="viewController">
-                    <view key="view" id="S3N-l2-10G">
+                <viewController id="Mo8-L4-fsR" sceneMemberID="viewController">
+                    <view key="view" id="CjE-aL-kah">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </view>
                 </viewController>
-                <customObject id="k4J-zB-2qx" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <customObject id="yy7-3D-Ukb" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="252" y="1064"/>
+            <point key="canvasLocation" x="778" y="708"/>
         </scene>
     </scenes>
 </document>

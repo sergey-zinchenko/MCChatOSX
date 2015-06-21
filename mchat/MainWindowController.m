@@ -7,28 +7,30 @@
 //
 
 #import "MainWindowController.h"
-#import "CompanionsLstViewController.h"
-#import "ConnectItem.h"
+
 
 @interface MainWindowController ()
-- (void)connectionAttemptStartedNotifcation:(NSNotification*)notif;
-- (void)connectionAttemptEndedNotifcation:(NSNotification*)notif;
+- (void)connectMenuClickedNotification:(NSNotification*)notif;
 @end
 
 @implementation MainWindowController
 {
-    __weak IBOutlet ConnectItem *connectItem;
+
 }
 
-- (void)connectionAttemptStartedNotifcation:(NSNotification*)notif
+- (void)connectMenuClickedNotification:(NSNotification*)notif
 {
-    connectItem.connectingNow = YES;
+    static NSString *storyBoardName = @"Main";
+    static NSString *viewControllerIdentifier = @"EnterNameController";
+    NSStoryboard *mainStoryBoard = [NSStoryboard storyboardWithName:storyBoardName
+                                                             bundle:nil];
+    NSViewController *enterNameViewController = [mainStoryBoard instantiateControllerWithIdentifier:viewControllerIdentifier];
+    NSWindow *sheetWindow = [NSWindow windowWithContentViewController:enterNameViewController];
+    [self.window beginSheet:sheetWindow completionHandler:^(NSModalResponse returnCode) {
+        
+    }];
 }
 
-- (void)connectionAttemptEndedNotifcation:(NSNotification*)notif
-{
-    connectItem.connectingNow = NO;
-}
 
 - (void)windowDidLoad {
     [super windowDidLoad];
@@ -36,9 +38,8 @@
 //    closeButton.enabled = YES;
     self.window.delegate = self;
     //self.window.titleVisibility = NSWindowTitleHidden;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectionAttemptStartedNotifcation:) name:kConnectionAttemptStartedNotifcation object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectionAttemptEndedNotifcation:) name:kConnectionAttemptEndedNotifcation object:nil];
-    connectItem.connectingNow = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectMenuClickedNotification:) name:kConnectMenuClickedNotification object:nil];
+  
 }
 
 - (BOOL)windowShouldClose:(id)sender

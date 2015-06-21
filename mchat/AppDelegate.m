@@ -7,9 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import "MainWindowController.h"
 
 @interface AppDelegate ()
-
+- (IBAction)onConnectMenuClicked:(id)sender;
 @end
 
 @implementation AppDelegate
@@ -20,6 +21,11 @@
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
+}
+
+- (IBAction)onConnectMenuClicked:(id)sender
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kConnectMenuClickedNotification object:nil];
 }
 
 @end

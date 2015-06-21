@@ -27,12 +27,19 @@
 {
     MCChatClient *cli = [MCChatClient sharedInstance];
     cli.myName = [nameTextField stringValue];
-    [self dismissController:self];
+//    [self dismissController:self];
+//    [self.view.window orderOut:self];
+//    [self.view.window close];
+    
+    [self.view.window.sheetParent endSheet:self.view.window];
 }
 
 - (IBAction)cancelClicked:(id)sender
 {
-    [self dismissController:self];
+//    [self dismissController:self];
+//    [self.view.window orderOut:self];
+//    [self.view.window close];
+    [self.view.window.sheetParent endSheet:self.view.window];
 }
 
 @end

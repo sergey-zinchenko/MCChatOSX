@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+#define kConnectMenuClickedNotification @"ConnectMenuClickedNotification"
+
 @interface MainWindowController : NSWindowController<NSWindowDelegate>
 
 @end
