@@ -128,6 +128,13 @@
     }
 }
 
+- (void)disconnectedBecauseOfException:(NSString *)exception
+                            withReason:(NSString *)reason
+                               forCore:(MCChatCore *)core
+{
+    
+}
+
 - (void)exception:(NSString *)exception
        withReason:(NSString *)reason
           forCore:(MCChatCore *)c

@@ -16,6 +16,9 @@
 @protocol MCChatCoreDelegate <NSObject>
 - (void)connectedToServerVersion:(NSUInteger)version
                        forCore:(MCChatCore *)core;
+- (void)disconnectedBecauseOfException:(NSString *)exception
+                            withReason:(NSString *)reason
+                               forCore:(MCChatCore *)core;
 - (void)exception:(NSString *)exception
     withReason:(NSString *)reason
         forCore:(MCChatCore *)core;
@@ -37,6 +40,6 @@
             toUsers:(NSArray *)users;
 - (void)sendBroadcastMessage:(NSDictionary *)message;
 
-@property (atomic, weak) id<MCChatCoreDelegate> delegate;
+@property (nonatomic, weak) id<MCChatCoreDelegate> delegate;
 @property (readonly, getter=getUsers) NSArray *users;
 @end
