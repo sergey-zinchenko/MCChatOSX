@@ -241,7 +241,7 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
         if (toSend.length > 0)
             [toSend replaceBytesInRange:NSMakeRange(0, toSend.length) withBytes:NULL length:0];
         static NSString *hostString = @"52.17.115.151";
-        //        static NSString *hostString = @"localhost";
+//                static NSString *hostString = @"localhost";
         CFHostRef host = CFHostCreateWithName(kCFAllocatorDefault, (__bridge CFStringRef)hostString);
         CFStreamCreatePairWithSocketToCFHost(kCFAllocatorDefault, host, 9000, &readStream, &writeStream);
         CFRelease(host);
