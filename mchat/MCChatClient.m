@@ -9,6 +9,13 @@
 #import "MCChatClient.h"
 #import "MCChatUser.h"
 
+#define kLayerFileld @"layer"
+#define kHandshakeLayer @"handshake"
+#define kUserLayer @"user"
+#define kLocationField @"location"
+#define kHiField @"hi"
+#define kHelloField @"hello"
+
 #define LOG_SELECTOR()  NSLog(@"%@ > %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #define VALID_DELEGATE(obj, sel) (obj&&[obj conformsToProtocol:@protocol(MCChatClientDeligate)]&&[obj respondsToSelector:sel])
 #define VALID_MESSAGE_FIELD(msg, field, cls) ([[msg allKeys] indexOfObject:field] != NSNotFound && [msg[field] isKindOfClass:[cls class]])
@@ -108,7 +115,7 @@
 - (void)updateMyLocation:(NSString *)locationString
 {
     myLocation = locationString;
-    [core sendMessage:@{@"layer":@"user", @"location": locationString}
+    [core sendMessage:@{kLayerFileld : kUserLayer, kLocationField : locationString}
               toUsers:[companions allKeys]];
 }
 
@@ -117,7 +124,7 @@
 {
     LOG_SELECTOR()
     [companions removeAllObjects];
-    [c sendBroadcastMessage:@{@"layer" : @"handshake", @"hello": self.myName}];
+    [c sendBroadcastMessage:@{kLayerFileld : kHandshakeLayer, kHelloField: self.myName}];
     if (connectingNow) {
         if (self.useNotifications)
             [[NSNotificationCenter defaultCenter] postNotificationName:kConnectionAttemptEndedNotifcation object:self userInfo:@{kSuccessFlag : @YES}];
@@ -132,15 +139,6 @@
                             withReason:(NSString *)reason
                                forCore:(MCChatCore *)core
 {
-    
-}
-
-- (void)exception:(NSString *)exception
-       withReason:(NSString *)reason
-          forCore:(MCChatCore *)c
-{
-    LOG_SELECTOR()
-    NSLog(@"Exception > %@ : %@", exception, reason);
     if (connectingNow) {
         if (self.useNotifications)
             [[NSNotificationCenter defaultCenter] postNotificationName:kConnectionAttemptEndedNotifcation object:self userInfo:@{kSuccessFlag : @NO}];
@@ -149,6 +147,19 @@
         }
         connectingNow = NO;
     }
+    [companions removeAllObjects];
+    if (self.useNotifications)
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDisconnectOccurredNotification object:self userInfo:nil];
+    if VALID_DELEGATE(self.deligate, @selector(onDisconnectOccurredForClient:))
+        [self.deligate onDisconnectOccurredForClient:self];
+}
+
+- (void)exception:(NSString *)exception
+       withReason:(NSString *)reason
+          forCore:(MCChatCore *)c
+{
+    LOG_SELECTOR()
+    NSLog(@"Exception > %@ : %@", exception, reason);
 }
 
 - (void)userConnected:(NSUUID *)user
@@ -172,6 +183,8 @@
                                                     userName:name
                                                    forClient:self];
     [companions setObject:companion forKey:uuid];
+    if (self.useNotifications)
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUserConnectedNotification object:self userInfo:@{kUserField : companion}];
     if VALID_DELEGATE(self.deligate, @selector(onUserConnected:forClient:)) {
         [self.deligate onUserConnected:companion forClient:self];
     }
@@ -183,6 +196,8 @@
     if ([[companions allKeys] indexOfObject:uuid] != NSNotFound) {
         MCChatUser *companion = companions[uuid];
         [companions removeObjectForKey:uuid];
+        if (self.useNotifications)
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUserDisconnectedNotification object:self userInfo:@{kUserField : companion}];
         if VALID_DELEGATE(self.deligate, @selector(onUserDisconnected:forClient:)) {
             [self.deligate onUserDisconnected:companion forClient:self];
         }
@@ -195,29 +210,29 @@
 {
     LOG_SELECTOR()
     NSLog(@"%@ >> %@", [userid UUIDString], message);
-    if VALID_MESSAGE_FIELD(message, @"layer", NSString) {
-        NSString *layer = message[@"layer"];
-        if ([layer isEqualToString:@"handshake"]) {
-            if VALID_MESSAGE_FIELD(message, @"hello", NSString) {
-                [c sendMessage:@{@"layer" : @"handshake", @"hi" : self.myName}
+    if VALID_MESSAGE_FIELD(message, kLayerFileld, NSString) {
+        NSString *layer = message[kLayerFileld];
+        if ([layer isEqualToString:kHandshakeLayer]) {
+            if VALID_MESSAGE_FIELD(message, kHelloField, NSString) {
+                [c sendMessage:@{kLayerFileld : kHandshakeLayer, kHiField : self.myName}
                         toUser:userid];
                 [self addCompanionWithUUID:userid
-                                   andName:message[@"hello"]];
+                                   andName:message[kHelloField]];
                 if (myLocation)
-                    [c sendMessage:@{@"layer" : @"user", @"location" : myLocation}
+                    [c sendMessage:@{kLayerFileld : kUserLayer, kLocationField : myLocation}
                             toUser:userid];
-            } else if VALID_MESSAGE_FIELD(message, @"hi", NSString) {
+            } else if VALID_MESSAGE_FIELD(message, kHiField, NSString) {
                 [self addCompanionWithUUID:userid
-                                   andName:message[@"hi"]];
+                                   andName:message[kHiField]];
                 if (myLocation)
-                    [c sendMessage:@{@"layer" : @"user", @"location" : myLocation}
+                    [c sendMessage:@{kLayerFileld : kUserLayer, kLocationField : myLocation}
                             toUser:userid];
             }
-        } else if ([layer isEqualToString:@"user"]) {
-            if VALID_MESSAGE_FIELD(message, @"location", NSString) {
+        } else if ([layer isEqualToString:kUserLayer]) {
+            if VALID_MESSAGE_FIELD(message, kLocationField, NSString) {
                 MCChatUser *companion = companions[userid];
                 if (companion) {
-                    companion.location = message[@"location"];
+                    companion.location = message[kLocationField];
                     if VALID_DELEGATE(self.deligate, @selector(onUserInfoChanged:forClient:)) {
                         [self.deligate onUserInfoChanged:companion
                                                forClient:self];

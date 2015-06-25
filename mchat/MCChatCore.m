@@ -388,7 +388,8 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
 - (void)disconnect
 {
     LOG_SELECTOR()
-    [self _closeStreamsAndCallDelegateWithException:nil];
+    if (readStream&&writeStream)
+        [self _closeStreamsAndCallDelegateWithException:nil];
 }
 
 - (void)sendMessage:(NSDictionary *)message

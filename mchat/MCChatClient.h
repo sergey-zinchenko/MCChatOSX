@@ -14,6 +14,10 @@
 #define kConnectionAttemptStartedNotifcation @"kConnectionAttemptStartedNotifcation"
 #define kConnectionAttemptEndedNotifcation @"kConnectionAttemptEndedNotifcation"
 #define kSuccessFlag @"kSuccessFlag"
+#define kDisconnectOccurredNotification @"kDisconnectOccurredNotification"
+#define kUserConnectedNotification @"kUserConnectedNotification"
+#define kUserDisconnectedNotification @"kUserDisconnectedNotification"
+#define kUserField @"kUserField"
 
 #define MC_CHAT_CLIENT_EXCEPTION @"MCChatClientException"
 
