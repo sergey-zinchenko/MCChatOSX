@@ -12,7 +12,7 @@
 #import "MCChatClient.h"
 #import "LocationMonitor.h"
 
-@interface CompanionsLstViewController : NSViewController<MCChatClientDeligate, NSTableViewDataSource, NSTableViewDelegate, LocationManagerDelegate>
+@interface CompanionsLstViewController : NSViewController<MCChatClientDeligate, NSTableViewDataSource, NSTableViewDelegate>
 
 
 

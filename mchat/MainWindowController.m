@@ -7,15 +7,18 @@
 //
 
 #import "MainWindowController.h"
+#import "MCChatClient.h"
 
 
 @interface MainWindowController ()
-- (void)connectMenuClickedNotification:(NSNotification*)notif;
+- (void)connectMenuClickedNotification:(NSNotification *)notif;
+- (void)connectionAttemptEndedNotification:(NSNotification *)notif;
 @end
 
 @implementation MainWindowController
 {
     NSWindow *nameSheetWindow;
+    LocationMonitor *locationMonitor;
 }
 
 - (void)connectMenuClickedNotification:(NSNotification*)notif
@@ -35,6 +38,18 @@
     }
 }
 
+- (void)connectionAttemptEndedNotification:(NSNotification *)notif
+{
+    if ([notif.userInfo[kSuccessFlag] boolValue]) {
+        @try {
+            [locationMonitor start];
+        }
+        @catch (NSException *exception) {
+
+        }
+    }
+}
+
 
 - (void)windowDidLoad {
     [super windowDidLoad];
@@ -42,7 +57,10 @@
     //    closeButton.enabled = YES;
     self.window.delegate = self;
     //self.window.titleVisibility = NSWindowTitleHidden;
+    locationMonitor = [[LocationMonitor alloc] init];
+    locationMonitor.delegate = self;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectMenuClickedNotification:) name:kConnectMenuClickedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectionAttemptEndedNotification:) name:kConnectionAttemptEndedNotifcation object:[MCChatClient sharedInstance]];
     
 }
 
@@ -50,6 +68,11 @@
 {
     [self.window miniaturize:self];
     return NO;
+}
+
+- (void)locationDidChangedTo:(NSString *)locationString
+{
+    [[MCChatClient sharedInstance] updateMyLocation:locationString];
 }
 
 @end

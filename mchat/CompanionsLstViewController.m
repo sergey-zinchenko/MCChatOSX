@@ -20,13 +20,10 @@
     
     NSMutableArray *companions;
     AVAudioPlayer *player;
-    LocationMonitor *locationMonitor;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    locationMonitor = [[LocationMonitor alloc] init];
-    locationMonitor.delegate = self;
     companions = [[NSMutableArray alloc] init];
     [companions addObjectsFromArray:[MCChatClient sharedInstance].companions];
     [MCChatClient sharedInstance].deligate = self;
@@ -48,14 +45,6 @@
 - (void)onConnectAttemptEndedSuccessfully:(BOOL)successfully
                                 forClient:(MCChatClient *)client
 {
-    @try {
-        if (successfully) {
-            [locationMonitor start];
-        }
-    }
-    @catch (NSException *exception) {
-        
-    }
     
 }
 
@@ -104,11 +93,6 @@
     }
 }
 
-
-- (void)locationDidChangedTo:(NSString *)locationString
-{
-    [[MCChatClient sharedInstance] updateMyLocation:locationString];
-}
 
 - (void)playDingSound
 {
