@@ -16,8 +16,10 @@
 @end
 
 @interface MCChatChat : NSObject
-- (instancetype)initWithUser:(MCChatUser *)user;
+- (instancetype)initWithUsers:(NSArray *)users;
 - (void)addCompanion:(MCChatUser *)companion;
+
++ (MCChatChat *) chatWithUsers:(NSArray *)users;
 
 @property (nonatomic, readonly) NSString *theme;
 @property (readonly, nonatomic) NSArray *companions;

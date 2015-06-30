@@ -10,4 +10,9 @@
 
 @implementation MCChatChat
 
++ (MCChatChat *) chatWithUsers:(NSArray *)users
+{
+    return nil;
+}
+
 @end

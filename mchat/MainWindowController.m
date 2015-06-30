@@ -59,6 +59,7 @@
     //self.window.titleVisibility = NSWindowTitleHidden;
     locationMonitor = [[LocationMonitor alloc] init];
     locationMonitor.delegate = self;
+    [MCChatClient sharedInstance].useNotifications = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectMenuClickedNotification:) name:kConnectMenuClickedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectionAttemptEndedNotification:) name:kConnectionAttemptEndedNotifcation object:[MCChatClient sharedInstance]];
     

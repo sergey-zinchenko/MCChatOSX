@@ -24,6 +24,7 @@
 		A58C54321AA5E25900059106 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A58C54311AA5E25900059106 /* Images.xcassets */; };
 		A58C54351AA5E25900059106 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A58C54331AA5E25900059106 /* Main.storyboard */; };
 		A58C54411AA5E25A00059106 /* mchatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A58C54401AA5E25A00059106 /* mchatTests.m */; };
+		A59D5B161B42A2E7000383A0 /* NSArray+dif.m in Sources */ = {isa = PBXBuildFile; fileRef = A59D5B151B42A2E7000383A0 /* NSArray+dif.m */; };
 		A5FE2AE91B36FEE600F9490F /* MainContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FE2AE81B36FEE600F9490F /* MainContainerViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +70,8 @@
 		A58C543A1AA5E25A00059106 /* mchatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mchatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A58C543F1AA5E25A00059106 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A58C54401AA5E25A00059106 /* mchatTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mchatTests.m; sourceTree = "<group>"; };
+		A59D5B141B42A2E7000383A0 /* NSArray+dif.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+dif.h"; sourceTree = "<group>"; };
+		A59D5B151B42A2E7000383A0 /* NSArray+dif.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+dif.m"; sourceTree = "<group>"; };
 		A5FE2AE71B36FEE600F9490F /* MainContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainContainerViewController.h; sourceTree = "<group>"; };
 		A5FE2AE81B36FEE600F9490F /* MainContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainContainerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -174,6 +177,7 @@
 		A58C54261AA5E25900059106 /* mchat */ = {
 			isa = PBXGroup;
 			children = (
+				A59D5B131B42A1EC000383A0 /* Common Protocols */,
 				A50F67F41B30C12F00B75059 /* Common Classes */,
 				A5830E6B1B2C36FC00183FAA /* MCChat */,
 				A50F67EC1B30519A00B75059 /* Resources */,
@@ -210,6 +214,15 @@
 				A58C543F1AA5E25A00059106 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A59D5B131B42A1EC000383A0 /* Common Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				A59D5B141B42A2E7000383A0 /* NSArray+dif.h */,
+				A59D5B151B42A2E7000383A0 /* NSArray+dif.m */,
+			);
+			name = "Common Protocols";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -270,7 +283,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A58C541F1AA5E25900059106 /* Build configuration list for PBXProject "mchat" */;
+			buildConfigurationList = A58C541F1AA5E25900059106 /* Build configuration list for PBXProject "MChat" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -336,6 +349,7 @@
 				A52CE7B21B1B2AE9005020A5 /* MCChatUser.m in Sources */,
 				A5187E091B2C568D007D8B7A /* MainWindowController.m in Sources */,
 				A50F67F71B30C16500B75059 /* LocationMonitor.m in Sources */,
+				A59D5B161B42A2E7000383A0 /* NSArray+dif.m in Sources */,
 				A52CE7AC1B1B01E2005020A5 /* MCChatClient.m in Sources */,
 				A53B85731AA5E7F300C191C2 /* MCChatCore.m in Sources */,
 				A5187E0D1B2C6194007D8B7A /* EnterYourNameController.m in Sources */,
@@ -455,6 +469,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = mchat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -467,6 +482,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = mchat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -514,7 +530,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A58C541F1AA5E25900059106 /* Build configuration list for PBXProject "mchat" */ = {
+		A58C541F1AA5E25900059106 /* Build configuration list for PBXProject "MChat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A58C54421AA5E25A00059106 /* Debug */,

@@ -8,10 +8,11 @@
 
 #import "CompanionsLstViewController.h"
 #import "CompanionTableCellView.h"
+#import "NSArray+dif.h"
 
 @interface CompanionsLstViewController ()
-
 - (void)playDingSound;
+- (void)filterAndDispayCompanions;
 @end
 
 @implementation CompanionsLstViewController
@@ -19,14 +20,31 @@
     __weak IBOutlet NSTableView *tblView;
     
     NSMutableArray *companions;
+    NSArray *companionsToDisplay;
     AVAudioPlayer *player;
+    NSPredicate *filterPredicate;
+}
+
+- (void)filterAndDispayCompanions
+{
+    NSArray *newFilteredArray = filterPredicate?[companions filteredArrayUsingPredicate:filterPredicate]:[companions copy];
+    NSIndexSet *ins = nil, *del = nil;
+    [newFilteredArray computeDeletions:&del insertions:&ins comparisonToInitialState:companionsToDisplay];
+    companionsToDisplay = newFilteredArray;
+    [tblView beginUpdates];
+    [tblView removeRowsAtIndexes:del withAnimation:NSTableViewAnimationSlideRight];
+    [tblView insertRowsAtIndexes:ins withAnimation:NSTableViewAnimationSlideLeft];
+    [tblView endUpdates];
+    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     companions = [[NSMutableArray alloc] init];
     [companions addObjectsFromArray:[MCChatClient sharedInstance].companions];
+    companionsToDisplay = [NSArray array];
     [MCChatClient sharedInstance].deligate = self;
+    [tblView becomeFirstResponder];
     
 }
 
@@ -39,47 +57,48 @@
 - (void)onConnectAttemptStartedForClient:(MCChatClient *)client
 {
     [companions removeAllObjects];
-    [tblView reloadData];
+    [self filterAndDispayCompanions];
 }
 
-- (void)onConnectAttemptEndedSuccessfully:(BOOL)successfully
-                                forClient:(MCChatClient *)client
+- (void)onDisconnectOccurredForClient:(MCChatClient *)client
 {
-    
+    [companions removeAllObjects];
+    [self filterAndDispayCompanions];
 }
+
 
 - (void)onUserConnected:(MCChatUser *)user
               forClient:(MCChatClient *)client
 {
     [companions addObject:user];
-    [tblView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:([companions count] - 1)] withAnimation:NSTableViewAnimationSlideLeft];
+    [self filterAndDispayCompanions];
     [self playDingSound];
 }
 
 - (void)onUserDisconnected:(MCChatUser *)user
                  forClient:(MCChatClient *)client
 {
-    [tblView removeRowsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange([companions indexOfObject:user], 1)] withAnimation:NSTableViewAnimationSlideRight];
     [companions removeObject:user];
+    [self filterAndDispayCompanions];
 }
 
 - (void)onUserInfoChanged:(MCChatUser *)user
                 forClient:(MCChatClient *)client
 {
-    [tblView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:[companions indexOfObject:user]]
+    [tblView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:[companionsToDisplay indexOfObject:user]]
                        columnIndexes:[NSIndexSet indexSetWithIndex:0]];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-    return [companions count];
+    return [companionsToDisplay count];
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
     static NSString *viewIdentifier = @"companionCell";
     CompanionTableCellView *cell = (CompanionTableCellView *)[tblView makeViewWithIdentifier:viewIdentifier owner:self];
-    MCChatUser *companion = companions[row];
+    MCChatUser *companion = companionsToDisplay[row];
     [cell setName:companion.name];
     [cell setLocation:companion.location];
     return cell;
@@ -89,7 +108,7 @@
 {
     if (tblView.numberOfSelectedRows > 0) {
        // [self performSegueWithIdentifier:@"openchat" sender:self];
-        [tblView deselectRow:tblView.selectedRow];
+       // [tblView deselectRow:tblView.selectedRow];
     }
 }
 
@@ -104,5 +123,14 @@
                                            error:nil];
     [player play];
 }
+
+
+- (IBAction)searchFieldAction:(NSSearchField *)sender {
+    NSString *attributeValue = [sender stringValue];
+    filterPredicate = (attributeValue&&![attributeValue isEqualToString:@""])?[NSPredicate predicateWithFormat:@"(name contains[cd] %@) or (location contains[cd] %@)",attributeValue, attributeValue]:nil;
+    [self filterAndDispayCompanions];
+    
+}
+
 
 @end
