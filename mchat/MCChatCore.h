@@ -13,6 +13,12 @@
 
 @class MCChatCore;
 
+typedef NS_ENUM(NSInteger, MCChatCoreStatus) {
+    MCChatCoreNotConnected,
+    MCChatCoreConnecting,
+    MCChatCoreConnected
+};
+
 @protocol MCChatCoreDelegate <NSObject>
 - (void)connectedToServerVersion:(NSUInteger)version
                        forCore:(MCChatCore *)core;
@@ -42,4 +48,5 @@
 
 @property (nonatomic, weak) id<MCChatCoreDelegate> delegate;
 @property (readonly, getter=getUsers) NSArray *users;
+@property (readonly, getter=getStatus) MCChatCoreStatus status;
 @end

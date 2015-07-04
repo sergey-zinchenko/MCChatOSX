@@ -35,6 +35,7 @@
 - (void)_sendMessage:(NSDictionary *)meesage;
 - (void)_closeStreamsAndCallDelegateWithException:(NSException *)exception;
 - (void)_sendMoreDataAndControllExceptions;
+- (MCChatCoreStatus)getStatus;
 @end
 
 @implementation MCChatCore
@@ -43,6 +44,12 @@
     CFWriteStreamRef writeStream;
     NSMutableData *received, *toSend;
     NSMutableArray *userList;
+    MCChatCoreStatus currentStatus;
+}
+
+- (MCChatCoreStatus)getStatus
+{
+    return currentStatus;
 }
 
 -(NSArray *)getUsers
@@ -70,6 +77,7 @@
                     [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"Wrong format of clients field of welcome message" userInfo:nil] raise];
                 [userList addObject:uuid];
             }
+            currentStatus = MCChatCoreConnected;
             if VALID_DELEGATE(self.delegate, @selector(connectedToServerVersion:forCore:))
                 [self.delegate connectedToServerVersion:[message[kVersionField] longValue] forCore:self];
         } else if ([message[kMessageTypeField] isEqualToString:kMessageTypeUserConnected]) {
@@ -224,6 +232,7 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
 {
     LOG_SELECTOR()
     if (self = [super init]) {
+        currentStatus = MCChatCoreNotConnected;
         userList = [[NSMutableArray alloc] init];
         toSend = [[NSMutableData alloc] init];
         received = [[NSMutableData alloc] init];
@@ -236,6 +245,7 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
     LOG_SELECTOR()
     
     if (!(readStream || writeStream)) {
+        currentStatus = MCChatCoreConnecting;
         if (received.length > 0)
             [received replaceBytesInRange:NSMakeRange(0, received.length) withBytes:NULL length:0];
         if (toSend.length > 0)
@@ -331,6 +341,7 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
 - (void)_releaseStream
 {
     LOG_SELECTOR()
+    currentStatus = MCChatCoreNotConnected;
     if (readStream) {
         CFRelease(readStream);
         readStream = NULL;
@@ -344,6 +355,7 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
 - (void)_closeStreamsAndClear
 {
     LOG_SELECTOR()
+    currentStatus = MCChatCoreNotConnected;
     if (readStream) {
         if (CFReadStreamGetStatus(readStream) != kCFStreamStatusClosed)
             CFReadStreamClose(readStream);

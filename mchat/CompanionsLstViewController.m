@@ -105,12 +105,26 @@
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
 {
-    if (tblView.numberOfSelectedRows > 0) {
-       // [self performSegueWithIdentifier:@"openchat" sender:self];
-       // [tblView deselectRow:tblView.selectedRow];
-    }
+//    if (tblView.numberOfSelectedRows > 0) {
+//        NSArray *selectedUsers = [companionsToDisplay objectsAtIndexes:tblView.selectedRowIndexes];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kUsersSelectionChangedNotification object:self userInfo:@{kSelectedUsersSet: selectedUsers}];
+//    }
+    
+    NSArray *selectedUsers = [companionsToDisplay objectsAtIndexes:tblView.selectedRowIndexes];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUsersSelectionChangedNotification object:self userInfo:@{kSelectedUsersSet: selectedUsers}];
+//    [[[NSApplication sharedApplication] menu] ]
 }
 
+-(BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+    //if ()
+    return NO;
+}
+
+-(void) doSomething:(id)sender;
+{
+    
+}
 
 - (void)playDingSound
 {
@@ -128,7 +142,6 @@
     NSString *attributeValue = [sender stringValue];
     filterPredicate = (attributeValue&&![attributeValue isEqualToString:@""])?[NSPredicate predicateWithFormat:@"(name contains[cd] %@) or (location contains[cd] %@)",attributeValue, attributeValue]:nil;
     [self filterAndDispayCompanions];
-    
 }
 
 

@@ -23,6 +23,7 @@
 @interface MCChatClient ()
 - (void)addCompanionWithUUID:(NSUUID *)uuid andName:(NSString *)name;
 - (void)removeCompanionWithUUID:(NSUUID *)uuid;
+- (MCChatCoreStatus)getStatus;
 @end
 
 @implementation MCChatClient
@@ -32,6 +33,12 @@
     NSString *_myName;
     BOOL connectingNow;
     NSString *myLocation;
+}
+
+- (MCChatCoreStatus)getStatus;
+{
+    LOG_SELECTOR()
+    return core.status;
 }
 
 - (NSString *)getMyName

@@ -32,7 +32,7 @@
                                         <menuItem title="Connect" keyEquivalent="c" id="UDJ-AK-1zo">
                                             <modifierMask key="keyEquivalentModifierMask" control="YES"/>
                                             <connections>
-                                                <action selector="onConnectMenuClicked:" target="Voe-Tx-rLC" id="soo-TJ-mR6"/>
+                                                <action selector="connectAction:" target="Ady-hI-5gd" id="ch0-Ps-o7r"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -42,16 +42,16 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Chats" id="zHx-rj-czN">
                                     <items>
-                                        <menuItem title="Start a chat" keyEquivalent="s" id="xo0-mA-LZr">
+                                        <menuItem title="Start chat" keyEquivalent="s" id="xo0-mA-LZr">
                                             <modifierMask key="keyEquivalentModifierMask" control="YES"/>
-                                            <connections>
-                                                <action selector="onStartChatCliecked:" target="Voe-Tx-rLC" id="Wwj-De-n5d"/>
-                                            </connections>
                                         </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
                         </items>
+                        <connections>
+                            <outlet property="delegate" destination="Voe-Tx-rLC" id="d5x-3d-WxO"/>
+                        </connections>
                     </menu>
                     <connections>
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
@@ -83,7 +83,7 @@
             <objects>
                 <viewController title="Enter a name" storyboardIdentifier="EnterNameController" id="jhj-vR-qcJ" customClass="EnterYourNameController" sceneMemberID="viewController">
                     <view key="view" id="Ofv-XL-Cet">
-                        <rect key="frame" x="0.0" y="0.0" width="189" height="120"/>
+                        <rect key="frame" x="0.0" y="0.0" width="189" height="116"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="E6t-A0-xeu">
@@ -166,7 +166,7 @@ DQ
                 </viewController>
                 <customObject id="yKp-Wl-ecl" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="335" y="272"/>
+            <point key="canvasLocation" x="334.5" y="274"/>
         </scene>
         <!--Companions Lst View Controller-->
         <scene sceneID="hIz-AP-VOD">
@@ -218,7 +218,7 @@ DQ
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="companionCell" id="vQI-gK-TSG" customClass="CompanionTableCellView">
-                                                            <rect key="frame" x="1" y="1" width="245.40633091017509" height="45"/>
+                                                            <rect key="frame" x="1" y="1" width="245" height="45"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QSj-wI-tgW">

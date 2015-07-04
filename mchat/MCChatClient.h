@@ -45,6 +45,7 @@
 
 + (MCChatClient *)sharedInstance;
 
+@property (readonly, getter=getStatus) MCChatCoreStatus status;
 @property (assign, nonatomic) BOOL useNotifications;
 @property (weak, nonatomic) id<MCChatClientDeligate> deligate;
 @property (getter=getMyName, setter=setMyName:) NSString* myName;

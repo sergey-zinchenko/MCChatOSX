@@ -14,6 +14,8 @@
 - (void)connectMenuClickedNotification:(NSNotification *)notif;
 - (void)connectionAttemptEndedNotification:(NSNotification *)notif;
 - (void)startChatMenuClickedNotification:(NSNotification *)notif;
+- (void)connectAction:(id)sender;
+
 @end
 
 @implementation MainWindowController
@@ -24,19 +26,7 @@
 
 - (void)connectMenuClickedNotification:(NSNotification*)notif
 {
-    if (!(nameSheetWindow||themeSheetWindow)) {
-        static NSString *storyBoardName = @"Main";
-        static NSString *viewControllerIdentifier = @"EnterNameController";
-        NSStoryboard *mainStoryBoard = [NSStoryboard storyboardWithName:storyBoardName
-                                                                 bundle:nil];
-        NSViewController *enterNameViewController = [mainStoryBoard instantiateControllerWithIdentifier:viewControllerIdentifier];
-        nameSheetWindow = [NSWindow windowWithContentViewController:enterNameViewController];
-        nameSheetWindow.releasedWhenClosed = YES;
-        [self.window beginSheet:nameSheetWindow completionHandler:^(NSModalResponse returnCode) {
-            [nameSheetWindow close];
-            nameSheetWindow = nil;
-        }];
-    }
+    
 }
 
 - (void)startChatMenuClickedNotification:(NSNotification *)notif
@@ -87,6 +77,32 @@
 {
     [self.window miniaturize:self];
     return NO;
+}
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+    SEL theAction = [menuItem action];
+    if (theAction == @selector(connectAction:)) {
+        return [MCChatClient sharedInstance].status == MCChatCoreNotConnected;
+    }
+    return NO;
+}
+
+- (void)connectAction:(id)sender
+{
+    if (!(nameSheetWindow||themeSheetWindow)) {
+        static NSString *storyBoardName = @"Main";
+        static NSString *viewControllerIdentifier = @"EnterNameController";
+        NSStoryboard *mainStoryBoard = [NSStoryboard storyboardWithName:storyBoardName
+                                                                 bundle:nil];
+        NSViewController *enterNameViewController = [mainStoryBoard instantiateControllerWithIdentifier:viewControllerIdentifier];
+        nameSheetWindow = [NSWindow windowWithContentViewController:enterNameViewController];
+        nameSheetWindow.releasedWhenClosed = YES;
+        [self.window beginSheet:nameSheetWindow completionHandler:^(NSModalResponse returnCode) {
+            [nameSheetWindow close];
+            nameSheetWindow = nil;
+        }];
+    }
 }
 
 - (void)locationDidChangedTo:(NSString *)locationString

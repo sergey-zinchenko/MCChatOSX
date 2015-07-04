@@ -10,7 +10,10 @@
 #import <CoreLocation/CoreLocation.h>
 #import <AVFoundation/AVFoundation.h>
 #import "MCChatClient.h"
-#import "LocationMonitor.h"
+
+#define kUsersSelectionChangedNotification @"kUsersSelectionChangedNotification"
+#define kSelectedUsersSet @"kSelectedUsersSet"
+
 
 @interface CompanionsLstViewController : NSViewController<MCChatClientDeligate, NSTableViewDataSource, NSTableViewDelegate>
 
