@@ -13,17 +13,18 @@
 @interface MainWindowController ()
 - (void)connectMenuClickedNotification:(NSNotification *)notif;
 - (void)connectionAttemptEndedNotification:(NSNotification *)notif;
+- (void)startChatMenuClickedNotification:(NSNotification *)notif;
 @end
 
 @implementation MainWindowController
 {
-    NSWindow *nameSheetWindow;
+    NSWindow *nameSheetWindow, *themeSheetWindow;
     LocationMonitor *locationMonitor;
 }
 
 - (void)connectMenuClickedNotification:(NSNotification*)notif
 {
-    if (!nameSheetWindow) {
+    if (!(nameSheetWindow||themeSheetWindow)) {
         static NSString *storyBoardName = @"Main";
         static NSString *viewControllerIdentifier = @"EnterNameController";
         NSStoryboard *mainStoryBoard = [NSStoryboard storyboardWithName:storyBoardName
@@ -34,6 +35,23 @@
         [self.window beginSheet:nameSheetWindow completionHandler:^(NSModalResponse returnCode) {
             [nameSheetWindow close];
             nameSheetWindow = nil;
+        }];
+    }
+}
+
+- (void)startChatMenuClickedNotification:(NSNotification *)notif
+{
+    if (!(nameSheetWindow||themeSheetWindow)) {
+        static NSString *storyBoardName = @"Main";
+        static NSString *viewControllerIdentifier = @"EnterThemeController";
+        NSStoryboard *mainStoryBoard = [NSStoryboard storyboardWithName:storyBoardName
+                                                                 bundle:nil];
+        NSViewController *enterThemeViewController = [mainStoryBoard instantiateControllerWithIdentifier:viewControllerIdentifier];
+        themeSheetWindow = [NSWindow windowWithContentViewController:enterThemeViewController];
+        themeSheetWindow.releasedWhenClosed = YES;
+        [self.window beginSheet:themeSheetWindow completionHandler:^(NSModalResponse returnCode) {
+            [themeSheetWindow close];
+            themeSheetWindow = nil;
         }];
     }
 }
@@ -61,8 +79,8 @@
     locationMonitor.delegate = self;
     [MCChatClient sharedInstance].useNotifications = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectMenuClickedNotification:) name:kConnectMenuClickedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startChatMenuClickedNotification:) name:kStartChatClickedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectionAttemptEndedNotification:) name:kConnectionAttemptEndedNotifcation object:[MCChatClient sharedInstance]];
-    
 }
 
 - (BOOL)windowShouldClose:(id)sender

@@ -9,7 +9,8 @@
 #import <Cocoa/Cocoa.h>
 #import "LocationMonitor.h"
 
-#define kConnectMenuClickedNotification @"ConnectMenuClickedNotification"
+#define kConnectMenuClickedNotification @"kConnectMenuClickedNotification"
+#define kStartChatClickedNotification @"kStartChatClickedNotification"
 
 @interface MainWindowController : NSWindowController<NSWindowDelegate, LocationManagerDelegate>
 

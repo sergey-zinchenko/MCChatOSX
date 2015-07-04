@@ -11,6 +11,7 @@
 
 @interface AppDelegate ()
 - (IBAction)onConnectMenuClicked:(id)sender;
+- (IBAction)onStartChatCliecked:(id)sender;
 @end
 
 @implementation AppDelegate
@@ -26,6 +27,11 @@
 - (IBAction)onConnectMenuClicked:(id)sender
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kConnectMenuClickedNotification object:nil];
+}
+
+- (IBAction)onStartChatCliecked:(id)sender
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kStartChatClickedNotification object:nil];
 }
 
 @end

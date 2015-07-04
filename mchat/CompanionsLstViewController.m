@@ -35,7 +35,6 @@
     [tblView removeRowsAtIndexes:del withAnimation:NSTableViewAnimationSlideRight];
     [tblView insertRowsAtIndexes:ins withAnimation:NSTableViewAnimationSlideLeft];
     [tblView endUpdates];
-    
 }
 
 - (void)viewDidLoad {
