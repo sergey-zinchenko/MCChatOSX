@@ -11,6 +11,7 @@
 
 #define kConnectMenuClickedNotification @"kConnectMenuClickedNotification"
 #define kStartChatClickedNotification @"kStartChatClickedNotification"
+#define kChatUsersArray @"kChatUsersArray"
 
 @interface MainWindowController : NSWindowController<NSWindowDelegate, LocationManagerDelegate>
 

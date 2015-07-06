@@ -8,10 +8,11 @@
 
 #import "AppDelegate.h"
 #import "MainWindowController.h"
+#import "MCChatClient.h"
 
 @interface AppDelegate ()
-- (IBAction)onConnectMenuClicked:(id)sender;
-- (IBAction)onStartChatCliecked:(id)sender;
+- (void)connectAction:(id)sender;
+- (void)disconnectAction:(id)sender;
 @end
 
 @implementation AppDelegate
@@ -24,14 +25,25 @@
     // Insert code here to tear down your application
 }
 
-- (IBAction)onConnectMenuClicked:(id)sender
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kConnectMenuClickedNotification object:nil];
+    SEL theAction = [menuItem action];
+    if (theAction == @selector(connectAction:)) {
+        return [MCChatClient sharedInstance].status == MCChatCoreNotConnected;
+    } else if (theAction == @selector(disconnectAction:)) {
+        return [MCChatClient sharedInstance].status != MCChatCoreNotConnected;
+    }
+    return NO;
 }
 
-- (IBAction)onStartChatCliecked:(id)sender
+- (void)disconnectAction:(id)sender
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kStartChatClickedNotification object:nil];
+    [[MCChatClient sharedInstance] disconnect];
+}
+
+- (void)connectAction:(id)sender
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kConnectMenuClickedNotification object:nil];
 }
 
 @end

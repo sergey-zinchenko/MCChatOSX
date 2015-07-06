@@ -9,6 +9,7 @@
 #import "CompanionsLstViewController.h"
 #import "CompanionTableCellView.h"
 #import "NSArray+dif.h"
+#import "MainWindowController.h"
 
 @interface CompanionsLstViewController ()
 - (void)playDingSound;
@@ -117,13 +118,18 @@
 
 -(BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-    //if ()
+    SEL sel = menuItem.action;
+    if (sel == @selector(startChatAction:)) {
+        return tblView.numberOfSelectedRows > 0;
+    }
     return NO;
 }
 
--(void) doSomething:(id)sender;
+- (void)startChatAction:(id)sender
 {
-    
+    if (tblView.numberOfSelectedRows > 0) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kStartChatClickedNotification object:self userInfo:@{kChatUsersArray:[companionsToDisplay objectsAtIndexes:tblView.selectedRowIndexes]}];
+    }
 }
 
 - (void)playDingSound
@@ -136,7 +142,6 @@
                                            error:nil];
     [player play];
 }
-
 
 - (IBAction)searchFieldAction:(NSSearchField *)sender {
     NSString *attributeValue = [sender stringValue];

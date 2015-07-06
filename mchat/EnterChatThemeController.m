@@ -14,12 +14,18 @@
 @end
 
 @implementation EnterChatThemeController
+{
+    IBOutlet NSTextField *label;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
 }
 
+- (void)viewWillAppear {
+    [label setStringValue:[NSString stringWithFormat:@"You want to start chat with %ld users....\nWhat is a theme of the discussion?", [self.users count]]];
+}
 
 - (IBAction)okClicked:(id)sender
 {

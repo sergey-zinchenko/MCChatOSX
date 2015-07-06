@@ -10,4 +10,6 @@
 
 @interface EnterChatThemeController : NSViewController
 
+@property (nonatomic, strong) NSArray *users;
+
 @end
