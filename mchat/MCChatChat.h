@@ -27,6 +27,9 @@ typedef NS_ENUM(NSInteger, MCChatChatInitiator) {
                        chatId:(NSUUID *)uid
                     andClient:(MCChatClient *)client;
 
++ (MCChatChat *) startChatWithCompanions:(NSArray *)companions
+                               chatTheme:(NSString *)theme;
+
 - (void)start;
 - (void)accept;
 - (void)decline;

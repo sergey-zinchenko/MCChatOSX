@@ -40,6 +40,12 @@
     return self;
 }
 
++ (MCChatChat *) startChatWithCompanions:(NSArray *)companions
+                               chatTheme:(NSString *)theme
+{
+    return nil;
+}
+
 - (void)start
 {
     LOG_SELECTOR()
