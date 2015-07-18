@@ -43,27 +43,36 @@
 + (MCChatChat *) startChatWithCompanions:(NSArray *)companions
                                chatTheme:(NSString *)theme
 {
-    return nil;
+    MCChatChat *chat = [[MCChatChat alloc] initWithCompanions:companions
+                                        chatTheme:theme
+                                           chatId:nil
+                                        andClient:nil];
+    [chat start];
+    return chat;
 }
 
 - (void)start
 {
     LOG_SELECTOR()
+    [self.client startChat:self];
 }
 
 - (void)accept
 {
     LOG_SELECTOR()
+    [self.client acceptChat:self];
 }
 
 - (void)decline
 {
     LOG_SELECTOR()
+    [self.client acceptChat:self];
 }
 
 - (void)leave
 {
     LOG_SELECTOR()
+    [self.client leaveChat:self];
 }
 
 @end

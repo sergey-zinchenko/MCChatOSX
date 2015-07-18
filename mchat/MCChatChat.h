@@ -10,6 +10,7 @@
 
 @class MCChatClient;
 @class MCChatUser;
+@class MCChatChat;
 
 
 typedef NS_ENUM(NSInteger, MCChatChatInitiator) {
@@ -18,7 +19,12 @@ typedef NS_ENUM(NSInteger, MCChatChatInitiator) {
 };
 
 @protocol MCChatChatDelegate <NSObject>
-
+@optional
+- (void)onCompanion:(MCChatUser *)companion acceptedChat:(MCChatChat *)chat;
+- (void)onCompanion:(MCChatUser *)companion leftChat:(MCChatChat *)chat;
+- (void)onNewMessageRecieved:(NSString *)message
+               fromCompanion:(MCChatUser *)companion
+                    fromChat:(MCChatChat *)chat;
 @end
 
 @interface MCChatChat : NSObject
