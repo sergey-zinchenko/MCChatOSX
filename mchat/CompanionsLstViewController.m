@@ -110,9 +110,7 @@
 //        NSArray *selectedUsers = [companionsToDisplay objectsAtIndexes:tblView.selectedRowIndexes];
 //        [[NSNotificationCenter defaultCenter] postNotificationName:kUsersSelectionChangedNotification object:self userInfo:@{kSelectedUsersSet: selectedUsers}];
 //    }
-    
-    NSArray *selectedUsers = [companionsToDisplay objectsAtIndexes:tblView.selectedRowIndexes];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kUsersSelectionChangedNotification object:self userInfo:@{kSelectedUsersSet: selectedUsers}];
+
 //    [[[NSApplication sharedApplication] menu] ]
 }
 

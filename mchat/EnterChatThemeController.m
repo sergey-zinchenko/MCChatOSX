@@ -15,7 +15,7 @@
 
 @implementation EnterChatThemeController
 {
-    IBOutlet NSTextField *label;
+   __weak IBOutlet NSTextField *label;
 }
 
 - (void)viewDidLoad {

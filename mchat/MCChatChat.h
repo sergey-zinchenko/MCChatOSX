@@ -11,17 +11,30 @@
 @class MCChatClient;
 @class MCChatUser;
 
+
+typedef NS_ENUM(NSInteger, MCChatChatInitiator) {
+    MCChatChatInitiatedByMe,
+    MCChatChatInitiatedByCompanion,
+    MCChatChatInitiatedByUnknown
+};
+
 @protocol MCChatChatDelegate <NSObject>
 
 @end
 
 @interface MCChatChat : NSObject
-- (instancetype)initWithUsers:(NSArray *)users;
-- (void)addCompanion:(MCChatUser *)companion;
+- (instancetype)initWithCompanions:(NSArray *)companions
+                    chatTheme:(NSString *)theme
+                       chatId:(NSUUID *)uid
+                    andClient:(MCChatClient *)cleint;
+- (void)start;
+- (void)accept;
+- (void)decline;
 
-+ (MCChatChat *) chatWithUsers:(NSArray *)users;
-
+@property (nonatomic, readonly) MCChatChatInitiator initiatedBy;
+@property (nonatomic, readonly) NSUUID *chatId;
 @property (nonatomic, readonly) NSString *theme;
-@property (readonly, nonatomic) NSArray *companions;
+@property (nonatomic, readonly) NSArray *companions;
+@property (nonatomic, readonly, weak) MCChatClient *client;
 @property (nonatomic, weak) id<MCChatChatDelegate> delegate;
 @end

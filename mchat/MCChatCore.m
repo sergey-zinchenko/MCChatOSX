@@ -49,11 +49,13 @@
 
 - (MCChatCoreStatus)getStatus
 {
+    LOG_SELECTOR()
     return currentStatus;
 }
 
 -(NSArray *)getUsers
 {
+    LOG_SELECTOR()
     return [userList copy];
 }
 
@@ -310,6 +312,7 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
 
 - (void)_sendMoreDataAndControllExceptions
 {
+    LOG_SELECTOR()
     @try {
         [self _sendMoreData];
     }
@@ -407,6 +410,7 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
 - (void)sendMessage:(NSDictionary *)message
              toUser:(NSUUID *)user
 {
+    LOG_SELECTOR()
     if (!(message&&user&&[message isKindOfClass:[NSDictionary class]]&&[user isKindOfClass:[NSUUID class]]))
         [[NSException exceptionWithName:ERRONOUS_PARAMETERS reason:@"Invalid parameters passed" userInfo:nil] raise];
     NSMutableDictionary *mutableMessage = [message mutableCopy];
@@ -416,6 +420,7 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
 
 - (void)sendBroadcastMessage:(NSDictionary *)message
 {
+    LOG_SELECTOR()
     [self sendMessage:message
               toUsers:self.users];
 }
@@ -423,6 +428,7 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
 - (void)sendMessage:(NSDictionary *)message
             toUsers:(NSArray *)users
 {
+    LOG_SELECTOR()
     if (!(message&&users&&[message isKindOfClass:[NSDictionary class]]&&[users isKindOfClass:[NSArray class]]))
         [[NSException exceptionWithName:ERRONOUS_PARAMETERS reason:@"Invalid parameters passed" userInfo:nil] raise];
     NSMutableArray *strUsers = [[NSMutableArray alloc] init];

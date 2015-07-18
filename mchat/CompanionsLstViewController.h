@@ -11,10 +11,6 @@
 #import <AVFoundation/AVFoundation.h>
 #import "MCChatClient.h"
 
-#define kUsersSelectionChangedNotification @"kUsersSelectionChangedNotification"
-#define kSelectedUsersSet @"kSelectedUsersSet"
-
-
 @interface CompanionsLstViewController : NSViewController<MCChatClientDeligate, NSTableViewDataSource, NSTableViewDelegate>
 
 

@@ -10,9 +10,31 @@
 
 @implementation MCChatChat
 
-+ (MCChatChat *) chatWithUsers:(NSArray *)users
+- (instancetype)initWithCompanions:(NSArray *)companions
+                         chatTheme:(NSString *)theme
+                            chatId:(NSUUID *)uid
+                         andClient:(MCChatClient *)cleint
 {
-    return nil;
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
+
+- (void)start
+{
+    
+}
+
+- (void)accept
+{
+    
+}
+
+- (void)decline
+{
+    
 }
 
 @end
