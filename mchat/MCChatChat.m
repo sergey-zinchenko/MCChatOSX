@@ -7,34 +7,57 @@
 //
 
 #import "MCChatChat.h"
+#import "MCChatClient.h"
+
+#define LOG_SELECTOR()  NSLog(@"%@ > %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 
 @implementation MCChatChat
+
+@synthesize theme = _theme, companions = _companions, chatId = _chatId, initiatedBy = _initiatedBy, client = _client;
 
 - (instancetype)initWithCompanions:(NSArray *)companions
                          chatTheme:(NSString *)theme
                             chatId:(NSUUID *)uid
-                         andClient:(MCChatClient *)cleint
+                         andClient:(MCChatClient *)client
 {
+    LOG_SELECTOR()
     self = [super init];
     if (self) {
-        
+        _theme = [theme copy];
+        _companions = [companions copy];
+        if (uid) {
+            _initiatedBy = MCChatChatInitiatedByCompanion;
+            _chatId = [uid copy];
+        } else {
+            _initiatedBy = MCChatChatInitiatedByMe;
+            _chatId = [NSUUID UUID];
+        }
+        if (client)
+            _client = client;
+        else
+            _client = [MCChatClient sharedInstance];
     }
     return self;
 }
 
 - (void)start
 {
-    
+    LOG_SELECTOR()
 }
 
 - (void)accept
 {
-    
+    LOG_SELECTOR()
 }
 
 - (void)decline
 {
-    
+    LOG_SELECTOR()
+}
+
+- (void)leave
+{
+    LOG_SELECTOR()
 }
 
 @end

@@ -10,6 +10,7 @@
 
 #import "MCChatCore.h"
 #import "MCChatUser.h"
+#import "MCChatChat.h"
 
 #define kConnectionAttemptStartedNotifcation @"kConnectionAttemptStartedNotifcation"
 #define kConnectionAttemptEndedNotifcation @"kConnectionAttemptEndedNotifcation"
@@ -42,6 +43,11 @@
 - (void)connect;
 - (void)disconnect;
 - (void)updateMyLocation:(NSString *)locationString;
+
+- (void)startChat:(MCChatChat *)chat;
+- (void)acceptChat:(MCChatChat *)chat;
+- (void)declineChat:(MCChatChat *)chat;
+- (void)leaveChat:(MCChatChat *)chat;
 
 + (MCChatClient *)sharedInstance;
 

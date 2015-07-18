@@ -8,6 +8,7 @@
 
 #import "MCChatClient.h"
 #import "MCChatUser.h"
+#import "MCChatChat.h"
 
 #define kLayerFileld @"layer"
 #define kHandshakeLayer @"handshake"
@@ -30,10 +31,32 @@
 {
     MCChatCore *core;
     NSMutableDictionary *companions;
+    NSMutableDictionary *chats;
     NSString *_myName;
     BOOL connectingNow;
     NSString *myLocation;
 }
+
+- (void)startChat:(MCChatChat *)chat
+{
+    LOG_SELECTOR()
+}
+
+- (void)acceptChat:(MCChatChat *)chat
+{
+    LOG_SELECTOR()
+}
+
+- (void)declineChat:(MCChatChat *)chat
+{
+    LOG_SELECTOR()
+}
+
+- (void)leaveChat:(MCChatChat *)chat
+{
+    LOG_SELECTOR()
+}
+
 
 - (MCChatCoreStatus)getStatus;
 {
@@ -92,6 +115,7 @@
         self.useNotifications = NO;
         connectingNow = NO;
         companions = [[NSMutableDictionary alloc] init];
+        chats = [[NSMutableDictionary alloc] init];
         core = [[MCChatCore alloc] init];
         core.delegate = self;
     }
@@ -131,6 +155,7 @@
 {
     LOG_SELECTOR()
     [companions removeAllObjects];
+    [chats removeAllObjects];
     [c sendBroadcastMessage:@{kLayerFileld : kHandshakeLayer, kHelloField: self.myName}];
     if (connectingNow) {
         if (self.useNotifications)
@@ -155,6 +180,7 @@
         connectingNow = NO;
     }
     [companions removeAllObjects];
+    [chats removeAllObjects];
     if (self.useNotifications)
         [[NSNotificationCenter defaultCenter] postNotificationName:kDisconnectOccurredNotification object:self userInfo:nil];
     if VALID_DELEGATE(self.deligate, @selector(onDisconnectOccurredForClient:))

@@ -18,4 +18,6 @@
                    forClient:(MCChatClient *)client;
 @property (readonly, nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *location;
+@property (readonly, nonatomic, strong) NSUUID *uid;
+@property (readonly, nonatomic, weak) MCChatClient *client;
 @end
