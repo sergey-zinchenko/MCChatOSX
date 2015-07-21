@@ -57,6 +57,11 @@
     LOG_SELECTOR()
 }
 
+- (void)sendMessage:(NSString *)message
+             toChat:(MCChatChat *)chat
+{
+    LOG_SELECTOR()
+}
 
 - (MCChatCoreStatus)getStatus;
 {

@@ -179,6 +179,8 @@ void readcb(CFReadStreamRef stream, CFStreamEventType eventType, void *clientCal
                     CFErrorRef err = CFReadStreamCopyError(stream);
                     CFStringRef desc = CFErrorCopyDescription(err);
                     [chatCore _closeStreamsAndCallDelegateWithException:[NSException exceptionWithName:LOWLEVEL_ERROR reason:(__bridge NSString *)(desc) userInfo:nil]];
+                    CFRelease(err);
+                    CFRelease(desc);
                 }
                 break;
             }
@@ -187,6 +189,8 @@ void readcb(CFReadStreamRef stream, CFStreamEventType eventType, void *clientCal
                 CFErrorRef err = CFReadStreamCopyError(stream);
                 CFStringRef desc = CFErrorCopyDescription(err);
                 [chatCore _closeStreamsAndCallDelegateWithException:[NSException exceptionWithName:LOWLEVEL_ERROR reason:(__bridge NSString *)(desc) userInfo:nil]];
+                CFRelease(err);
+                CFRelease(desc);
                 break;
             }
             case kCFStreamEventEndEncountered:
@@ -213,6 +217,8 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
                 CFErrorRef err = CFWriteStreamCopyError(stream);
                 CFStringRef desc = CFErrorCopyDescription(err);
                 [chatCore _closeStreamsAndCallDelegateWithException:[NSException exceptionWithName:LOWLEVEL_ERROR reason:(__bridge NSString *)(desc) userInfo:nil]];
+                CFRelease(err);
+                CFRelease(desc);
                 break;
             case kCFStreamEventOpenCompleted:
                 NSLog(@"Write stream open completed");

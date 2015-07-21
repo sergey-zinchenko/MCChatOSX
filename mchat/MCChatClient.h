@@ -48,6 +48,8 @@
 - (void)acceptChat:(MCChatChat *)chat;
 - (void)declineChat:(MCChatChat *)chat;
 - (void)leaveChat:(MCChatChat *)chat;
+- (void)sendMessage:(NSString *)message
+             toChat:(MCChatChat *)chat;
 
 + (MCChatClient *)sharedInstance;
 
