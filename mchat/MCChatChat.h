@@ -40,6 +40,7 @@ typedef NS_ENUM(NSInteger, MCChatChatInitiator) {
 
 - (void)start;
 - (void)accept;
+- (void)decline;
 - (void)leave;
 - (void)sendMessage:(NSString *)message;
 

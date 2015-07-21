@@ -18,7 +18,9 @@
 #define kDisconnectOccurredNotification @"kDisconnectOccurredNotification"
 #define kUserConnectedNotification @"kUserConnectedNotification"
 #define kUserDisconnectedNotification @"kUserDisconnectedNotification"
+#define kChatStartedNotification @"kChatStartedNotification"
 #define kUserField @"kUserField"
+#define kChatField @"kChatField"
 
 #define MC_CHAT_CLIENT_EXCEPTION @"MCChatClientException"
 
@@ -73,5 +75,7 @@
 @property (weak, nonatomic) id<MCChatClientChatsDeligate> chatsDeligate;
 @property (getter=getMyName, setter=setMyName:) NSString* myName;
 @property (readonly, getter=getCompanions) NSArray* companions;
+@property (readonly, getter=getChats) NSArray *chats;
+@property (readonly, getter=getPendingChats) NSArray *pendingChats;
 
 @end

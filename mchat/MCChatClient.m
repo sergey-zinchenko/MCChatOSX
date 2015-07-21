@@ -35,16 +35,29 @@
 @implementation MCChatClient
 {
     MCChatCore *core;
-    NSMutableDictionary *companions, *pendingChats, *chats;
+    NSMutableDictionary *companions, *chats, *acceptedChats, *pendingChats;
     NSString *_myName;
     BOOL connectingNow;
     NSString *myLocation;
 }
 
+- (NSArray *)getChats
+{
+    LOG_SELECTOR()
+    return [acceptedChats allValues];
+}
+
+
+-(NSArray *)getPendingChats
+{
+    LOG_SELECTOR()
+    return [pendingChats allValues];
+}
+
 - (void)startChat:(MCChatChat *)chat
 {
     LOG_SELECTOR()
-    if ([[chats allKeys] indexOfObject:chat] != NSNotFound)
+    if ([[acceptedChats allKeys] indexOfObject:chat] != NSNotFound)
         [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat was already started or accepted" userInfo:nil] raise];
     NSMutableArray *chatCompanionsUids = [NSMutableArray array], *chatCompanionsUidsStrings = [NSMutableArray array];
     for (MCChatUser *u in chat.companions) {
@@ -61,6 +74,12 @@
     }
     [chats setObject:chat
               forKey:chat.chatId];
+    [acceptedChats setObject:chat
+              forKey:chat.chatId];
+    if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatStarted:forClient:))
+        [self.chatsDeligate onChatStarted:chat forClient:self];
+    if (self.useNotifications)
+        [[NSNotificationCenter defaultCenter] postNotificationName:kChatStartedNotification object:self userInfo:@{kChatField: chat}];
 }
 
 - (void)acceptChat:(MCChatChat *)chat
@@ -141,6 +160,8 @@
         self.useNotifications = NO;
         connectingNow = NO;
         companions = [[NSMutableDictionary alloc] init];
+        acceptedChats = [[NSMutableDictionary alloc] init];
+        pendingChats = [[NSMutableDictionary alloc] init];
         chats = [[NSMutableDictionary alloc] init];
         core = [[MCChatCore alloc] init];
         core.delegate = self;
@@ -184,7 +205,9 @@
 {
     LOG_SELECTOR()
     [companions removeAllObjects];
+    [acceptedChats removeAllObjects];
     [chats removeAllObjects];
+    [pendingChats removeAllObjects];
     [c sendBroadcastMessage:@{kLayerFileld : kHandshakeLayer, kHelloField: self.myName}];
     if (connectingNow) {
         if (self.useNotifications)
@@ -215,6 +238,8 @@
         connectingNow = NO;
     }
     [companions removeAllObjects];
+    [acceptedChats removeAllObjects];
+    [pendingChats removeAllObjects];
     [chats removeAllObjects];
     if (self.useNotifications)
         [[NSNotificationCenter defaultCenter] postNotificationName:kDisconnectOccurredNotification object:self userInfo:nil];

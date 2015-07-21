@@ -64,6 +64,12 @@
     [self.client acceptChat:self];
 }
 
+-(void)decline
+{
+    LOG_SELECTOR()
+    [self.client declineChat:self];
+}
+
 - (void)leave
 {
     LOG_SELECTOR()
@@ -73,7 +79,8 @@
 - (void)sendMessage:(NSString *)message
 {
     LOG_SELECTOR()
-    [self.client sendMessage:message toChat:self];
+    [self.client sendMessage:message
+                      toChat:self];
 }
 
 @end
