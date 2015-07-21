@@ -206,14 +206,14 @@ DQ
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnSelection="YES" columnResizing="NO" autosaveColumns="NO" rowHeight="45" viewBased="YES" id="vh3-UZ-15P">
-                                            <rect key="frame" x="0.0" y="0.0" width="248" height="0.0"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="247" height="0.0"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <tableViewGridLines key="gridStyleMask" horizontal="YES"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn width="244.44520024689206" minWidth="40" maxWidth="1000" id="eXM-RP-BVT">
+                                                <tableColumn width="245.44520024689206" minWidth="40" maxWidth="1000" id="eXM-RP-BVT">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -408,6 +408,7 @@ DQ
                     </view>
                     <connections>
                         <outlet property="label" destination="izl-q8-QKy" id="aON-AX-wkJ"/>
+                        <outlet property="themeField" destination="z92-NJ-hI3" id="PTb-dn-Zjr"/>
                     </connections>
                 </viewController>
                 <customObject id="lxw-F2-nLN" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

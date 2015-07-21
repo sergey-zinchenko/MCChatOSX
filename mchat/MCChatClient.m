@@ -13,12 +13,17 @@
 #define kLayerFileld @"layer"
 #define kHandshakeLayer @"handshake"
 #define kUserLayer @"user"
+#define kChatLayer @"chat"
+#define kStartField @"start"
+#define kCompanionsField @"companions"
+#define kThemeField @"theme"
 #define kLocationField @"location"
 #define kHiField @"hi"
 #define kHelloField @"hello"
 
 #define LOG_SELECTOR()  NSLog(@"%@ > %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #define VALID_DELEGATE(obj, sel) (obj&&[obj conformsToProtocol:@protocol(MCChatClientDeligate)]&&[obj respondsToSelector:sel])
+#define VALID_CHATS_DELEGATE(obj, sel) (obj&&[obj conformsToProtocol:@protocol(MCChatClientChatsDeligate)]&&[obj respondsToSelector:sel])
 #define VALID_MESSAGE_FIELD(msg, field, cls) ([[msg allKeys] indexOfObject:field] != NSNotFound && [msg[field] isKindOfClass:[cls class]])
 
 @interface MCChatClient ()
@@ -30,8 +35,7 @@
 @implementation MCChatClient
 {
     MCChatCore *core;
-    NSMutableDictionary *companions;
-    NSMutableDictionary *chats;
+    NSMutableDictionary *companions, *pendingChats, *chats;
     NSString *_myName;
     BOOL connectingNow;
     NSString *myLocation;
@@ -40,6 +44,23 @@
 - (void)startChat:(MCChatChat *)chat
 {
     LOG_SELECTOR()
+    if ([[chats allKeys] indexOfObject:chat] != NSNotFound)
+        [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat was already started or accepted" userInfo:nil] raise];
+    NSMutableArray *chatCompanionsUids = [NSMutableArray array], *chatCompanionsUidsStrings = [NSMutableArray array];
+    for (MCChatUser *u in chat.companions) {
+        [chatCompanionsUids addObject:u.uid];
+        [chatCompanionsUidsStrings addObject:[u.uid UUIDString]];
+    }
+    for (NSUUID *uid in chatCompanionsUids) {
+        NSMutableArray *uidsForCurrentCompanion = [chatCompanionsUids mutableCopy];
+        [uidsForCurrentCompanion removeObject:uid];
+        NSMutableArray *uidsStringsForCurrentCompanion = [chatCompanionsUidsStrings mutableCopy];
+        [uidsStringsForCurrentCompanion removeObject:[uid UUIDString]];
+        [core sendMessage:@{kLayerFileld:kChatLayer, kStartField:[chat.chatId UUIDString], kThemeField:chat.theme, kCompanionsField:uidsStringsForCurrentCompanion}
+                   toUser:uid];
+    }
+    [chats setObject:chat
+              forKey:chat.chatId];
 }
 
 - (void)acceptChat:(MCChatChat *)chat
@@ -137,6 +158,9 @@
         if VALID_DELEGATE(self.deligate, @selector(onConnectAttemptStartedForClient:)) {
             [self.deligate onConnectAttemptStartedForClient:self];
         }
+        if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onConnectAttemptStartedForClient:)) {
+            [self.chatsDeligate onConnectAttemptStartedForClient:self];
+        }
         [core connect];
     } else
         [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"Name was not specifyed" userInfo:nil] raise];
@@ -168,6 +192,9 @@
         if VALID_DELEGATE(self.deligate, @selector(onConnectAttemptEndedSuccessfully:forClient:)) {
             [self.deligate onConnectAttemptEndedSuccessfully:YES forClient:self];
         }
+        if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onConnectAttemptEndedSuccessfully:forClient:)) {
+            [self.chatsDeligate onConnectAttemptEndedSuccessfully:YES forClient:self];
+        }
         connectingNow = NO;
     }
 }
@@ -182,6 +209,9 @@
         if VALID_DELEGATE(self.deligate, @selector(onConnectAttemptEndedSuccessfully:forClient:)) {
             [self.deligate onConnectAttemptEndedSuccessfully:NO forClient:self];
         }
+        if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onConnectAttemptEndedSuccessfully:forClient:)) {
+            [self.chatsDeligate onConnectAttemptEndedSuccessfully:NO forClient:self];
+        }
         connectingNow = NO;
     }
     [companions removeAllObjects];
@@ -190,6 +220,8 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kDisconnectOccurredNotification object:self userInfo:nil];
     if VALID_DELEGATE(self.deligate, @selector(onDisconnectOccurredForClient:))
         [self.deligate onDisconnectOccurredForClient:self];
+    if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onDisconnectOccurredForClient:))
+        [self.chatsDeligate onDisconnectOccurredForClient:self];
 }
 
 - (void)exception:(NSString *)exception

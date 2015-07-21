@@ -38,6 +38,20 @@
                 forClient:(MCChatClient *)client;
 @end
 
+@protocol MCChatClientChatsDeligate <NSObject>
+@optional
+- (void)onConnectAttemptStartedForClient:(MCChatClient *)client;
+- (void)onConnectAttemptEndedSuccessfully:(BOOL)successfully
+                                forClient:(MCChatClient *)client;
+- (void)onDisconnectOccurredForClient:(MCChatClient *)client;
+- (void)onChatStarted:(MCChatChat *)chat
+            forClient:(MCChatClient *)client;
+- (void)onChatInvitationRecieved:(MCChatChat *)chat
+                        fromUser:(MCChatUser *)user
+                       forClient:(MCChatClient *)client;
+@end
+
+
 @interface MCChatClient : NSObject<MCChatCoreDelegate>
 - (instancetype)initWithName:(NSString *)name;
 - (void)connect;
@@ -56,6 +70,7 @@
 @property (readonly, getter=getStatus) MCChatCoreStatus status;
 @property (assign, nonatomic) BOOL useNotifications;
 @property (weak, nonatomic) id<MCChatClientDeligate> deligate;
+@property (weak, nonatomic) id<MCChatClientChatsDeligate> chatsDeligate;
 @property (getter=getMyName, setter=setMyName:) NSString* myName;
 @property (readonly, getter=getCompanions) NSArray* companions;
 
