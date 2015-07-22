@@ -57,6 +57,8 @@
 - (void)startChat:(MCChatChat *)chat
 {
     LOG_SELECTOR()
+    if (chat.initiatedBy != MCChatChatInitiatedByMe)
+        [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat was not initiated by the user" userInfo:nil] raise];
     if ([[acceptedChats allKeys] indexOfObject:chat] != NSNotFound)
         [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat was already started or accepted" userInfo:nil] raise];
     NSMutableArray *chatCompanionsUids = [NSMutableArray array], *chatCompanionsUidsStrings = [NSMutableArray array];
@@ -75,7 +77,7 @@
     [chats setObject:chat
               forKey:chat.chatId];
     [acceptedChats setObject:chat
-              forKey:chat.chatId];
+                      forKey:chat.chatId];
     if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatStarted:forClient:))
         [self.chatsDeligate onChatStarted:chat forClient:self];
     if (self.useNotifications)
@@ -85,6 +87,18 @@
 - (void)acceptChat:(MCChatChat *)chat
 {
     LOG_SELECTOR()
+    if (chat.initiatedBy != MCChatChatInitiatedByCompanion)
+        [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat was not initiated by companion" userInfo:nil] raise];
+    if ([[acceptedChats allKeys] indexOfObject:chat] != NSNotFound)
+        [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat was already started or accepted" userInfo:nil] raise];
+    NSMutableArray *chatCompanionsUids = [NSMutableArray array];
+    for (MCChatUser *u in chat.companions) {
+        [chatCompanionsUids addObject:u.uid];
+    }
+    [core sendMessage:@{} toUsers:chatCompanionsUids];
+    [pendingChats removeObjectForKey:chat.chatId];
+    [acceptedChats setObject:chat forKey:chat.chatId];
+    
 }
 
 - (void)declineChat:(MCChatChat *)chat
@@ -102,6 +116,7 @@
 {
     LOG_SELECTOR()
 }
+
 
 - (MCChatCoreStatus)getStatus;
 {
@@ -131,8 +146,8 @@
     static dispatch_once_t once;
     static id sharedInstance;
     dispatch_once(&once, ^{
-                      sharedInstance = [[MCChatClient alloc] init];
-                  });
+        sharedInstance = [[MCChatClient alloc] init];
+    });
     return sharedInstance;
 }
 
@@ -335,6 +350,56 @@
                 }
             }
             
+        } else if ([layer isEqualToString:kChatLayer]) {
+            if VALID_MESSAGE_FIELD(message, kStartField, NSString) {
+                if (VALID_MESSAGE_FIELD(message, kThemeField, NSString) && VALID_MESSAGE_FIELD(message, kCompanionsField, NSArray)) {
+                    NSUUID *chatId = [[NSUUID alloc] initWithUUIDString:message[kStartField]];
+                    NSMutableArray *companionsIds = [[NSMutableArray alloc] init];
+                    [companionsIds addObject:userid];
+                    if (!chatId)
+                        return;
+                    BOOL allUidsValid = YES;
+                    for (NSObject *o in message[kCompanionsField]) {
+                        if ([o isKindOfClass:[NSString class]]) {
+                            NSUUID *companionId = [[NSUUID alloc] initWithUUIDString:(NSString *)o];
+                            if (companionId) {
+                                [companionsIds addObject:companionId];
+                            } else {
+                                allUidsValid = NO;
+                                break;
+                            }
+                        } else {
+                            allUidsValid = NO;
+                            break;
+                        }
+                    }
+                    if (!allUidsValid)
+                        return;
+                    NSMutableArray *chatCompanions = [NSMutableArray array];
+                    for (NSUUID *uid in companionsIds) {
+                        MCChatUser *c = [companions objectForKey:uid];
+                        if (c)
+                            [chatCompanions addObject:c];
+                        else
+                            return;
+                    }
+                    MCChatUser *chatInitiator = [companions objectForKey:userid];
+                    if (!chatInitiator)
+                        return;
+                    MCChatChat *chat = [[MCChatChat alloc] initWithCompanions:chatCompanions
+                                                                    chatTheme:message[kThemeField]
+                                                                       chatId:chatId
+                                                                    andClient:self];
+                    [pendingChats setObject:chat
+                                     forKey:chatId];
+                    [chats setObject:chat
+                              forKey:chatId];
+                    if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatInvitationRecieved:fromUser:forClient:))
+                        [self.chatsDeligate onChatInvitationRecieved:chat
+                                                            fromUser:chatInitiator
+                                                           forClient:self];
+                }
+            }
         }
         
     }
