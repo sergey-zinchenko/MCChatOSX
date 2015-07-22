@@ -15,6 +15,8 @@
 #define kUserLayer @"user"
 #define kChatLayer @"chat"
 #define kStartField @"start"
+#define kAcceptedField @"accepted"
+#define kDeclinedFiled @"declined"
 #define kCompanionsField @"companions"
 #define kThemeField @"theme"
 #define kLocationField @"location"
@@ -89,21 +91,49 @@
     LOG_SELECTOR()
     if (chat.initiatedBy != MCChatChatInitiatedByCompanion)
         [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat was not initiated by companion" userInfo:nil] raise];
+    if ([[pendingChats allKeys] indexOfObject:chat] == NSNotFound)
+        [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat is not pending" userInfo:nil] raise];
     if ([[acceptedChats allKeys] indexOfObject:chat] != NSNotFound)
         [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat was already started or accepted" userInfo:nil] raise];
     NSMutableArray *chatCompanionsUids = [NSMutableArray array];
     for (MCChatUser *u in chat.companions) {
         [chatCompanionsUids addObject:u.uid];
     }
-    [core sendMessage:@{} toUsers:chatCompanionsUids];
+    [core sendMessage:@{kLayerFileld:kChatLayer, kAcceptedField:[chat.chatId UUIDString]} toUsers:chatCompanionsUids];
     [pendingChats removeObjectForKey:chat.chatId];
     [acceptedChats setObject:chat forKey:chat.chatId];
-    
+    if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatAcccpted:forClient:))
+        [self.chatsDeligate onChatAcccpted:chat
+                                 forClient:self];
+    if (self.useNotifications)
+        [[NSNotificationCenter defaultCenter] postNotificationName:kChatAcceptedNotification
+                                                            object:self
+                                                          userInfo:@{kChatField: chat}];
 }
 
 - (void)declineChat:(MCChatChat *)chat
 {
     LOG_SELECTOR()
+    if (chat.initiatedBy != MCChatChatInitiatedByCompanion)
+        [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat was not initiated by companion" userInfo:nil] raise];
+    if ([[pendingChats allKeys] indexOfObject:chat] == NSNotFound)
+        [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat is not pending" userInfo:nil] raise];
+    if ([[acceptedChats allKeys] indexOfObject:chat] != NSNotFound)
+        [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat was already started or accepted" userInfo:nil] raise];
+    NSMutableArray *chatCompanionsUids = [NSMutableArray array];
+    for (MCChatUser *u in chat.companions) {
+        [chatCompanionsUids addObject:u.uid];
+    }
+    [core sendMessage:@{kLayerFileld:kChatLayer, kDeclinedFiled:[chat.chatId UUIDString]} toUsers:chatCompanionsUids];
+    [pendingChats removeObjectForKey:chat.chatId];
+    [chats removeObjectForKey:chat.chatId];
+    if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatDeclined:forClient:))
+        [self.chatsDeligate onChatDeclined:chat
+                                 forClient:self];
+    if (self.useNotifications)
+        [[NSNotificationCenter defaultCenter] postNotificationName:kChatDeclinedNotification
+                                                            object:self
+                                                          userInfo:@{kChatField: chat}];
 }
 
 - (void)leaveChat:(MCChatChat *)chat
@@ -398,6 +428,8 @@
                         [self.chatsDeligate onChatInvitationRecieved:chat
                                                             fromUser:chatInitiator
                                                            forClient:self];
+                    if (self.useNotifications)
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kChatInvitationReceivedNotification object:self userInfo:@{kChatField: chat, kUserField: chatInitiator}];
                 }
             }
         }

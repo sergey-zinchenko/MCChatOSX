@@ -19,6 +19,10 @@
 #define kUserConnectedNotification @"kUserConnectedNotification"
 #define kUserDisconnectedNotification @"kUserDisconnectedNotification"
 #define kChatStartedNotification @"kChatStartedNotification"
+#define kChatInvitationReceivedNotification @"kChatInvitationReceivedNotification"
+#define kChatAcceptedNotification @"kChatAcceptedNotification"
+#define kChatDeclinedNotification @"kChatDeclinedNotification"
+#define kChatLeftNotification @"kChatLeftNotification"
 #define kUserField @"kUserField"
 #define kChatField @"kChatField"
 
