@@ -23,6 +23,9 @@
 #define kChatAcceptedNotification @"kChatAcceptedNotification"
 #define kChatDeclinedNotification @"kChatDeclinedNotification"
 #define kChatLeftNotification @"kChatLeftNotification"
+
+#define kChatAcceptedByCompanionNotification @"kChatAcceptedByCompanionNotification"
+#define kChatDeclinedByCompanionNotification @"kChatDeclinedByCompanionNotification"
 #define kUserField @"kUserField"
 #define kChatField @"kChatField"
 
@@ -55,7 +58,7 @@
 - (void)onChatInvitationRecieved:(MCChatChat *)chat
                         fromUser:(MCChatUser *)user
                        forClient:(MCChatClient *)client;
-- (void)onChatAcccpted:(MCChatChat *)chat
+- (void)onChatAccepted:(MCChatChat *)chat
              forClient:(MCChatClient *)client;
 - (void)onChatDeclined:(MCChatChat *)chat
              forClient:(MCChatClient *)client;

@@ -11,20 +11,24 @@
 
 #define LOG_SELECTOR()  NSLog(@"%@ > %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 
+
 @implementation MCChatChat
 
-@synthesize theme = _theme, companions = _companions, chatId = _chatId, initiatedBy = _initiatedBy, client = _client;
+@synthesize theme = _theme, companions = _companions, chatId = _chatId, initiatedBy = _initiatedBy, client = _client, acceptedCompanions = _acceptedCompanions;
 
-- (instancetype)initWithCompanions:(NSArray *)companions
-                         chatTheme:(NSString *)theme
-                            chatId:(NSUUID *)uid
-                         andClient:(MCChatClient *)client
+
+- (instancetype) initWithCompanions:(NSArray *)companions
+                 acceptedCompanions:(NSArray *)acceptedCompanions
+                          chatTheme:(NSString *)theme
+                             chatId:(NSUUID *)uid
+                          andClient:(MCChatClient *)client
 {
     LOG_SELECTOR()
     self = [super init];
     if (self) {
-        _theme = [theme copy];
-        _companions = [companions copy];
+        _theme = theme?[theme copy]:@"Unspecified";
+        _companions = companions?[companions mutableCopy]:[NSMutableArray array];
+        _acceptedCompanions = acceptedCompanions ? [acceptedCompanions mutableCopy]:[NSMutableArray array];
         if (uid) {
             _initiatedBy = MCChatChatInitiatedByCompanion;
             _chatId = [uid copy];
@@ -38,6 +42,7 @@
             _client = [MCChatClient sharedInstance];
     }
     return self;
+
 }
 
 + (MCChatChat *) startChatWithCompanions:(NSArray *)companions
@@ -45,9 +50,10 @@
 {
     LOG_SELECTOR()
     MCChatChat *chat = [[MCChatChat alloc] initWithCompanions:companions
-                                        chatTheme:theme
-                                           chatId:nil
-                                        andClient:nil];
+                                           acceptedCompanions:@[]
+                                                    chatTheme:theme
+                                                       chatId:nil
+                                                    andClient:nil];
     [chat start];
     return chat;
 }

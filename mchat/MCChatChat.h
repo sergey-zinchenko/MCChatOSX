@@ -23,6 +23,8 @@ typedef NS_ENUM(NSInteger, MCChatChatInitiator) {
 - (void)onCompanion:(MCChatUser *)companion
        acceptedChat:(MCChatChat *)chat;
 - (void)onCompanion:(MCChatUser *)companion
+       declinedChat:(MCChatChat *)chat;
+- (void)onCompanion:(MCChatUser *)companion
            leftChat:(MCChatChat *)chat;
 - (void)onMessageRecieved:(NSString *)message
                fromCompanion:(MCChatUser *)companion
@@ -30,10 +32,12 @@ typedef NS_ENUM(NSInteger, MCChatChatInitiator) {
 @end
 
 @interface MCChatChat : NSObject
+
 - (instancetype) initWithCompanions:(NSArray *)companions
-                    chatTheme:(NSString *)theme
-                       chatId:(NSUUID *)uid
-                    andClient:(MCChatClient *)client;
+                 acceptedCompanions:(NSArray *)acceptedCompanions
+                          chatTheme:(NSString *)theme
+                             chatId:(NSUUID *)uid
+                          andClient:(MCChatClient *)client;
 
 + (MCChatChat *) startChatWithCompanions:(NSArray *)companions
                                chatTheme:(NSString *)theme;
@@ -47,7 +51,8 @@ typedef NS_ENUM(NSInteger, MCChatChatInitiator) {
 @property (nonatomic, readonly) MCChatChatInitiator initiatedBy;
 @property (nonatomic, readonly) NSUUID *chatId;
 @property (nonatomic, readonly) NSString *theme;
-@property (nonatomic, readonly) NSArray *companions;
+@property (nonatomic, readonly) NSMutableArray *companions;
+@property (nonatomic, readonly) NSMutableArray *acceptedCompanions;
 @property (nonatomic, readonly, weak) MCChatClient *client;
 @property (nonatomic, weak) id<MCChatChatDelegate> delegate;
 
