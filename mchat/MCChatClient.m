@@ -141,7 +141,22 @@
 - (void)leaveChat:(MCChatChat *)chat
 {
     LOG_SELECTOR()
-    
+    if ([[acceptedChats allKeys] indexOfObject:chat] == NSNotFound)
+        [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat was not started or accepted" userInfo:nil] raise];
+    NSMutableArray *chatCompanionsUids = [NSMutableArray array];
+    for (MCChatUser *u in chat.companions) {
+        [chatCompanionsUids addObject:u.uid];
+    }
+    [core sendMessage:@{kLayerFileld:kChatLayer, kLeftField:[chat.chatId UUIDString]} toUsers:chatCompanionsUids];
+    [pendingChats removeObjectForKey:chat.chatId];
+    [chats removeObjectForKey:chat.chatId];
+    if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatLeft:forClient:))
+        [self.chatsDeligate onChatLeft:chat
+                                 forClient:self];
+    if (self.useNotifications)
+        [[NSNotificationCenter defaultCenter] postNotificationName:kChatLeftNotification
+                                                            object:self
+                                                          userInfo:@{kChatField: chat}];
 }
 
 - (void)sendMessage:(NSString *)message
@@ -439,7 +454,7 @@
                 NSUUID *chatId = [[NSUUID alloc] initWithUUIDString:message[kAcceptedField]];
                 if (!chatId)
                     return;
-                MCChatChat *chat = pendingChats[chatId];
+                MCChatChat *chat = chats[chatId];
                 if (!chat)
                     return;
                 MCChatUser *companion = companions[userid];
@@ -458,7 +473,7 @@
                 NSUUID *chatId = [[NSUUID alloc] initWithUUIDString:message[kAcceptedField]];
                 if (!chatId)
                     return;
-                MCChatChat *chat = pendingChats[chatId];
+                MCChatChat *chat = chats[chatId];
                 if (!chat)
                     return;
                 MCChatUser *companion = companions[userid];
@@ -473,7 +488,24 @@
                 if (self.useNotifications)
                     [[NSNotificationCenter defaultCenter] postNotificationName:kChatDeclinedByCompanionNotification object:self userInfo:@{kUserField:companion, kChatField:chat}];
             } else if VALID_MESSAGE_FIELD(message, kLeftField, NSString) {
-                
+                NSUUID *chatId = [[NSUUID alloc] initWithUUIDString:message[kAcceptedField]];
+                if (!chatId)
+                    return;
+                MCChatChat *chat = chats[chatId];
+                if (!chat)
+                    return;
+                MCChatUser *companion = companions[userid];
+                if (!companion)
+                    return;
+                if ([chat.companions indexOfObject:companion] == NSNotFound)
+                    return;
+                [chat.companions removeObject:companion];
+                [chat.acceptedCompanions removeObject:companion];
+                if VALID_CHATS_CHAT_DELEGATE(chat.delegate, @selector(onCompanion:leftChat:))
+                    [chat.delegate onCompanion:companion
+                                  leftChat:chat];
+                if (self.useNotifications)
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kChatLeftByCompanionNotification object:self userInfo:@{kUserField:companion, kChatField:chat}];
             }
         }
         

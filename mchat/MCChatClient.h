@@ -26,6 +26,8 @@
 
 #define kChatAcceptedByCompanionNotification @"kChatAcceptedByCompanionNotification"
 #define kChatDeclinedByCompanionNotification @"kChatDeclinedByCompanionNotification"
+#define kChatLeftByCompanionNotification @"kChatLeftByCompanionNotification"
+
 #define kUserField @"kUserField"
 #define kChatField @"kChatField"
 
