@@ -206,7 +206,7 @@ DQ
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnSelection="YES" columnResizing="NO" autosaveColumns="NO" rowHeight="45" viewBased="YES" id="vh3-UZ-15P">
-                                            <rect key="frame" x="0.0" y="0.0" width="247" height="0.0"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="248" height="0.0"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -500,10 +500,10 @@ DQ
             </objects>
             <point key="canvasLocation" x="-47" y="1216"/>
         </scene>
-        <!--View Controller-->
+        <!--Chat List View Controller-->
         <scene sceneID="Q4p-BA-Dll">
             <objects>
-                <viewController id="Mo8-L4-fsR" sceneMemberID="viewController">
+                <viewController id="Mo8-L4-fsR" customClass="ChatListViewController" sceneMemberID="viewController">
                     <view key="view" id="CjE-aL-kah">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
