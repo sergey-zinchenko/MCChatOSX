@@ -13,6 +13,6 @@
 @interface AcceptChatViewController : NSViewController<MCChatChatDelegate>
 
 @property (nonatomic, setter=setChat:) MCChatChat *chat;
-@property (nonatomic) MCChatUser *chatInitiator;
+@property (nonatomic, setter=setChatInitiator:) MCChatUser *chatInitiator;
 
 @end

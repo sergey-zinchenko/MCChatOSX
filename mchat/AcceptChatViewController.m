@@ -15,6 +15,8 @@
 - (void)onChatCompanionsChanged;
 - (void)clearChatAndClose;
 - (void)setChat:(MCChatChat *)chat;
+- (void)setChatInitiator:(MCChatUser *)chatInitiator;
+- (void)updateUi;
 @end
 
 @implementation AcceptChatViewController
@@ -27,10 +29,24 @@
 
 @synthesize chat = _chat, chatInitiator = _chatInitiator;
 
+- (void)updateUi
+{
+    if (!self.chat&&self.chatInitiator)
+        return;
+    [messageField setStringValue:[NSString stringWithFormat:@"%@ wants to start chat with you. %lu companions accepted discussion already. \nTheme is \"%@\". Do you accept?", self.chatInitiator.name, (unsigned long)[self.chat.acceptedCompanions count], self.chat.theme]];
+}
+
 - (void)setChat:(MCChatChat *)chat
 {
     _chat = chat;
     _chat.delegate = self;
+    [self updateUi];
+}
+
+- (void)setChatInitiator:(MCChatUser *)chatInitiator
+{
+    _chatInitiator = chatInitiator;
+    [self updateUi];
 }
 
 - (void)clearChatAndClose
@@ -47,16 +63,17 @@
 - (void)viewWillAppear
 {
     [super viewWillAppear];
+    [self updateUi];
 }
 
 - (IBAction)onAcceptCliecked:(id)sender
 {
-    [self.view.window.sheetParent endSheet:self.view.window];
+    [self clearChatAndClose];
 }
 
 - (IBAction)onDeclineCliecked:(id)sender
 {
-    [self.view.window.sheetParent endSheet:self.view.window];
+    [self clearChatAndClose];
 }
 
 - (void)onChatCompanionsChanged
@@ -64,7 +81,7 @@
     if ([self.chat.companions count] == 0) {
         [self clearChatAndClose];
     } else {
-        
+        [self updateUi];
     }
 }
 

@@ -9,6 +9,7 @@
 #import "MainWindowController.h"
 #import "MCChatClient.h"
 #import "EnterChatThemeController.h"
+#import "AcceptChatViewController.h"
 
 
 @interface MainWindowController ()
@@ -29,16 +30,16 @@
     MCChatChat *chat = notif.userInfo[kChatField];
     MCChatUser *initiator = notif.userInfo[kUserField];
     if (!self.window.isMiniaturized/*&&self.window.isKeyWindow*/) {
-        NSAlert *alert = [[NSAlert alloc] init];
-        alert.alertStyle = NSInformationalAlertStyle;
-        alert.messageText = [NSString stringWithFormat:@"%@ wants to start chat with you", initiator.name];
-        alert.informativeText = [NSString stringWithFormat:@"Theme of the discussion is\"%@\". Do you accept?", chat.theme];
-        [alert addButtonWithTitle:@"Accept"];
-        [alert addButtonWithTitle:@"Decline"];
-        
-        [alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {
-            NSLog(@"handler");
-        
+        static NSString *storyBoardName = @"Main";
+        static NSString *viewControllerIdentifier = @"AcceptChatController";
+        NSStoryboard *mainStoryBoard = [NSStoryboard storyboardWithName:storyBoardName
+                                                                 bundle:nil];
+        AcceptChatViewController *acceptChatViewController = [mainStoryBoard instantiateControllerWithIdentifier:viewControllerIdentifier];
+        acceptChatViewController.chat = chat;
+        acceptChatViewController.chatInitiator = initiator;
+        NSWindow *acceptChatSheetWindow = [NSWindow windowWithContentViewController:acceptChatViewController];
+        [self.window beginSheet:acceptChatSheetWindow completionHandler:^(NSModalResponse returnCode) {
+            [acceptChatSheetWindow orderOut:self];
         }];
     } else {
         NSUserNotification *notification = [[NSUserNotification alloc] init];
@@ -56,9 +57,8 @@
                                                                  bundle:nil];
         NSViewController *enterNameViewController = [mainStoryBoard instantiateControllerWithIdentifier:viewControllerIdentifier];
         nameSheetWindow = [NSWindow windowWithContentViewController:enterNameViewController];
-        nameSheetWindow.releasedWhenClosed = YES;
         [self.window beginSheet:nameSheetWindow completionHandler:^(NSModalResponse returnCode) {
-            [nameSheetWindow close];
+            [nameSheetWindow orderOut:self];
             nameSheetWindow = nil;
         }];
     }
@@ -74,9 +74,8 @@
         NSViewController *enterThemeViewController = [mainStoryBoard instantiateControllerWithIdentifier:viewControllerIdentifier];
         ((EnterChatThemeController *) enterThemeViewController).users = notif.userInfo[kChatUsersArray];
         themeSheetWindow = [NSWindow windowWithContentViewController:enterThemeViewController];
-        themeSheetWindow.releasedWhenClosed = YES;
         [self.window beginSheet:themeSheetWindow completionHandler:^(NSModalResponse returnCode) {
-            [themeSheetWindow close];
+            [nameSheetWindow orderOut:self];
             themeSheetWindow = nil;
         }];
     }
