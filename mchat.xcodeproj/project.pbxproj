@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A50496DF1B690EEB00C642EA /* AcceptChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A50496DD1B690EEB00C642EA /* AcceptChatViewController.m */; };
 		A50F67EB1B30405400B75059 /* MCChatChat.m in Sources */ = {isa = PBXBuildFile; fileRef = A50F67EA1B30405400B75059 /* MCChatChat.m */; };
 		A50F67EE1B3051B200B75059 /* ding-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A50F67ED1B3051B200B75059 /* ding-sound.mp3 */; };
 		A50F67F01B30526900B75059 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A50F67EF1B30526900B75059 /* AVFoundation.framework */; };
 		A50F67F31B307E8200B75059 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A50F67F21B307E8200B75059 /* CoreLocation.framework */; };
 		A50F67F71B30C16500B75059 /* LocationMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = A50F67F61B30C16500B75059 /* LocationMonitor.m */; };
 		A50F67FA1B333BFA00B75059 /* CompanionTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = A50F67F91B333BFA00B75059 /* CompanionTableCellView.m */; };
+		A50F83E91B61112A00A79DF6 /* ChatListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A50F83E81B61112A00A79DF6 /* ChatListViewController.m */; };
 		A5187E091B2C568D007D8B7A /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5187E081B2C568D007D8B7A /* MainWindowController.m */; };
 		A5187E0D1B2C6194007D8B7A /* EnterYourNameController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5187E0C1B2C6194007D8B7A /* EnterYourNameController.m */; };
 		A52CE7AC1B1B01E2005020A5 /* MCChatClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A52CE7AB1B1B01E2005020A5 /* MCChatClient.m */; };
@@ -40,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A50496DC1B690EEB00C642EA /* AcceptChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AcceptChatViewController.h; sourceTree = "<group>"; };
+		A50496DD1B690EEB00C642EA /* AcceptChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AcceptChatViewController.m; sourceTree = "<group>"; };
 		A50F67E91B30405400B75059 /* MCChatChat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCChatChat.h; sourceTree = "<group>"; };
 		A50F67EA1B30405400B75059 /* MCChatChat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCChatChat.m; sourceTree = "<group>"; };
 		A50F67ED1B3051B200B75059 /* ding-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "ding-sound.mp3"; sourceTree = "<group>"; };
@@ -49,6 +53,8 @@
 		A50F67F61B30C16500B75059 /* LocationMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationMonitor.m; sourceTree = "<group>"; };
 		A50F67F81B333BFA00B75059 /* CompanionTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompanionTableCellView.h; sourceTree = "<group>"; };
 		A50F67F91B333BFA00B75059 /* CompanionTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompanionTableCellView.m; sourceTree = "<group>"; };
+		A50F83E71B61112A00A79DF6 /* ChatListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatListViewController.h; sourceTree = "<group>"; };
+		A50F83E81B61112A00A79DF6 /* ChatListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatListViewController.m; sourceTree = "<group>"; };
 		A5187E071B2C568D007D8B7A /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
 		A5187E081B2C568D007D8B7A /* MainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = "<group>"; };
 		A5187E0B1B2C6194007D8B7A /* EnterYourNameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterYourNameController.h; sourceTree = "<group>"; };
@@ -99,6 +105,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A50496DB1B690EBF00C642EA /* Accept Chat Sheet */ = {
+			isa = PBXGroup;
+			children = (
+				A50496DC1B690EEB00C642EA /* AcceptChatViewController.h */,
+				A50496DD1B690EEB00C642EA /* AcceptChatViewController.m */,
+			);
+			name = "Accept Chat Sheet";
+			sourceTree = "<group>";
+		};
 		A50F67EC1B30519A00B75059 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -129,6 +144,8 @@
 				A50F67F91B333BFA00B75059 /* CompanionTableCellView.m */,
 				A5FE2AE71B36FEE600F9490F /* MainContainerViewController.h */,
 				A5FE2AE81B36FEE600F9490F /* MainContainerViewController.m */,
+				A50F83E71B61112A00A79DF6 /* ChatListViewController.h */,
+				A50F83E81B61112A00A79DF6 /* ChatListViewController.m */,
 			);
 			name = "Main Window";
 			sourceTree = "<group>";
@@ -186,6 +203,7 @@
 				A50F67EC1B30519A00B75059 /* Resources */,
 				A5CF33911B47FBBC000F8466 /* Enter Theme Sheet */,
 				A5187E0A1B2C6148007D8B7A /* Enter Name Sheet */,
+				A50496DB1B690EBF00C642EA /* Accept Chat Sheet */,
 				A5187E061B2C5551007D8B7A /* Main Window */,
 				A58C54291AA5E25900059106 /* AppDelegate.h */,
 				A58C542A1AA5E25900059106 /* AppDelegate.m */,
@@ -360,11 +378,13 @@
 				A58C542D1AA5E25900059106 /* main.m in Sources */,
 				A50F67FA1B333BFA00B75059 /* CompanionTableCellView.m in Sources */,
 				A52CE7B21B1B2AE9005020A5 /* MCChatUser.m in Sources */,
+				A50496DF1B690EEB00C642EA /* AcceptChatViewController.m in Sources */,
 				A5187E091B2C568D007D8B7A /* MainWindowController.m in Sources */,
 				A50F67F71B30C16500B75059 /* LocationMonitor.m in Sources */,
 				A5CF33941B480B9B000F8466 /* EnterChatThemeController.m in Sources */,
 				A59D5B161B42A2E7000383A0 /* NSArray+dif.m in Sources */,
 				A52CE7AC1B1B01E2005020A5 /* MCChatClient.m in Sources */,
+				A50F83E91B61112A00A79DF6 /* ChatListViewController.m in Sources */,
 				A53B85731AA5E7F300C191C2 /* MCChatCore.m in Sources */,
 				A5187E0D1B2C6194007D8B7A /* EnterYourNameController.m in Sources */,
 				A58C542B1AA5E25900059106 /* AppDelegate.m in Sources */,

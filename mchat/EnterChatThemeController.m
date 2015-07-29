@@ -18,6 +18,7 @@
 {
     __weak IBOutlet NSTextField *label;
     __weak IBOutlet NSTextField *themeField;
+    __weak IBOutlet NSButton *openChatWidowCheckBox;
 }
 
 - (void)viewDidLoad {

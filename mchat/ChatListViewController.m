@@ -17,7 +17,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [MCChatClient sharedInstance].chatsDeligate = self;
-    // Do view setup here.
 }
 
 - (void)onConnectAttemptStartedForClient:(MCChatClient *)client
@@ -46,7 +45,7 @@
                         fromUser:(MCChatUser *)user
                        forClient:(MCChatClient *)client
 {
-    
+   
 }
 
 - (void)onChatAccepted:(MCChatChat *)chat

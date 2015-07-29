@@ -213,7 +213,7 @@ DQ
                                             <tableViewGridLines key="gridStyleMask" horizontal="YES"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn width="245.44520024689206" minWidth="40" maxWidth="1000" id="eXM-RP-BVT">
+                                                <tableColumn width="244.85914600444175" minWidth="40" maxWidth="1000" id="eXM-RP-BVT">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -280,7 +280,7 @@ DQ
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="B1f-4t-tzf"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="250" id="gIF-ol-34n"/>
                                 </constraints>
-                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="A8D-wp-YRd">
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="A8D-wp-YRd">
                                     <rect key="frame" x="1" y="95.388471841812134" width="186" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
@@ -321,7 +321,7 @@ DQ
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="kss-d4-EcC"/>
                                 </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="You want to start chat with x users.... What is theme of the discussion?" id="rPc-5o-DeT">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="You want to start chat with x users.... What is theme of the discussion?" id="rPc-5o-DeT">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -408,6 +408,7 @@ DQ
                     </view>
                     <connections>
                         <outlet property="label" destination="izl-q8-QKy" id="aON-AX-wkJ"/>
+                        <outlet property="openChatWidowCheckBox" destination="snA-ss-SkC" id="kXy-Sx-236"/>
                         <outlet property="themeField" destination="z92-NJ-hI3" id="PTb-dn-Zjr"/>
                     </connections>
                 </viewController>
@@ -512,6 +513,101 @@ DQ
                 <customObject id="yy7-3D-Ukb" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="515" y="1056"/>
+        </scene>
+        <!--Accept Chat View Controller-->
+        <scene sceneID="2Dy-05-ZuJ">
+            <objects>
+                <viewController storyboardIdentifier="AcceptChatController" id="BXl-ub-WyS" customClass="AcceptChatViewController" sceneMemberID="viewController">
+                    <view key="view" id="Li9-ep-7Fg">
+                        <rect key="frame" x="0.0" y="0.0" width="348" height="151"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xIb-lR-67P" userLabel="User x wants to start chat with you Theme is &quot;x&quot;. Do you want to accept?">
+                                <rect key="frame" x="53" y="90" width="242" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="zGk-JI-QWv"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="User x wants to start chat with you Theme is &quot;x&quot;. Do you want to accept?" id="bjQ-iV-g3t">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="fOq-ZM-KIQ">
+                                <rect key="frame" x="63" y="66" width="223" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="14" id="Nq0-1s-5hr"/>
+                                    <constraint firstAttribute="width" constant="219" id="lmi-1e-pIS"/>
+                                </constraints>
+                                <buttonCell key="cell" type="check" title="Open chat window automatically" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Yf3-4C-mdL">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="pLU-v1-S2T">
+                                <rect key="frame" x="100" y="20" width="149" height="32"/>
+                                <subviews>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="S0Z-x0-wx7">
+                                        <rect key="frame" x="-6" y="-1" width="83" height="32"/>
+                                        <buttonCell key="cell" type="push" title="Decline" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zHe-tK-zNt">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onDeclineCliecked:" target="BXl-ub-WyS" id="GjE-wT-Ngy"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mPo-BQ-zpC">
+                                        <rect key="frame" x="73" y="-1" width="82" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="70" id="Bvr-A9-ZxD"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="push" title="Accept" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iJC-XD-Gll">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onAcceptCliecked:" target="BXl-ub-WyS" id="wN3-gj-uD1"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="mPo-BQ-zpC" firstAttribute="baseline" secondItem="S0Z-x0-wx7" secondAttribute="baseline" id="6cs-Lf-WPV"/>
+                                    <constraint firstAttribute="height" constant="32" id="R4S-5d-jse"/>
+                                    <constraint firstAttribute="trailing" secondItem="mPo-BQ-zpC" secondAttribute="trailing" id="cJy-Gc-JaV"/>
+                                    <constraint firstItem="S0Z-x0-wx7" firstAttribute="centerY" secondItem="pLU-v1-S2T" secondAttribute="centerY" id="cT3-z7-qei"/>
+                                    <constraint firstItem="S0Z-x0-wx7" firstAttribute="leading" secondItem="pLU-v1-S2T" secondAttribute="leading" id="cyX-XH-c3v"/>
+                                    <constraint firstAttribute="width" constant="149" id="j7z-7Z-gre"/>
+                                </constraints>
+                            </customView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="fOq-ZM-KIQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Li9-ep-7Fg" secondAttribute="leading" constant="65" id="13d-Ny-oBb"/>
+                            <constraint firstItem="xIb-lR-67P" firstAttribute="top" secondItem="Li9-ep-7Fg" secondAttribute="top" constant="27" id="52M-5i-wdg"/>
+                            <constraint firstAttribute="bottom" secondItem="pLU-v1-S2T" secondAttribute="bottom" constant="20" id="9Sm-nd-8G4"/>
+                            <constraint firstAttribute="centerX" secondItem="fOq-ZM-KIQ" secondAttribute="centerX" id="BiZ-Ur-umZ"/>
+                            <constraint firstItem="xIb-lR-67P" firstAttribute="leading" secondItem="Li9-ep-7Fg" secondAttribute="leading" constant="55" id="CrR-uX-Me7"/>
+                            <constraint firstAttribute="centerX" secondItem="pLU-v1-S2T" secondAttribute="centerX" id="QXh-cu-fct"/>
+                            <constraint firstItem="pLU-v1-S2T" firstAttribute="top" secondItem="fOq-ZM-KIQ" secondAttribute="bottom" constant="16" id="YT4-2w-e4r"/>
+                            <constraint firstAttribute="centerX" secondItem="xIb-lR-67P" secondAttribute="centerX" id="lM6-v6-8BN"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="acceptButton" destination="mPo-BQ-zpC" id="hNl-7t-9VB"/>
+                        <outlet property="declineButton" destination="S0Z-x0-wx7" id="n7n-Ya-Lt8"/>
+                        <outlet property="messageField" destination="xIb-lR-67P" id="Ipa-fE-z0p"/>
+                        <outlet property="openChatWidowCheckBox" destination="fOq-ZM-KIQ" id="NUW-aa-1gU"/>
+                    </connections>
+                </viewController>
+                <customObject id="dbv-1W-zF0" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="197" y="1819.5"/>
         </scene>
     </scenes>
 </document>

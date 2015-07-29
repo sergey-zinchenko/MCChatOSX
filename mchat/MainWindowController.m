@@ -15,12 +15,36 @@
 - (void)connectMenuClickedNotification:(NSNotification *)notif;
 - (void)connectionAttemptEndedNotification:(NSNotification *)notif;
 - (void)startChatMenuClickedNotification:(NSNotification *)notif;
+- (void)chatInvitationrecievedNotification:(NSNotification *)notif;
 @end
 
 @implementation MainWindowController
 {
     NSWindow *nameSheetWindow, *themeSheetWindow;
     LocationMonitor *locationMonitor;
+}
+
+- (void)chatInvitationrecievedNotification:(NSNotification *)notif
+{
+    MCChatChat *chat = notif.userInfo[kChatField];
+    MCChatUser *initiator = notif.userInfo[kUserField];
+    if (!self.window.isMiniaturized/*&&self.window.isKeyWindow*/) {
+        NSAlert *alert = [[NSAlert alloc] init];
+        alert.alertStyle = NSInformationalAlertStyle;
+        alert.messageText = [NSString stringWithFormat:@"%@ wants to start chat with you", initiator.name];
+        alert.informativeText = [NSString stringWithFormat:@"Theme of the discussion is\"%@\". Do you accept?", chat.theme];
+        [alert addButtonWithTitle:@"Accept"];
+        [alert addButtonWithTitle:@"Decline"];
+        
+        [alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {
+            NSLog(@"handler");
+        
+        }];
+    } else {
+        NSUserNotification *notification = [[NSUserNotification alloc] init];
+        notification.title = chat.theme;
+        [[NSUserNotificationCenter defaultUserNotificationCenter] scheduleNotification:notification];
+    }
 }
 
 - (void)connectMenuClickedNotification:(NSNotification*)notif
@@ -65,7 +89,7 @@
             [locationMonitor start];
         }
         @catch (NSException *exception) {
-
+            
         }
     }
 }
@@ -83,6 +107,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectMenuClickedNotification:) name:kConnectMenuClickedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startChatMenuClickedNotification:) name:kStartChatClickedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectionAttemptEndedNotification:) name:kConnectionAttemptEndedNotifcation object:[MCChatClient sharedInstance]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatInvitationrecievedNotification:) name:kChatInvitationReceivedNotification object:[MCChatClient sharedInstance]];
 }
 
 - (BOOL)windowShouldClose:(id)sender
