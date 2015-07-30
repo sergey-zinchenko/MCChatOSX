@@ -181,10 +181,8 @@
 - (void)setMyName:(NSString *)myName
 {
     LOG_SELECTOR()
-    if (myName&&![myName isEqualToString:@""]&&![myName isEqualToString:_myName]) {
-        [self disconnect];
+    if (myName&&![myName isEqualToString:@""]) {
         _myName = myName;
-        [self connect];
     }
 }
 

@@ -27,6 +27,7 @@
 {
     MCChatClient *cli = [MCChatClient sharedInstance];
     cli.myName = [nameTextField stringValue];
+    [cli connect];
 //    [self dismissController:self];
 //    [self.view.window orderOut:self];
 //    [self.view.window close];

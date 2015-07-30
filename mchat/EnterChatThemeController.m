@@ -34,9 +34,9 @@
 
 - (IBAction)okClicked:(id)sender
 {
-    [self.view.window.sheetParent endSheet:self.view.window];
     [MCChatChat startChatWithCompanions:self.users
                               chatTheme:[themeField stringValue]];
+    [self.view.window.sheetParent endSheet:self.view.window];
 }
 
 - (IBAction)cancelClicked:(id)sender
