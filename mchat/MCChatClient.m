@@ -463,7 +463,7 @@
                 if ([chat.companions indexOfObject:companion] == NSNotFound || [chat.acceptedCompanions indexOfObject:companion] != NSNotFound)
                     return;
                 [chat.acceptedCompanions addObject:companion];
-                if (chat.delegate&&[chat.delegate conformsToProtocol:@protocol(MCChatChatDelegate)]&&[chat.delegate respondsToSelector:@selector(onCompanion:acceptedChat:)])
+                if VALID_CHATS_CHAT_DELEGATE(chat.delegate, @selector(onCompanion:acceptedChat:))
                     [chat.delegate onCompanion:companion
                                   acceptedChat:chat];
                 if (self.useNotifications)
