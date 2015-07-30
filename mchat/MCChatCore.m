@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #include <CFNetwork/CFSocketStream.h>
+//#include <sys/socket.h>
+#include <netinet/in.h>
 #import "MCChatCore.h"
 
 #define BUF_SIZE 2048
@@ -159,6 +161,17 @@
     
 }
 
+int configureSocket(CFSocketNativeHandle handle)
+{
+    int enable = 1;
+    int result = setsockopt(handle, SOL_SOCKET, SO_KEEPALIVE, &enable, sizeof(enable));
+//    int count = 20;
+//    result |=  setsockopt(handle, IPPROTO_TCP, TCP_KEEPCNT, &count, sizeof(count));
+//    //result |=  setsockopt(handle, IPPROTO_TCP, TCP_KEEPIDLE, 180, 4) = 0;
+//    int interval = 60;
+//    result |=  setsockopt(handle, IPPROTO_TCP, TCP_KEEPINTVL, &interval, sizeof(interval));
+    return result;
+}
 
 void readcb(CFReadStreamRef stream, CFStreamEventType eventType, void *clientCallBackInfo)
 {
@@ -167,6 +180,16 @@ void readcb(CFReadStreamRef stream, CFStreamEventType eventType, void *clientCal
         switch(eventType) {
             case kCFStreamEventOpenCompleted:
                 NSLog(@"Read stream open completed");
+                CFDataRef socketData = CFReadStreamCopyProperty(stream, kCFStreamPropertySocketNativeHandle);
+                if (socketData) {
+                    CFSocketNativeHandle handle;
+                    CFDataGetBytes(socketData, CFRangeMake(0, sizeof(CFSocketNativeHandle)), (UInt8 *)&handle);
+                    CFRelease(socketData);
+                    if (configureSocket(handle) != 0)
+                        [chatCore _closeStreamsAndCallDelegateWithException:[NSException exceptionWithName:LOWLEVEL_ERROR reason:@"Failed to configure socket" userInfo:nil]];
+                } else {
+                    [chatCore _closeStreamsAndCallDelegateWithException:[NSException exceptionWithName:LOWLEVEL_ERROR reason:@"Failed to get socket from stream" userInfo:nil]];
+                }
                 break;
             case kCFStreamEventHasBytesAvailable:{
                 NSLog(@"Read stream has bytes available");
