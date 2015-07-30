@@ -33,7 +33,9 @@
 {
     if (!self.chat&&self.chatInitiator)
         return;
-    [messageField setStringValue:[NSString stringWithFormat:@"%@ wants to start chat with you. %lu companions accepted discussion already. \nTheme is \"%@\". Do you accept?", self.chatInitiator.name, (unsigned long)[self.chat.acceptedCompanions count], self.chat.theme]];
+    NSUInteger count = [self.chat.acceptedCompanions count];
+    NSString *companionsString = count > 1?@"companions":@"companion";
+    [messageField setStringValue:[NSString stringWithFormat:@"%@ wants to start chat with you. %lu %@ accepted discussion already. \nTheme is \"%@\". Do you accept?", self.chatInitiator.name, (unsigned long)count, companionsString, self.chat.theme]];
 }
 
 - (void)setChat:(MCChatChat *)chat
@@ -68,11 +70,13 @@
 
 - (IBAction)onAcceptCliecked:(id)sender
 {
+    [self.chat accept];
     [self clearChatAndClose];
 }
 
 - (IBAction)onDeclineCliecked:(id)sender
 {
+    [self.chat decline];
     [self clearChatAndClose];
 }
 
@@ -86,8 +90,15 @@
 }
 
 - (void)onCompanion:(MCChatUser *)companion
+       acceptedChat:(MCChatChat *)chat
+{
+    [self onChatCompanionsChanged];
+}
+
+- (void)onCompanion:(MCChatUser *)companion
        declinedChat:(MCChatChat *)chat
 {
+
     [self onChatCompanionsChanged];
 }
 

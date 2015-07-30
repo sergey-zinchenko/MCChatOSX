@@ -93,9 +93,9 @@
     LOG_SELECTOR()
     if (chat.initiatedBy != MCChatChatInitiatedByCompanion)
         [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat was not initiated by companion" userInfo:nil] raise];
-    if ([[pendingChats allKeys] indexOfObject:chat] == NSNotFound)
+    if ([[pendingChats allKeys] indexOfObject:chat.chatId] == NSNotFound)
         [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat is not pending" userInfo:nil] raise];
-    if ([[acceptedChats allKeys] indexOfObject:chat] != NSNotFound)
+    if ([[acceptedChats allKeys] indexOfObject:chat.chatId] != NSNotFound)
         [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat was already started or accepted" userInfo:nil] raise];
     NSMutableArray *chatCompanionsUids = [NSMutableArray array];
     for (MCChatUser *u in chat.companions) {
@@ -118,9 +118,9 @@
     LOG_SELECTOR()
     if (chat.initiatedBy != MCChatChatInitiatedByCompanion)
         [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat was not initiated by companion" userInfo:nil] raise];
-    if ([[pendingChats allKeys] indexOfObject:chat] == NSNotFound)
+    if ([[pendingChats allKeys] indexOfObject:chat.chatId] == NSNotFound)
         [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat is not pending" userInfo:nil] raise];
-    if ([[acceptedChats allKeys] indexOfObject:chat] != NSNotFound)
+    if ([[acceptedChats allKeys] indexOfObject:chat.chatId] != NSNotFound)
         [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat was already started or accepted" userInfo:nil] raise];
     NSMutableArray *chatCompanionsUids = [NSMutableArray array];
     for (MCChatUser *u in chat.companions) {
@@ -141,7 +141,7 @@
 - (void)leaveChat:(MCChatChat *)chat
 {
     LOG_SELECTOR()
-    if ([[acceptedChats allKeys] indexOfObject:chat] == NSNotFound)
+    if ([[acceptedChats allKeys] indexOfObject:chat.chatId] == NSNotFound)
         [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat was not started or accepted" userInfo:nil] raise];
     NSMutableArray *chatCompanionsUids = [NSMutableArray array];
     for (MCChatUser *u in chat.companions) {
@@ -463,14 +463,14 @@
                 if ([chat.companions indexOfObject:companion] == NSNotFound || [chat.acceptedCompanions indexOfObject:companion] != NSNotFound)
                     return;
                 [chat.acceptedCompanions addObject:companion];
-                if VALID_CHATS_CHAT_DELEGATE(chat.delegate, @selector(onCompanion:acceptedChat:))
+                if (chat.delegate&&[chat.delegate conformsToProtocol:@protocol(MCChatChatDelegate)]&&[chat.delegate respondsToSelector:@selector(onCompanion:acceptedChat:)])
                     [chat.delegate onCompanion:companion
                                   acceptedChat:chat];
                 if (self.useNotifications)
                     [[NSNotificationCenter defaultCenter] postNotificationName:kChatAcceptedByCompanionNotification object:self userInfo:@{kUserField:companion, kChatField:chat}];
 
             } else if VALID_MESSAGE_FIELD(message, kDeclinedFiled, NSString) {
-                NSUUID *chatId = [[NSUUID alloc] initWithUUIDString:message[kAcceptedField]];
+                NSUUID *chatId = [[NSUUID alloc] initWithUUIDString:message[kDeclinedFiled]];
                 if (!chatId)
                     return;
                 MCChatChat *chat = chats[chatId];
@@ -488,7 +488,7 @@
                 if (self.useNotifications)
                     [[NSNotificationCenter defaultCenter] postNotificationName:kChatDeclinedByCompanionNotification object:self userInfo:@{kUserField:companion, kChatField:chat}];
             } else if VALID_MESSAGE_FIELD(message, kLeftField, NSString) {
-                NSUUID *chatId = [[NSUUID alloc] initWithUUIDString:message[kAcceptedField]];
+                NSUUID *chatId = [[NSUUID alloc] initWithUUIDString:message[kLeftField]];
                 if (!chatId)
                     return;
                 MCChatChat *chat = chats[chatId];
