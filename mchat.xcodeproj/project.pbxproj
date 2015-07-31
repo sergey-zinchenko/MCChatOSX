@@ -28,6 +28,7 @@
 		A58C54411AA5E25A00059106 /* mchatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A58C54401AA5E25A00059106 /* mchatTests.m */; };
 		A59D5B161B42A2E7000383A0 /* NSArray+dif.m in Sources */ = {isa = PBXBuildFile; fileRef = A59D5B151B42A2E7000383A0 /* NSArray+dif.m */; };
 		A5CF33941B480B9B000F8466 /* EnterChatThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5CF33931B480B9B000F8466 /* EnterChatThemeController.m */; };
+		A5D881101B6B76CA0033EDDC /* ChatTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D8810F1B6B76CA0033EDDC /* ChatTableCellView.m */; };
 		A5FE2AE91B36FEE600F9490F /* MainContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FE2AE81B36FEE600F9490F /* MainContainerViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +82,8 @@
 		A59D5B151B42A2E7000383A0 /* NSArray+dif.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+dif.m"; sourceTree = "<group>"; };
 		A5CF33921B480B9B000F8466 /* EnterChatThemeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterChatThemeController.h; sourceTree = "<group>"; };
 		A5CF33931B480B9B000F8466 /* EnterChatThemeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterChatThemeController.m; sourceTree = "<group>"; };
+		A5D8810E1B6B76CA0033EDDC /* ChatTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableCellView.h; sourceTree = "<group>"; };
+		A5D8810F1B6B76CA0033EDDC /* ChatTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableCellView.m; sourceTree = "<group>"; };
 		A5FE2AE71B36FEE600F9490F /* MainContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainContainerViewController.h; sourceTree = "<group>"; };
 		A5FE2AE81B36FEE600F9490F /* MainContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainContainerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -146,6 +149,8 @@
 				A5FE2AE81B36FEE600F9490F /* MainContainerViewController.m */,
 				A50F83E71B61112A00A79DF6 /* ChatListViewController.h */,
 				A50F83E81B61112A00A79DF6 /* ChatListViewController.m */,
+				A5D8810E1B6B76CA0033EDDC /* ChatTableCellView.h */,
+				A5D8810F1B6B76CA0033EDDC /* ChatTableCellView.m */,
 			);
 			name = "Main Window";
 			sourceTree = "<group>";
@@ -380,6 +385,7 @@
 				A52CE7B21B1B2AE9005020A5 /* MCChatUser.m in Sources */,
 				A50496DF1B690EEB00C642EA /* AcceptChatViewController.m in Sources */,
 				A5187E091B2C568D007D8B7A /* MainWindowController.m in Sources */,
+				A5D881101B6B76CA0033EDDC /* ChatTableCellView.m in Sources */,
 				A50F67F71B30C16500B75059 /* LocationMonitor.m in Sources */,
 				A5CF33941B480B9B000F8466 /* EnterChatThemeController.m in Sources */,
 				A59D5B161B42A2E7000383A0 /* NSArray+dif.m in Sources */,

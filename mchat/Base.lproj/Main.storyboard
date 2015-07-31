@@ -550,11 +550,11 @@ DQ
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="companionCell" id="8gk-Uv-Q70" customClass="CompanionTableCellView">
+                                                        <tableCellView identifier="chatCell" id="8gk-Uv-Q70" customClass="ChatTableCellView">
                                                             <rect key="frame" x="1" y="1" width="445" height="45"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UEz-Lf-bM1">
+                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UEz-Lf-bM1">
                                                                     <rect key="frame" x="10" y="0.0" width="294" height="17"/>
                                                                     <textFieldCell key="cell" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" title="Initiator" id="S0E-ok-1wb">
                                                                         <font key="font" metaFont="system"/>
@@ -562,25 +562,21 @@ DQ
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jK1-ML-1fv">
+                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jK1-ML-1fv">
                                                                     <rect key="frame" x="9" y="13" width="295" height="29"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" constant="29" id="wgd-Jf-qqf"/>
-                                                                    </constraints>
                                                                     <textFieldCell key="cell" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" alignment="left" title="Chat Theme" id="fW4-fj-qAb">
                                                                         <font key="font" metaFont="system" size="24"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HH1-te-C7e">
-                                                                    <rect key="frame" x="112" y="0.0" width="63" height="17"/>
-                                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Accepted" id="jJ2-RJ-4GJ">
+                                                                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nU7-kJ-Ty2">
+                                                                    <rect key="frame" x="370" y="23" width="74" height="21"/>
+                                                                    <buttonCell key="cell" type="bevel" title="Open" bezelStyle="regularSquare" alignment="center" borderStyle="border" inset="2" id="Wbf-ht-zzO">
+                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                         <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                    </textFieldCell>
-                                                                </textField>
+                                                                    </buttonCell>
+                                                                </button>
                                                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tLs-hE-TFn">
                                                                     <rect key="frame" x="370" y="0.0" width="74" height="21"/>
                                                                     <buttonCell key="cell" type="bevel" title="Left" bezelStyle="regularSquare" alignment="center" borderStyle="border" inset="2" id="W2l-zT-xg8">
@@ -588,35 +584,20 @@ DQ
                                                                         <font key="font" metaFont="system"/>
                                                                     </buttonCell>
                                                                 </button>
-                                                                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nU7-kJ-Ty2">
-                                                                    <rect key="frame" x="370" y="23" width="74" height="21"/>
-                                                                    <buttonCell key="cell" type="bevel" title="Accept" bezelStyle="regularSquare" alignment="center" borderStyle="border" inset="2" id="Wbf-ht-zzO">
-                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                        <font key="font" metaFont="system"/>
-                                                                    </buttonCell>
-                                                                </button>
                                                             </subviews>
-                                                            <constraints>
-                                                                <constraint firstAttribute="trailing" secondItem="UEz-Lf-bM1" secondAttribute="trailing" constant="10" id="XB5-ns-Yi4"/>
-                                                                <constraint firstItem="UEz-Lf-bM1" firstAttribute="top" secondItem="8gk-Uv-Q70" secondAttribute="top" constant="28" id="hh4-0N-CUl"/>
-                                                                <constraint firstItem="jK1-ML-1fv" firstAttribute="leading" secondItem="8gk-Uv-Q70" secondAttribute="leading" constant="11" id="jVr-Sz-xvP"/>
-                                                                <constraint firstAttribute="bottom" secondItem="UEz-Lf-bM1" secondAttribute="bottom" id="mO8-Mt-aPf"/>
-                                                                <constraint firstItem="UEz-Lf-bM1" firstAttribute="leading" secondItem="8gk-Uv-Q70" secondAttribute="leading" constant="12" id="o4x-JN-MkD"/>
-                                                                <constraint firstItem="jK1-ML-1fv" firstAttribute="top" secondItem="8gk-Uv-Q70" secondAttribute="top" constant="3" id="rm9-yz-vkm"/>
-                                                                <constraint firstAttribute="trailing" secondItem="jK1-ML-1fv" secondAttribute="trailing" constant="11" id="tiQ-Cw-u6Q"/>
-                                                            </constraints>
                                                             <connections>
-                                                                <outlet property="locationField" destination="UEz-Lf-bM1" id="onS-R1-YvL"/>
-                                                                <outlet property="textField" destination="jK1-ML-1fv" id="q8a-Kd-2sR"/>
-                                                                <outlet property="userNameField" destination="jK1-ML-1fv" id="lKQ-2u-yBE"/>
+                                                                <outlet property="bottomButton" destination="tLs-hE-TFn" id="8kc-gf-RwK"/>
+                                                                <outlet property="chatInfoField" destination="UEz-Lf-bM1" id="cTx-z3-yGA"/>
+                                                                <outlet property="chatThemeField" destination="jK1-ML-1fv" id="v0z-oL-F68"/>
+                                                                <outlet property="topButton" destination="nU7-kJ-Ty2" id="N5G-W5-WFK"/>
                                                             </connections>
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                 </tableColumn>
                                             </tableColumns>
                                             <connections>
-                                                <outlet property="dataSource" destination="XfG-lQ-9wD" id="vH9-YO-mEf"/>
-                                                <outlet property="delegate" destination="XfG-lQ-9wD" id="Vb0-pz-e6L"/>
+                                                <outlet property="dataSource" destination="Mo8-L4-fsR" id="UrY-Oq-2r9"/>
+                                                <outlet property="delegate" destination="Mo8-L4-fsR" id="rb7-w3-IlT"/>
                                             </connections>
                                         </tableView>
                                     </subviews>

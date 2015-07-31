@@ -167,7 +167,8 @@ int configureSocket(CFSocketNativeHandle handle)
     int result = setsockopt(handle, SOL_SOCKET, SO_KEEPALIVE, &enable, sizeof(enable));
 //    int count = 20;
 //    result |=  setsockopt(handle, IPPROTO_TCP, TCP_KEEPCNT, &count, sizeof(count));
-//    //result |=  setsockopt(handle, IPPROTO_TCP, TCP_KEEPIDLE, 180, 4) = 0;
+//    int idle = 180;
+//    //result |=  setsockopt(handle, IPPROTO_TCP, TCP_KEEPIDLE, &idle, sizeof(idle));
 //    int interval = 60;
 //    result |=  setsockopt(handle, IPPROTO_TCP, TCP_KEEPINTVL, &interval, sizeof(interval));
     return result;
