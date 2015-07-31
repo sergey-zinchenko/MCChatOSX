@@ -48,7 +48,7 @@
 - (NSArray *)getChats
 {
     LOG_SELECTOR()
-    return [acceptedChats allValues];
+    return [[acceptedChats allValues] arrayByAddingObjectsFromArray:[pendingChats allValues]];
 }
 
 

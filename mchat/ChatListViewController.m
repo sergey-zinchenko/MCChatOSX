@@ -7,21 +7,61 @@
 //
 
 #import "ChatListViewController.h"
+#import "ChatTableCellView.h"
+#import "NSArray+dif.h"
 
 @interface ChatListViewController ()
 
 @end
 
 @implementation ChatListViewController
+{
+    __weak IBOutlet NSTableView *tblView;
+    
+    NSMutableArray *chats;
+    NSArray *chatsToDisplay;
+    NSPredicate *filterPredicate;
+}
+
+- (void)filterAndDispayChats
+{
+    NSArray *newFilteredArray = filterPredicate?[chats filteredArrayUsingPredicate:filterPredicate]:[chats copy];
+    NSIndexSet *ins = nil, *del = nil;
+    [newFilteredArray computeDeletions:&del insertions:&ins comparisonToInitialState:chatsToDisplay];
+    chatsToDisplay = newFilteredArray;
+    [tblView beginUpdates];
+    [tblView removeRowsAtIndexes:del withAnimation:NSTableViewAnimationSlideRight];
+    [tblView insertRowsAtIndexes:ins withAnimation:NSTableViewAnimationSlideLeft];
+    [tblView endUpdates];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    chats = [[NSMutableArray alloc] init];
+    [chats addObjectsFromArray:[MCChatClient sharedInstance].chats];
+    chatsToDisplay = [NSArray array];
     [MCChatClient sharedInstance].chatsDeligate = self;
+    [tblView becomeFirstResponder];
 }
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
+{
+    return [chatsToDisplay count];
+}
+
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+    static NSString *viewIdentifier = @"chatCell";
+    ChatTableCellView *cell = (ChatTableCellView *)[tblView makeViewWithIdentifier:viewIdentifier owner:self];
+    cell.chat = chatsToDisplay[row];
+    return cell;
+}
+
 
 - (void)onConnectAttemptStartedForClient:(MCChatClient *)client
 {
-    
+    [chats removeAllObjects];
+    [self filterAndDispayChats];
 }
 
 - (void)onConnectAttemptEndedSuccessfully:(BOOL)successfully
@@ -32,20 +72,24 @@
 
 - (void)onDisconnectOccurredForClient:(MCChatClient *)client
 {
-    
+    [chats removeAllObjects];
+    [self filterAndDispayChats];
 }
 
 - (void)onChatStarted:(MCChatChat *)chat
             forClient:(MCChatClient *)client
 {
-    
+    [chats addObject:chat];
+    [self filterAndDispayChats];
 }
 
 - (void)onChatInvitationRecieved:(MCChatChat *)chat
                         fromUser:(MCChatUser *)user
                        forClient:(MCChatClient *)client
 {
-   
+    [chats addObject:chat];
+    [self filterAndDispayChats];
+    //[self playDingSound];
 }
 
 - (void)onChatAccepted:(MCChatChat *)chat

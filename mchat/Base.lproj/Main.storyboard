@@ -627,6 +627,9 @@ DQ
                             <constraint firstItem="icJ-JS-wKI" firstAttribute="leading" secondItem="lac-Iy-OMy" secondAttribute="leading" constant="11" id="Yf8-cD-W2A"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tblView" destination="JR5-FG-YFm" id="Zlr-gX-geA"/>
+                    </connections>
                 </viewController>
                 <customObject id="yy7-3D-Ukb" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -706,14 +709,15 @@ DQ
                             </customView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="fOq-ZM-KIQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Li9-ep-7Fg" secondAttribute="leading" constant="65" id="13d-Ny-oBb"/>
                             <constraint firstItem="xIb-lR-67P" firstAttribute="top" secondItem="Li9-ep-7Fg" secondAttribute="top" constant="27" id="52M-5i-wdg"/>
                             <constraint firstAttribute="bottom" secondItem="pLU-v1-S2T" secondAttribute="bottom" constant="20" id="9Sm-nd-8G4"/>
                             <constraint firstAttribute="centerX" secondItem="fOq-ZM-KIQ" secondAttribute="centerX" id="BiZ-Ur-umZ"/>
                             <constraint firstItem="xIb-lR-67P" firstAttribute="leading" secondItem="Li9-ep-7Fg" secondAttribute="leading" constant="55" id="CrR-uX-Me7"/>
                             <constraint firstAttribute="centerX" secondItem="pLU-v1-S2T" secondAttribute="centerX" id="QXh-cu-fct"/>
                             <constraint firstItem="pLU-v1-S2T" firstAttribute="top" secondItem="fOq-ZM-KIQ" secondAttribute="bottom" constant="16" id="YT4-2w-e4r"/>
+                            <constraint firstItem="fOq-ZM-KIQ" firstAttribute="top" secondItem="xIb-lR-67P" secondAttribute="bottom" constant="8" id="gzv-Ur-NoG"/>
                             <constraint firstAttribute="centerX" secondItem="xIb-lR-67P" secondAttribute="centerX" id="lM6-v6-8BN"/>
+                            <constraint firstAttribute="trailing" secondItem="xIb-lR-67P" secondAttribute="trailing" constant="55" id="saS-SV-r9D"/>
                         </constraints>
                     </view>
                     <connections>

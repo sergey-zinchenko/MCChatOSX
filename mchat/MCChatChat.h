@@ -18,6 +18,12 @@ typedef NS_ENUM(NSInteger, MCChatChatInitiator) {
     MCChatChatInitiatedByCompanion
 };
 
+typedef NS_ENUM(NSInteger, MCChatChatState) {
+    MCChatChatStateAccepted,
+    MCChatChatStatePending,
+    MCChatChatStateClosed
+};
+
 @protocol MCChatChatDelegate <NSObject>
 @optional
 - (void)onCompanion:(MCChatUser *)companion
@@ -49,6 +55,7 @@ typedef NS_ENUM(NSInteger, MCChatChatInitiator) {
 - (void)sendMessage:(NSString *)message;
 
 @property (nonatomic, readonly) MCChatChatInitiator initiatedBy;
+@property (nonatomic, readonly) MCChatChatState state;
 @property (nonatomic, readonly) NSUUID *chatId;
 @property (nonatomic, readonly) NSString *theme;
 @property (nonatomic, readonly) NSMutableArray *companions;
