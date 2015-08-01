@@ -32,6 +32,7 @@ typedef NS_ENUM(NSInteger, MCChatChatState) {
        declinedChat:(MCChatChat *)chat;
 - (void)onCompanion:(MCChatUser *)companion
            leftChat:(MCChatChat *)chat;
+- (void)onChatEnded:(MCChatChat *)chat;
 - (void)onMessageRecieved:(NSString *)message
             fromCompanion:(MCChatUser *)companion
                  fromChat:(MCChatChat *)chat;

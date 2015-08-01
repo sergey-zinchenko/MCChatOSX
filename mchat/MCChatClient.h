@@ -69,6 +69,15 @@
              forClient:(MCChatClient *)client;
 - (void)onChatLeft:(MCChatChat *)chat
              forClient:(MCChatClient *)client;
+- (void)onChatAccepted:(MCChatChat *)chat
+           byCompanion:(MCChatUser *)companion
+             forClient:(MCChatClient *)client;
+- (void)onChatDeclined:(MCChatChat *)chat
+           byCompanion:(MCChatUser *)companion
+             forClient:(MCChatClient *)client;
+- (void)onChatLeft:(MCChatChat *)chat
+       byCompanion:(MCChatUser *)companion
+         forClient:(MCChatClient *)client;
 @end
 
 
