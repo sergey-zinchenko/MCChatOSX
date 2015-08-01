@@ -87,13 +87,14 @@
 
 + (MCChatClient *)sharedInstance;
 
-@property (readonly, getter=getStatus) MCChatCoreStatus status;
+@property (readonly, assign, getter=getStatus) MCChatCoreStatus status;
 @property (assign, nonatomic) BOOL useNotifications;
 @property (weak, nonatomic) id<MCChatClientDeligate> deligate;
 @property (weak, nonatomic) id<MCChatClientChatsDeligate> chatsDeligate;
-@property (getter=getMyName, setter=setMyName:) NSString* myName;
+@property (nonatomic, setter=setMyName:) NSString* myName;
 @property (readonly, getter=getCompanions) NSArray* companions;
 @property (readonly, getter=getChats) NSArray *chats;
 @property (readonly, getter=getPendingChats) NSArray *pendingChats;
+@property (readonly, getter=getAcceptedChats) NSArray *acceptedChats;
 
 @end

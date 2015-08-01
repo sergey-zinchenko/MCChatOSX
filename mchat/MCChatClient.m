@@ -34,16 +34,22 @@
 - (void)addCompanionWithUUID:(NSUUID *)uuid andName:(NSString *)name;
 - (void)removeCompanionWithUUID:(NSUUID *)uuid;
 - (MCChatCoreStatus)getStatus;
+- (NSArray *)getAcceptedChats;
+- (NSArray *)getPendingChats;
+- (NSArray *)getChats;
+- (NSArray *)getCompanions;
+- (void)setMyName:(NSString *)name;
 @end
 
 @implementation MCChatClient
 {
     MCChatCore *core;
     NSMutableDictionary *companions, *chats, *acceptedChats, *pendingChats;
-    NSString *_myName;
     BOOL connectingNow;
     NSString *myLocation;
 }
+
+@synthesize myName = _myName;
 
 - (NSArray *)getChats
 {
@@ -52,7 +58,13 @@
 }
 
 
--(NSArray *)getPendingChats
+- (NSArray *)getPendingChats
+{
+    LOG_SELECTOR()
+    return [pendingChats allValues];
+}
+
+- (NSArray *)getAcceptedChats
 {
     LOG_SELECTOR()
     return [pendingChats allValues];
@@ -60,6 +72,7 @@
 
 - (BOOL)isAcceptedChat:(MCChatChat *)chat
 {
+    LOG_SELECTOR()
     if (chat.client != self)
         [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat does not belong to this client" userInfo:nil] raise];
     return [[acceptedChats allValues] indexOfObject:chat] != NSNotFound;
@@ -67,6 +80,7 @@
 
 - (BOOL)isPendingChat:(MCChatChat *)chat
 {
+    LOG_SELECTOR()
     if (chat.client != self)
         [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat does not belong to this client" userInfo:nil] raise];
     return [[pendingChats allValues] indexOfObject:chat] != NSNotFound;
@@ -74,6 +88,7 @@
 
 - (BOOL)isUnknownChat:(MCChatChat *)chat
 {
+    LOG_SELECTOR()
     if (chat.client != self)
         [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat does not belong to this client" userInfo:nil] raise];
     return [[chats allValues] indexOfObject:chat] != NSNotFound;
@@ -191,12 +206,6 @@
 {
     LOG_SELECTOR()
     return core.status;
-}
-
-- (NSString *)getMyName
-{
-    LOG_SELECTOR()
-    return _myName;
 }
 
 - (void)setMyName:(NSString *)myName
