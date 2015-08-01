@@ -64,12 +64,6 @@
     [self filterAndDispayChats];
 }
 
-- (void)onConnectAttemptEndedSuccessfully:(BOOL)successfully
-                                forClient:(MCChatClient *)client
-{
-    
-}
-
 - (void)onDisconnectOccurredForClient:(MCChatClient *)client
 {
     [chats removeAllObjects];
@@ -103,6 +97,29 @@
 {
     [chats removeObject:chat];
     [self filterAndDispayChats];
+}
+
+- (void)onChatAccepted:(MCChatChat *)chat
+           byCompanion:(MCChatUser *)companion
+             forClient:(MCChatClient *)client
+{
+    [tblView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:[chatsToDisplay indexOfObject:chat]] columnIndexes:[NSIndexSet indexSetWithIndex:0]];
+}
+
+- (void)onChatDeclined:(MCChatChat *)chat
+           byCompanion:(MCChatUser *)companion
+             forClient:(MCChatClient *)client
+{
+    if ([chat.companions count] > 0)
+        [tblView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:[chatsToDisplay indexOfObject:chat]] columnIndexes:[NSIndexSet indexSetWithIndex:0]];
+}
+
+- (void)onChatLeft:(MCChatChat *)chat
+       byCompanion:(MCChatUser *)companion
+         forClient:(MCChatClient *)client
+{
+    if ([chat.companions count] > 0)
+        [tblView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:[chatsToDisplay indexOfObject:chat]] columnIndexes:[NSIndexSet indexSetWithIndex:0]];
 }
 
 @end

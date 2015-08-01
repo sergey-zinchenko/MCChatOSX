@@ -42,9 +42,15 @@
     NSUInteger acceptedCount = [_chat.acceptedCompanions count];
     NSUInteger pendingCount = [_chat.companions count] - acceptedCount;
     NSColor *textColor;
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init] ;
+    paragraphStyle.alignment = kCTTextAlignmentCenter;
     if (_chat.state == MCChatChatStateAccepted) {
         textColor = [NSColor textColor];
+        topButton.attributedTitle = [[NSAttributedString alloc] initWithString:@"Open" attributes:@{NSForegroundColorAttributeName:[NSColor textColor], NSParagraphStyleAttributeName:paragraphStyle}];
+        bottomButton.attributedTitle = [[NSAttributedString alloc] initWithString:@"Left" attributes:@{NSForegroundColorAttributeName:[NSColor redColor], NSParagraphStyleAttributeName:paragraphStyle}];
     } else {
+        topButton.attributedTitle = [[NSAttributedString alloc] initWithString:@"Accept" attributes:@{NSForegroundColorAttributeName:[NSColor greenColor], NSParagraphStyleAttributeName:paragraphStyle}];
+        bottomButton.attributedTitle = [[NSAttributedString alloc] initWithString:@"Decline" attributes:@{NSForegroundColorAttributeName:[NSColor redColor], NSParagraphStyleAttributeName:paragraphStyle}];
         textColor = [NSColor redColor];
     }
     chatThemeField.textColor = textColor;
@@ -56,12 +62,21 @@
 
 - (IBAction)onTopButtonClicked:(id)sender
 {
-    
+    if (_chat.state == MCChatChatStateAccepted) {
+        
+    } else {
+        [_chat accept];
+    }
+        
 }
 
 - (IBAction)onBottomButtonClicked:(id)sender
 {
-    
+    if (_chat.state == MCChatChatStateAccepted) {
+        [_chat leave];
+    } else {
+        [_chat decline];
+    }
 }
 
 @end
