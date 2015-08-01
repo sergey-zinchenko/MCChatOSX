@@ -99,9 +99,10 @@
 }
 
 - (void)onChatEnded:(MCChatChat *)chat
-            forCore:(MCChatCore *)core
+          forClient:(MCChatClient *)client
 {
-    
+    [chats removeObject:chat];
+    [self filterAndDispayChats];
 }
 
 @end
