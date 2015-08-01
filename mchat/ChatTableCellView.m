@@ -40,12 +40,17 @@
     if (!_chat)
         return;
     NSUInteger count = [_chat.acceptedCompanions count];
-    chatThemeField.textColor = [NSColor disabledControlTextColor];
-    chatInfoField.textColor = [NSColor disabledControlTextColor];
+    NSColor *textColor;
+    if (_chat.state == MCChatChatStateAccepted) {
+        textColor = [NSColor textColor];
+    } else {
+        textColor = [NSColor redColor];
+    }
+    chatThemeField.textColor = textColor;
+    chatInfoField.textColor = textColor;
     NSString *companionsString = count > 1?@"companions":@"companion";
     chatThemeField.stringValue = _chat.theme;
     chatInfoField.stringValue = [NSString stringWithFormat:@"%ld %@ accepted already", (unsigned long)count, companionsString];
-
 }
 
 - (IBAction)onTopButtonClicked:(id)sender

@@ -42,15 +42,14 @@
     [super viewDidLoad];
     companions = [[NSMutableArray alloc] init];
     [companions addObjectsFromArray:[MCChatClient sharedInstance].companions];
-    companionsToDisplay = [NSArray array];
+    companionsToDisplay = [companions copy];
     [MCChatClient sharedInstance].deligate = self;
+    [tblView reloadData];
 }
 
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];
 }
-
-
 
 - (void)onConnectAttemptStartedForClient:(MCChatClient *)client
 {

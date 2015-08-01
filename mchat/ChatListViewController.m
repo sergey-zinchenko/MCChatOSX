@@ -39,9 +39,9 @@
     [super viewDidLoad];
     chats = [[NSMutableArray alloc] init];
     [chats addObjectsFromArray:[MCChatClient sharedInstance].chats];
-    chatsToDisplay = [NSArray array];
+    chatsToDisplay = [chats copy];
     [MCChatClient sharedInstance].chatsDeligate = self;
-    [tblView becomeFirstResponder];
+    [tblView reloadData];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView

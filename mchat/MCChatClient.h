@@ -60,6 +60,8 @@
 - (void)onChatInvitationRecieved:(MCChatChat *)chat
                         fromUser:(MCChatUser *)user
                        forClient:(MCChatClient *)client;
+- (void)onChatEnded:(MCChatChat *)chat
+            forCore:(MCChatCore *)core;
 - (void)onChatAccepted:(MCChatChat *)chat
              forClient:(MCChatClient *)client;
 - (void)onChatDeclined:(MCChatChat *)chat
