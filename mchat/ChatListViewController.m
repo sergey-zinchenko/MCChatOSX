@@ -11,7 +11,8 @@
 #import "NSArray+dif.h"
 
 @interface ChatListViewController ()
-
+- (void)filterAndDispayChats;
+- (IBAction)searchFieldAction:(NSSearchField *)sender;
 @end
 
 @implementation ChatListViewController
@@ -121,5 +122,14 @@
     if ([chat.companions count] > 0)
         [tblView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:[chatsToDisplay indexOfObject:chat]] columnIndexes:[NSIndexSet indexSetWithIndex:0]];
 }
+
+- (IBAction)searchFieldAction:(NSSearchField *)sender
+{
+    NSString *attributeValue = [sender stringValue];
+    filterPredicate = (attributeValue&&![attributeValue isEqualToString:@""])?[NSPredicate predicateWithFormat:@"theme contains[cd] %@",attributeValue, attributeValue]:nil;
+    [self filterAndDispayChats];
+}
+
+
 
 @end

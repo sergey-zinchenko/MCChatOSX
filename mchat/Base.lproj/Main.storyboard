@@ -196,7 +196,7 @@ DQ
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </searchFieldCell>
                                 <connections>
-                                    <action selector="searchFieldAction:" target="XfG-lQ-9wD" id="qh4-bP-icm"/>
+                                    <action selector="searchFieldAction:" target="XfG-lQ-9wD" id="GCC-Gr-KCA"/>
                                 </connections>
                             </searchField>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="47" horizontalPageScroll="10" verticalLineScroll="47" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VcJ-XH-uji">
@@ -520,7 +520,7 @@ DQ
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </searchFieldCell>
                                 <connections>
-                                    <action selector="searchFieldAction:" target="XfG-lQ-9wD" id="xlK-Lp-lPg"/>
+                                    <action selector="searchFieldAction:" target="Mo8-L4-fsR" id="2B3-Rd-R2v"/>
                                 </connections>
                             </searchField>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="47" horizontalPageScroll="10" verticalLineScroll="47" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V8T-jH-Tw7">
@@ -537,7 +537,7 @@ DQ
                                             <tableViewGridLines key="gridStyleMask" horizontal="YES"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn width="445.05212854144264" minWidth="40" maxWidth="1000" id="ogb-X0-Vpt">
+                                                <tableColumn width="445" minWidth="40" maxWidth="10000" id="ogb-X0-Vpt">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>

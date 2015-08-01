@@ -14,6 +14,9 @@
 @interface CompanionsLstViewController ()
 - (void)playDingSound;
 - (void)filterAndDispayCompanions;
+- (IBAction)searchFieldAction:(NSSearchField *)sender;
+- (void)startChatAction:(id)sender;
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem;
 @end
 
 @implementation CompanionsLstViewController
@@ -45,10 +48,6 @@
     companionsToDisplay = [companions copy];
     [MCChatClient sharedInstance].deligate = self;
     [tblView reloadData];
-}
-
-- (void)setRepresentedObject:(id)representedObject {
-    [super setRepresentedObject:representedObject];
 }
 
 - (void)onConnectAttemptStartedForClient:(MCChatClient *)client
@@ -111,7 +110,7 @@
 //    [[[NSApplication sharedApplication] menu] ]
 }
 
--(BOOL)validateMenuItem:(NSMenuItem *)menuItem
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
     SEL sel = menuItem.action;
     if (sel == @selector(startChatAction:)) {
