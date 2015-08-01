@@ -213,7 +213,7 @@ DQ
                                             <tableViewGridLines key="gridStyleMask" horizontal="YES"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn width="245.13886406375337" minWidth="40" maxWidth="1000" id="eXM-RP-BVT">
+                                                <tableColumn width="245.03581616806073" minWidth="40" maxWidth="1000" id="eXM-RP-BVT">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -227,7 +227,7 @@ DQ
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="companionCell" id="vQI-gK-TSG" customClass="CompanionTableCellView">
-                                                            <rect key="frame" x="1" y="1" width="245" height="45"/>
+                                                            <rect key="frame" x="1" y="1" width="245.42868440918437" height="45"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QSj-wI-tgW">
@@ -676,7 +676,7 @@ DQ
                         <rect key="frame" x="0.0" y="0.0" width="348" height="151"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xIb-lR-67P" userLabel="User x wants to start chat with you Theme is &quot;x&quot;. Do you want to accept?">
+                            <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xIb-lR-67P" userLabel="User x wants to start chat with you Theme is &quot;x&quot;. Do you want to accept?">
                                 <rect key="frame" x="53" y="90" width="242" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="zGk-JI-QWv"/>
