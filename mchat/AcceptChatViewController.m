@@ -13,7 +13,7 @@
 - (IBAction)onAcceptCliecked:(id)sender;
 - (IBAction)onDeclineCliecked:(id)sender;
 - (void)onChatCompanionsChanged;
-- (void)clearChatAndClose;
+- (void)clearChatAndInitiatorAndClose;
 - (void)setChat:(MCChatChat *)chat;
 - (void)setChatInitiator:(MCChatUser *)chatInitiator;
 - (void)updateUi;
@@ -51,10 +51,11 @@
     [self updateUi];
 }
 
-- (void)clearChatAndClose
+- (void)clearChatAndInitiatorAndClose
 {
     _chat.delegate = nil;
     _chat = nil;
+    _chatInitiator = nil;
     [self.view.window.sheetParent endSheet:self.view.window];
 }
 
@@ -71,19 +72,19 @@
 - (IBAction)onAcceptCliecked:(id)sender
 {
     [self.chat accept];
-    [self clearChatAndClose];
+    [self clearChatAndInitiatorAndClose];
 }
 
 - (IBAction)onDeclineCliecked:(id)sender
 {
     [self.chat decline];
-    [self clearChatAndClose];
+    [self clearChatAndInitiatorAndClose];
 }
 
 - (void)onChatCompanionsChanged
 {
     if ([self.chat.companions count] == 0) {
-        [self clearChatAndClose];
+        [self clearChatAndInitiatorAndClose];
     } else {
         [self updateUi];
     }
