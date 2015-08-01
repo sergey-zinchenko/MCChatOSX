@@ -172,6 +172,8 @@
     if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatEnded:forClient:))
         [self.chatsDeligate onChatEnded:chat
                               forClient:self];
+    if VALID_CHATS_CHAT_DELEGATE(chat.delegate, @selector(onChatEnded:))
+        [chat.delegate onChatEnded:chat];
     if (self.useNotifications) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kChatDeclinedNotification
                                                             object:self
@@ -200,6 +202,8 @@
     if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatEnded:forClient:))
         [self.chatsDeligate onChatEnded:chat
                               forClient:self];
+    if VALID_CHATS_CHAT_DELEGATE(chat.delegate, @selector(onChatEnded:))
+        [chat.delegate onChatEnded:chat];
     if (self.useNotifications) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kChatLeftNotification
                                                             object:self
@@ -509,6 +513,10 @@
                 if VALID_CHATS_CHAT_DELEGATE(chat.delegate, @selector(onCompanion:acceptedChat:))
                     [chat.delegate onCompanion:companion
                                   acceptedChat:chat];
+                if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatAccepted:byCompanion:forClient:))
+                    [self.chatsDeligate onChatAccepted:chat
+                                       byCompanion:companion
+                                         forClient:self];
                 if (self.useNotifications)
                     [[NSNotificationCenter defaultCenter] postNotificationName:kChatAcceptedByCompanionNotification object:self userInfo:@{kUserField:companion, kChatField:chat}];
 
@@ -528,9 +536,17 @@
                 if VALID_CHATS_CHAT_DELEGATE(chat.delegate, @selector(onCompanion:declinedChat:))
                     [chat.delegate onCompanion:companion
                                   declinedChat:chat];
-                if ([chat.companions count] == 0 && VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatEnded:forClient:)))
-                    [self.chatsDeligate onChatEnded:chat
-                                          forClient:self];
+                if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatDeclined:byCompanion:forClient:))
+                    [self.chatsDeligate onChatDeclined:chat
+                                       byCompanion:companion
+                                         forClient:self];
+                if ([chat.companions count] == 0) {
+                    if VALID_CHATS_CHAT_DELEGATE(chat.delegate, @selector(onChatEnded:))
+                        [chat.delegate onChatEnded:chat];
+                    if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatEnded:forClient:))
+                        [self.chatsDeligate onChatEnded:chat
+                                              forClient:self];
+                }
                 if (self.useNotifications) {
                     [[NSNotificationCenter defaultCenter] postNotificationName:kChatDeclinedByCompanionNotification object:self userInfo:@{kUserField:companion, kChatField:chat}];
                     if ([chat.companions count] == 0)
@@ -555,9 +571,17 @@
                 if VALID_CHATS_CHAT_DELEGATE(chat.delegate, @selector(onCompanion:leftChat:))
                     [chat.delegate onCompanion:companion
                                   leftChat:chat];
-                if ([chat.companions count] == 0 && VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatEnded:forClient:)))
-                    [self.chatsDeligate onChatEnded:chat
-                                          forClient:self];
+                if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatLeft:byCompanion:forClient:))
+                    [self.chatsDeligate onChatLeft:chat
+                                       byCompanion:companion
+                                         forClient:self];
+                if ([chat.companions count] == 0) {
+                    if VALID_CHATS_CHAT_DELEGATE(chat.delegate, @selector(onChatEnded:))
+                        [chat.delegate onChatEnded:chat];
+                    if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatEnded:forClient:))
+                        [self.chatsDeligate onChatEnded:chat
+                                              forClient:self];
+                }
                 if (self.useNotifications) {
                     [[NSNotificationCenter defaultCenter] postNotificationName:kChatLeftByCompanionNotification object:self userInfo:@{kUserField:companion, kChatField:chat}];
                     if ([chat.companions count] == 0)
