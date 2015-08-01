@@ -280,11 +280,11 @@ DQ
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="B1f-4t-tzf"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="250" id="gIF-ol-34n"/>
                                 </constraints>
-                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="8.0900405432460576e-13" horizontal="YES" id="A8D-wp-YRd">
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="A8D-wp-YRd">
                                     <rect key="frame" x="1" y="95.388471841812134" width="186" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="0.0032162797977448626" horizontal="NO" id="II2-d3-CNt">
+                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="II2-d3-CNt">
                                     <rect key="frame" x="224" y="17" width="15" height="102"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
@@ -530,14 +530,14 @@ DQ
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnSelection="YES" columnResizing="NO" autosaveColumns="NO" rowHeight="45" viewBased="YES" id="JR5-FG-YFm">
-                                            <rect key="frame" x="0.0" y="0.0" width="248" height="0.0"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="448" height="0.0"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <tableViewGridLines key="gridStyleMask" horizontal="YES"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn width="445.16806629340925" minWidth="40" maxWidth="1000" id="ogb-X0-Vpt">
+                                                <tableColumn width="445.07157039590095" minWidth="40" maxWidth="1000" id="ogb-X0-Vpt">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -611,7 +611,7 @@ DQ
                                     <rect key="frame" x="1" y="95.388471841812134" width="186" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="mfE-Lt-HsU">
+                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="3.6954393151939555e-12" horizontal="NO" id="mfE-Lt-HsU">
                                     <rect key="frame" x="224" y="17" width="15" height="102"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>

@@ -11,6 +11,9 @@
 
 #define LOG_SELECTOR()  NSLog(@"%@ > %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 
+@interface MCChatChat ()
+- (MCChatChatState)getState;
+@end
 
 @implementation MCChatChat
 
@@ -87,6 +90,15 @@
     LOG_SELECTOR()
     [self.client sendMessage:message
                       toChat:self];
+}
+
+- (MCChatChatState)getState
+{
+    if ([self.client isAcceptedChat:self])
+        return MCChatChatStateAccepted;
+    else if ([self.client isPendingChat:self])
+        return MCChatChatStatePending;
+    return MCChatChatStateUnknown;
 }
 
 @end

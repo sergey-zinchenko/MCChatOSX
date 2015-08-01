@@ -81,6 +81,9 @@
 - (void)leaveChat:(MCChatChat *)chat;
 - (void)sendMessage:(NSString *)message
              toChat:(MCChatChat *)chat;
+- (BOOL)isAcceptedChat:(MCChatChat *)chat;
+- (BOOL)isPendingChat:(MCChatChat *)chat;
+- (BOOL)isUnknownChat:(MCChatChat *)chat;
 
 + (MCChatClient *)sharedInstance;
 

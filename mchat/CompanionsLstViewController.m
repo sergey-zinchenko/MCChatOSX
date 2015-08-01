@@ -44,8 +44,6 @@
     [companions addObjectsFromArray:[MCChatClient sharedInstance].companions];
     companionsToDisplay = [NSArray array];
     [MCChatClient sharedInstance].deligate = self;
-    [tblView becomeFirstResponder];
-    
 }
 
 - (void)setRepresentedObject:(id)representedObject {

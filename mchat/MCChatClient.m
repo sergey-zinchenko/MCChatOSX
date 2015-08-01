@@ -48,7 +48,7 @@
 - (NSArray *)getChats
 {
     LOG_SELECTOR()
-    return [[acceptedChats allValues] arrayByAddingObjectsFromArray:[pendingChats allValues]];
+    return [chats allValues];
 }
 
 
@@ -56,6 +56,27 @@
 {
     LOG_SELECTOR()
     return [pendingChats allValues];
+}
+
+- (BOOL)isAcceptedChat:(MCChatChat *)chat
+{
+    if (chat.client != self)
+        [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat does not belong to this client" userInfo:nil] raise];
+    return [[acceptedChats allValues] indexOfObject:chat] != NSNotFound;
+}
+
+- (BOOL)isPendingChat:(MCChatChat *)chat
+{
+    if (chat.client != self)
+        [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat does not belong to this client" userInfo:nil] raise];
+    return [[pendingChats allValues] indexOfObject:chat] != NSNotFound;
+}
+
+- (BOOL)isUnknownChat:(MCChatChat *)chat
+{
+    if (chat.client != self)
+        [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat does not belong to this client" userInfo:nil] raise];
+    return [[chats allValues] indexOfObject:chat] != NSNotFound;
 }
 
 - (void)startChat:(MCChatChat *)chat
@@ -206,7 +227,7 @@
 - (instancetype)initWithName:(NSString *)name
 {
     LOG_SELECTOR()
-    self = [super init];
+    self = [self init];
     if (self) {
         _myName = name;
     }
