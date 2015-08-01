@@ -165,13 +165,19 @@
     [core sendMessage:@{kLayerFileld:kChatLayer, kDeclinedFiled:[chat.chatId UUIDString]} toUsers:chatCompanionsUids];
     [pendingChats removeObjectForKey:chat.chatId];
     [chats removeObjectForKey:chat.chatId];
+    
     if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatDeclined:forClient:))
         [self.chatsDeligate onChatDeclined:chat
                                  forClient:self];
-    if (self.useNotifications)
+    if ([chat.companions count] == 0 && VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatEnded:forClient:)))
+        [self.chatsDeligate onChatEnded:chat forClient:self];
+    if (self.useNotifications) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kChatDeclinedNotification
                                                             object:self
                                                           userInfo:@{kChatField: chat}];
+        if ([chat.companions count] == 0)
+            [[NSNotificationCenter defaultCenter] postNotificationName:kChatEndedNotification object:self userInfo:@{kChatField:chat}];
+    }
 }
 
 - (void)leaveChat:(MCChatChat *)chat
@@ -189,10 +195,15 @@
     if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatLeft:forClient:))
         [self.chatsDeligate onChatLeft:chat
                                  forClient:self];
-    if (self.useNotifications)
+    if ([chat.companions count] == 0 && VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatEnded:forClient:)))
+        [self.chatsDeligate onChatEnded:chat forClient:self];
+    if (self.useNotifications) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kChatLeftNotification
                                                             object:self
                                                           userInfo:@{kChatField: chat}];
+        if ([chat.companions count] == 0)
+            [[NSNotificationCenter defaultCenter] postNotificationName:kChatEndedNotification object:self userInfo:@{kChatField:chat}];
+    }
 }
 
 - (void)sendMessage:(NSString *)message
@@ -513,8 +524,13 @@
                 if VALID_CHATS_CHAT_DELEGATE(chat.delegate, @selector(onCompanion:declinedChat:))
                     [chat.delegate onCompanion:companion
                                   declinedChat:chat];
-                if (self.useNotifications)
+                if ([chat.companions count] == 0 && VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatEnded:forClient:)))
+                    [self.chatsDeligate onChatEnded:chat forClient:self];
+                if (self.useNotifications) {
                     [[NSNotificationCenter defaultCenter] postNotificationName:kChatDeclinedByCompanionNotification object:self userInfo:@{kUserField:companion, kChatField:chat}];
+                    if ([chat.companions count] == 0)
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kChatEndedNotification object:self userInfo:@{kChatField:chat}];
+                }
             } else if VALID_MESSAGE_FIELD(message, kLeftField, NSString) {
                 NSUUID *chatId = [[NSUUID alloc] initWithUUIDString:message[kLeftField]];
                 if (!chatId)
@@ -532,8 +548,13 @@
                 if VALID_CHATS_CHAT_DELEGATE(chat.delegate, @selector(onCompanion:leftChat:))
                     [chat.delegate onCompanion:companion
                                   leftChat:chat];
-                if (self.useNotifications)
+                if ([chat.companions count] == 0 && VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatEnded:forClient:)))
+                    [self.chatsDeligate onChatEnded:chat forClient:self];
+                if (self.useNotifications) {
                     [[NSNotificationCenter defaultCenter] postNotificationName:kChatLeftByCompanionNotification object:self userInfo:@{kUserField:companion, kChatField:chat}];
+                    if ([chat.companions count] == 0)
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kChatEndedNotification object:self userInfo:@{kChatField:chat}];
+                }
             }
         }
         

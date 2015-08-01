@@ -19,6 +19,7 @@
 #define kUserConnectedNotification @"kUserConnectedNotification"
 #define kUserDisconnectedNotification @"kUserDisconnectedNotification"
 #define kChatStartedNotification @"kChatStartedNotification"
+#define kChatEndedNotification @"kChatEndedNotification"
 #define kChatInvitationReceivedNotification @"kChatInvitationReceivedNotification"
 #define kChatAcceptedNotification @"kChatAcceptedNotification"
 #define kChatDeclinedNotification @"kChatDeclinedNotification"
@@ -61,7 +62,7 @@
                         fromUser:(MCChatUser *)user
                        forClient:(MCChatClient *)client;
 - (void)onChatEnded:(MCChatChat *)chat
-            forCore:(MCChatCore *)core;
+            forClient:(MCChatClient *)client;
 - (void)onChatAccepted:(MCChatChat *)chat
              forClient:(MCChatClient *)client;
 - (void)onChatDeclined:(MCChatChat *)chat

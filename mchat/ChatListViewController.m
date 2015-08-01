@@ -95,17 +95,11 @@
 - (void)onChatAccepted:(MCChatChat *)chat
              forClient:(MCChatClient *)client
 {
-    
+    [tblView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:[chatsToDisplay indexOfObject:chat]] columnIndexes:[NSIndexSet indexSetWithIndex:0]];
 }
 
-- (void)onChatDeclined:(MCChatChat *)chat
-             forClient:(MCChatClient *)client
-{
-    
-}
-
-- (void)onChatLeft:(MCChatChat *)chat
-         forClient:(MCChatClient *)client
+- (void)onChatEnded:(MCChatChat *)chat
+            forCore:(MCChatCore *)core
 {
     
 }
