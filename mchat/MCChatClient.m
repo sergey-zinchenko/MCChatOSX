@@ -369,12 +369,6 @@
     NSLog(@"Exception > %@ : %@", exception, reason);
 }
 
-- (void)userConnected:(NSUUID *)user
-              forCore:(MCChatCore *)c
-{
-    LOG_SELECTOR()
-}
-
 - (void)userDisconnected:(NSUUID *)user
                  forCore:(MCChatCore *)c
 {
