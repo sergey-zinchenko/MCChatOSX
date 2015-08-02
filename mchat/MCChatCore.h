@@ -20,6 +20,7 @@ typedef NS_ENUM(NSInteger, MCChatCoreStatus) {
 };
 
 @protocol MCChatCoreDelegate <NSObject>
+@optional
 - (void)connectedToServerVersion:(NSUInteger)version
                        forCore:(MCChatCore *)core;
 - (void)disconnectedBecauseOfException:(NSString *)exception

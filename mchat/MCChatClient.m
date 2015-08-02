@@ -10,6 +10,8 @@
 #import "MCChatUser.h"
 #import "MCChatChat.h"
 
+#define kPublicChatUUIDString @"00000000-0000-0000-0000-000000000000"
+
 #define kLayerFileld @"layer"
 #define kHandshakeLayer @"handshake"
 #define kUserLayer @"user"
@@ -41,6 +43,7 @@
 - (NSArray *)getChats;
 - (NSArray *)getCompanions;
 - (void)setMyName:(NSString *)name;
+- (void)finalizeHandshakeForUserWithUUID:(NSUUID *)userid;
 @end
 
 @implementation MCChatClient
@@ -52,6 +55,8 @@
 }
 
 @synthesize myName = _myName;
+
+static NSUUID *publicChatUUID;
 
 - (NSArray *)getChats
 {
@@ -198,6 +203,8 @@
     [core sendMessage:@{kLayerFileld:kChatLayer, kLeftField:[chat.chatId UUIDString]} toUsers:chatCompanionsUids];
     [acceptedChats removeObjectForKey:chat.chatId];
     [chats removeObjectForKey:chat.chatId];
+    if ([chat.chatId isEqualTo:publicChatUUID])
+        _publicChat = nil;
     if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatLeft:forClient:))
         [self.chatsDeligate onChatLeft:chat
                              forClient:self];
@@ -302,6 +309,7 @@
 - (void)disconnect
 {
     LOG_SELECTOR()
+    _publicChat = nil;
     [core disconnect];
 }
 
@@ -320,6 +328,19 @@
     [acceptedChats removeAllObjects];
     [chats removeAllObjects];
     [pendingChats removeAllObjects];
+    
+    _publicChat = [[MCChatChat alloc] initWithCompanions:nil
+                                                 acceptedCompanions:nil
+                                                          chatTheme:@"Public chat"
+                                                             chatId:publicChatUUID
+                                                          andClient:self];
+    [acceptedChats setObject:_publicChat forKey:_publicChat.chatId];
+    [chats setObject:_publicChat forKey:_publicChat.chatId];
+    if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatStarted:forClient:))
+        [self.chatsDeligate onChatStarted:_publicChat forClient:self];
+    if (self.useNotifications)
+        [[NSNotificationCenter defaultCenter] postNotificationName:kChatStartedNotification object:self userInfo:@{kChatField: _publicChat}];
+    
     [c sendBroadcastMessage:@{kLayerFileld : kHandshakeLayer, kHelloField: self.myName}];
     if (connectingNow) {
         if (self.useNotifications)
@@ -353,6 +374,7 @@
     [acceptedChats removeAllObjects];
     [pendingChats removeAllObjects];
     [chats removeAllObjects];
+    _publicChat = nil;
     if (self.useNotifications)
         [[NSNotificationCenter defaultCenter] postNotificationName:kDisconnectOccurredNotification object:self userInfo:nil];
     if VALID_DELEGATE(self.deligate, @selector(onDisconnectOccurredForClient:))
@@ -384,6 +406,11 @@
                                                     userName:name
                                                    forClient:self];
     [companions setObject:companion forKey:uuid];
+    
+    MCChatChat *publicChat = acceptedChats[publicChatUUID];
+    if (publicChat)
+        [publicChat.companions addObject:companion];
+    
     if VALID_DELEGATE(self.deligate, @selector(onUserConnected:forClient:)) {
         [self.deligate onUserConnected:companion forClient:self];
     }
@@ -407,6 +434,12 @@
         if([c.companions indexOfObject:companion] != NSNotFound) {
             [c.companions removeObject:companion];
             [c.acceptedCompanions removeObject:companion];
+            if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatLeft:byCompanion:forClient:))
+                [self.chatsDeligate onChatLeft:c
+                                   byCompanion:companion
+                                     forClient:self];
+            if (self.useNotifications)
+                [[NSNotificationCenter defaultCenter] postNotificationName:kChatLeftByCompanionNotification object:self userInfo:@{kUserField:companion, kChatField:c}];
             [self checkChat:c ifEndedIfNeeded:YES];
         }
     }
@@ -426,15 +459,11 @@
                         toUser:userid];
                 [self addCompanionWithUUID:userid
                                    andName:message[kHelloField]];
-                if (myLocation)
-                    [c sendMessage:@{kLayerFileld : kUserLayer, kLocationField : myLocation}
-                            toUser:userid];
+                [self finalizeHandshakeForUserWithUUID:userid];
             } else if VALID_MESSAGE_FIELD(message, kHiField, NSString) {
                 [self addCompanionWithUUID:userid
                                    andName:message[kHiField]];
-                if (myLocation)
-                    [c sendMessage:@{kLayerFileld : kUserLayer, kLocationField : myLocation}
-                            toUser:userid];
+                [self finalizeHandshakeForUserWithUUID:userid];
             }
         } else if ([layer isEqualToString:kUserLayer]) {
             if VALID_MESSAGE_FIELD(message, kLocationField, NSString) {
@@ -581,7 +610,7 @@
   ifEndedIfNeeded:(BOOL)neededToCheck;
 {
     LOG_SELECTOR()
-    if (!neededToCheck || [chat.companions count] == 0) {
+    if ((![chat.chatId isEqualTo:publicChatUUID]) && (!neededToCheck || [chat.companions count] == 0)) {
         [chats removeObjectForKey:chat.chatId];
         [acceptedChats removeObjectForKey:chat.chatId];
         [pendingChats removeObjectForKey:chat.chatId];
@@ -594,6 +623,23 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:kChatEndedNotification
                                                                 object:self
                                                               userInfo:@{kChatField:chat}];
+    }
+}
+
++ (void)initialize
+{
+    publicChatUUID = [[NSUUID alloc] initWithUUIDString:kPublicChatUUIDString];
+}
+
+-(void)finalizeHandshakeForUserWithUUID:(NSUUID *)userid
+{
+    if (myLocation)
+        [core sendMessage:@{kLayerFileld : kUserLayer, kLocationField : myLocation}
+                toUser:userid];
+    if ([chats.allKeys indexOfObject:publicChatUUID] != NSNotFound) {
+        [core sendMessage:@{kLayerFileld : kChatLayer, kAcceptedField : [publicChatUUID UUIDString]} toUser:userid];
+    } else {
+        [core sendMessage:@{kLayerFileld : kChatLayer, kDeclinedFiled : [publicChatUUID UUIDString]} toUser:userid];
     }
 }
 

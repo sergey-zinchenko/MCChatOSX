@@ -13,6 +13,7 @@
 @interface ChatListViewController ()
 - (void)filterAndDispayChats;
 - (IBAction)searchFieldAction:(NSSearchField *)sender;
+- (void)onUserConnectedNotification:(NSNotification *)notif;
 @end
 
 @implementation ChatListViewController
@@ -43,6 +44,7 @@
     chatsToDisplay = [chats copy];
     [MCChatClient sharedInstance].chatsDeligate = self;
     [tblView reloadData];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onUserConnectedNotification:) name:kUserConnectedNotification object:[MCChatClient sharedInstance]];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
@@ -119,7 +121,7 @@
        byCompanion:(MCChatUser *)companion
          forClient:(MCChatClient *)client
 {
-    if ([chat.companions count] > 0)
+//    if ([chat.companions count] >= 0)
         [tblView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:[chatsToDisplay indexOfObject:chat]] columnIndexes:[NSIndexSet indexSetWithIndex:0]];
 }
 
@@ -130,6 +132,15 @@
     [self filterAndDispayChats];
 }
 
-
+-(void)onUserConnectedNotification:(NSNotification *)notif
+{
+    MCChatChat *publicChat = ((MCChatClient *)notif.object).publicChat;
+    if (publicChat) {
+        NSUInteger index = [chatsToDisplay indexOfObject:publicChat];
+        if (index != NSNotFound)
+            [tblView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:index] columnIndexes:[NSIndexSet indexSetWithIndex:0]];
+    }
+    
+}
 
 @end

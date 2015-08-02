@@ -100,7 +100,7 @@
             if (!client)
                 [[NSException exceptionWithName:MESSAGE_FORMAT_EXCEPTION reason:@"There is no valid client filed in 'disconnected' message" userInfo:nil] raise];
             [userList removeObject:client];
-            if VALID_DELEGATE(self.delegate, @selector(userConnected:forCore:))
+            if VALID_DELEGATE(self.delegate, @selector(userDisconnected:forCore:))
                 [self.delegate userDisconnected:client forCore:self];
         }
     } else {

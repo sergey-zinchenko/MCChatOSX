@@ -108,5 +108,6 @@
 @property (readonly, getter=getChats) NSArray *chats;
 @property (readonly, getter=getPendingChats) NSArray *pendingChats;
 @property (readonly, getter=getAcceptedChats) NSArray *acceptedChats;
+@property (readonly, nonatomic) MCChatChat *publicChat;
 
 @end
