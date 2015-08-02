@@ -17,6 +17,7 @@
 - (void)connectionAttemptEndedNotification:(NSNotification *)notif;
 - (void)startChatMenuClickedNotification:(NSNotification *)notif;
 - (void)chatInvitationrecievedNotification:(NSNotification *)notif;
+- (void)disconnectOccurredNotification:(NSNotification *)notif;
 @end
 
 @implementation MainWindowController
@@ -91,7 +92,48 @@
         @catch (NSException *exception) {
             
         }
+    } else {
+        NSAlert *retryAlert = [[NSAlert alloc] init];
+        retryAlert.alertStyle = NSCriticalAlertStyle;
+        retryAlert.messageText = @"Unable to establish connection";
+        retryAlert.informativeText = @"Looks like there are some communicaton problems";
+        [retryAlert addButtonWithTitle:@"Retry"];
+        [retryAlert addButtonWithTitle:@"Cancel"];
+        [retryAlert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {
+            switch (returnCode) {
+                case NSAlertFirstButtonReturn:
+                    [[MCChatClient sharedInstance] connect];
+                    break;
+                case NSAlertSecondButtonReturn:
+                    
+                    break;
+                default:
+                    break;
+            }
+        }];
     }
+}
+
+-(void)disconnectOccurredNotification:(NSNotification *)notif
+{
+    NSAlert *reconnectAlert = [[NSAlert alloc] init];
+    reconnectAlert.alertStyle = NSCriticalAlertStyle;
+    reconnectAlert.messageText = @"The connection was lost";
+    reconnectAlert.informativeText = @"Do you want to try to reconnect?";
+    [reconnectAlert addButtonWithTitle:@"Reconnect"];
+    [reconnectAlert addButtonWithTitle:@"Cancel"];
+    [reconnectAlert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {
+        switch (returnCode) {
+            case NSAlertFirstButtonReturn:
+                [[MCChatClient sharedInstance] connect];
+                break;
+            case NSAlertSecondButtonReturn:
+                
+                break;
+            default:
+                break;
+        }
+    }];
 }
 
 
@@ -114,6 +156,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startChatMenuClickedNotification:) name:kStartChatClickedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectionAttemptEndedNotification:) name:kConnectionAttemptEndedNotifcation object:[MCChatClient sharedInstance]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatInvitationrecievedNotification:) name:kChatInvitationReceivedNotification object:[MCChatClient sharedInstance]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(disconnectOccurredNotification:) name:kDisconnectOccurredNotification object:[MCChatClient sharedInstance]];
 }
 
 - (BOOL)windowShouldClose:(id)sender

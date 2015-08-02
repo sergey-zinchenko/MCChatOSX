@@ -31,6 +31,8 @@
 
 #define kUserField @"kUserField"
 #define kChatField @"kChatField"
+#define kExceptionField @"kExceptionField"
+#define kReasonField @"kReasonField"
 
 #define MC_CHAT_CLIENT_EXCEPTION @"MCChatClientException"
 
@@ -40,8 +42,12 @@
 @optional
 - (void)onConnectAttemptStartedForClient:(MCChatClient *)client;
 - (void)onConnectAttemptEndedSuccessfully:(BOOL)successfully
+                            withException:(NSString *)exception
+                                andReason:(NSString *)reason
                                 forClient:(MCChatClient *)client;
-- (void)onDisconnectOccurredForClient:(MCChatClient *)client;
+- (void)onDisconnectOccurredWithException:(NSString *)exception
+                                andReason:(NSString *)reason
+                                forClient:(MCChatClient *)client;
 - (void)onUserConnected:(MCChatUser *)user
               forClient:(MCChatClient *)client;
 - (void)onUserDisconnected:(MCChatUser *)user
@@ -54,8 +60,12 @@
 @optional
 - (void)onConnectAttemptStartedForClient:(MCChatClient *)client;
 - (void)onConnectAttemptEndedSuccessfully:(BOOL)successfully
+                            withException:(NSString *)exception
+                                andReason:(NSString *)reason
                                 forClient:(MCChatClient *)client;
-- (void)onDisconnectOccurredForClient:(MCChatClient *)client;
+- (void)onDisconnectOccurredWithException:(NSString *)exception
+                                andReason:(NSString *)reason
+                                forClient:(MCChatClient *)client;
 - (void)onChatStarted:(MCChatChat *)chat
             forClient:(MCChatClient *)client;
 - (void)onChatInvitationRecieved:(MCChatChat *)chat

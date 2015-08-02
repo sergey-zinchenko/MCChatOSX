@@ -345,11 +345,11 @@ static NSUUID *publicChatUUID;
     if (connectingNow) {
         if (self.useNotifications)
             [[NSNotificationCenter defaultCenter] postNotificationName:kConnectionAttemptEndedNotifcation object:self userInfo:@{kSuccessFlag : @YES}];
-        if VALID_DELEGATE(self.deligate, @selector(onConnectAttemptEndedSuccessfully:forClient:)) {
-            [self.deligate onConnectAttemptEndedSuccessfully:YES forClient:self];
+        if VALID_DELEGATE(self.deligate, @selector(onConnectAttemptEndedSuccessfully:withException:andReason:forClient:)) {
+            [self.deligate onConnectAttemptEndedSuccessfully:YES withException:nil andReason:nil forClient:self];
         }
-        if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onConnectAttemptEndedSuccessfully:forClient:)) {
-            [self.chatsDeligate onConnectAttemptEndedSuccessfully:YES forClient:self];
+        if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onConnectAttemptEndedSuccessfully:withException:andReason:forClient:)) {
+            [self.chatsDeligate onConnectAttemptEndedSuccessfully:YES withException:nil andReason:nil forClient:self];
         }
         connectingNow = NO;
     }
@@ -359,28 +359,48 @@ static NSUUID *publicChatUUID;
                             withReason:(NSString *)reason
                                forCore:(MCChatCore *)core
 {
-    if (connectingNow) {
-        if (self.useNotifications)
-            [[NSNotificationCenter defaultCenter] postNotificationName:kConnectionAttemptEndedNotifcation object:self userInfo:@{kSuccessFlag : @NO}];
-        if VALID_DELEGATE(self.deligate, @selector(onConnectAttemptEndedSuccessfully:forClient:)) {
-            [self.deligate onConnectAttemptEndedSuccessfully:NO forClient:self];
-        }
-        if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onConnectAttemptEndedSuccessfully:forClient:)) {
-            [self.chatsDeligate onConnectAttemptEndedSuccessfully:NO forClient:self];
-        }
-        connectingNow = NO;
-    }
     [companions removeAllObjects];
     [acceptedChats removeAllObjects];
     [pendingChats removeAllObjects];
     [chats removeAllObjects];
     _publicChat = nil;
-    if (self.useNotifications)
-        [[NSNotificationCenter defaultCenter] postNotificationName:kDisconnectOccurredNotification object:self userInfo:nil];
-    if VALID_DELEGATE(self.deligate, @selector(onDisconnectOccurredForClient:))
-        [self.deligate onDisconnectOccurredForClient:self];
-    if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onDisconnectOccurredForClient:))
-        [self.chatsDeligate onDisconnectOccurredForClient:self];
+    NSMutableDictionary *infoDictionary = [NSMutableDictionary dictionary];
+    if (exception)
+        [infoDictionary setObject:exception
+                           forKey:kExceptionField];
+    if (reason)
+        [infoDictionary setObject:reason
+                           forKey:kReasonField];
+    if (connectingNow) {
+        if VALID_DELEGATE(self.deligate, @selector(onConnectAttemptEndedSuccessfully:withException:andReason:forClient:))
+            [self.deligate onConnectAttemptEndedSuccessfully:NO
+                                               withException:exception
+                                                   andReason:reason
+                                                   forClient:self];
+        
+        if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onConnectAttemptEndedSuccessfully:withException:andReason:forClient:))
+            [self.chatsDeligate onConnectAttemptEndedSuccessfully:NO
+                                                    withException:exception
+                                                        andReason:reason
+                                                        forClient:self];
+        
+        if (self.useNotifications) {
+            [infoDictionary setObject:@NO forKey:kSuccessFlag];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kConnectionAttemptEndedNotifcation object:self userInfo:infoDictionary];
+        }
+    } else {
+        if VALID_DELEGATE(self.deligate, @selector(onDisconnectOccurredWithException:andReason:forClient:))
+            [self.deligate onDisconnectOccurredWithException:exception
+                                                   andReason:reason
+                                                   forClient:self];
+        if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onDisconnectOccurredWithException:andReason:forClient:))
+            [self.chatsDeligate onDisconnectOccurredWithException:exception
+                                                        andReason:reason
+                                                        forClient:self];
+        if (self.useNotifications)
+            [[NSNotificationCenter defaultCenter] postNotificationName:kDisconnectOccurredNotification object:self userInfo:infoDictionary];
+    }
+    connectingNow = NO;
 }
 
 - (void)exception:(NSString *)exception
