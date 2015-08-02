@@ -56,12 +56,13 @@
     [self filterAndDispayCompanions];
 }
 
-- (void)onDisconnectOccurredForClient:(MCChatClient *)client
+-(void)onDisconnectOccurredWithException:(NSString *)exception
+                               andReason:(NSString *)reason
+                               forClient:(MCChatClient *)client
 {
     [companions removeAllObjects];
     [self filterAndDispayCompanions];
 }
-
 
 - (void)onUserConnected:(MCChatUser *)user
               forClient:(MCChatClient *)client

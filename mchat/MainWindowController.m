@@ -24,7 +24,7 @@
 {
     NSWindow *nameSheetWindow, *themeSheetWindow;
     LocationMonitor *locationMonitor;
-//    NSMutableArray *testClients;
+    //    NSMutableArray *testClients;
 }
 
 - (void)chatInvitationrecievedNotification:(NSNotification *)notif
@@ -92,7 +92,7 @@
         @catch (NSException *exception) {
             
         }
-    } else {
+    } else if (notif.userInfo[kExceptionField]&&notif.userInfo[kReasonField]) {
         NSAlert *retryAlert = [[NSAlert alloc] init];
         retryAlert.alertStyle = NSCriticalAlertStyle;
         retryAlert.messageText = @"Unable to establish connection";
@@ -116,35 +116,37 @@
 
 -(void)disconnectOccurredNotification:(NSNotification *)notif
 {
-    NSAlert *reconnectAlert = [[NSAlert alloc] init];
-    reconnectAlert.alertStyle = NSCriticalAlertStyle;
-    reconnectAlert.messageText = @"The connection was lost";
-    reconnectAlert.informativeText = @"Do you want to try to reconnect?";
-    [reconnectAlert addButtonWithTitle:@"Reconnect"];
-    [reconnectAlert addButtonWithTitle:@"Cancel"];
-    [reconnectAlert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {
-        switch (returnCode) {
-            case NSAlertFirstButtonReturn:
-                [[MCChatClient sharedInstance] connect];
-                break;
-            case NSAlertSecondButtonReturn:
-                
-                break;
-            default:
-                break;
-        }
-    }];
+    if (notif.userInfo[kExceptionField]&&notif.userInfo[kReasonField]) {
+        NSAlert *reconnectAlert = [[NSAlert alloc] init];
+        reconnectAlert.alertStyle = NSCriticalAlertStyle;
+        reconnectAlert.messageText = @"The connection was lost";
+        reconnectAlert.informativeText = @"Do you want to try to reconnect?";
+        [reconnectAlert addButtonWithTitle:@"Reconnect"];
+        [reconnectAlert addButtonWithTitle:@"Cancel"];
+        [reconnectAlert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {
+            switch (returnCode) {
+                case NSAlertFirstButtonReturn:
+                    [[MCChatClient sharedInstance] connect];
+                    break;
+                case NSAlertSecondButtonReturn:
+                    
+                    break;
+                default:
+                    break;
+            }
+        }];
+    }
 }
 
 
 - (void)windowDidLoad {
     [super windowDidLoad];
-//    testClients = [NSMutableArray array];
-//    for (NSUInteger i = 0; i < 100; i++) {
-//        MCChatClient *c = [[MCChatClient alloc] initWithName:[NSString stringWithFormat:@"%ld", (unsigned long)i]];
-//        [testClients addObject:c];
-//        [c connect];
-//    }
+    //    testClients = [NSMutableArray array];
+    //    for (NSUInteger i = 0; i < 100; i++) {
+    //        MCChatClient *c = [[MCChatClient alloc] initWithName:[NSString stringWithFormat:@"%ld", (unsigned long)i]];
+    //        [testClients addObject:c];
+    //        [c connect];
+    //    }
     //    NSButton *closeButton = [self.window standardWindowButton:NSWindowCloseButton];
     //    closeButton.enabled = YES;
     self.window.delegate = self;

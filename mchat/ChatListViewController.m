@@ -67,7 +67,9 @@
     [self filterAndDispayChats];
 }
 
-- (void)onDisconnectOccurredForClient:(MCChatClient *)client
+-(void)onDisconnectOccurredWithException:(NSString *)exception
+                               andReason:(NSString *)reason
+                               forClient:(MCChatClient *)client
 {
     [chats removeAllObjects];
     [self filterAndDispayChats];
