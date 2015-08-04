@@ -12,5 +12,6 @@
 
 @property (nonatomic, setter=setDate:) NSDate *date;
 @property (nonatomic, setter=setMessageText:) NSString *messageText;
+@property (nonatomic, setter=setCompanionName:) NSString *companionName;
 
 @end

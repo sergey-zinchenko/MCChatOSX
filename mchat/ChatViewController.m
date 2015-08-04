@@ -12,11 +12,12 @@
 #import "MCChatClient.h"
 
 #define kMessageText @"kMessageText"
-#define kIncome @"kIncome"
 #define kDate @"kDate"
+#define kCompanionName @"kCompanionName"
 
 @interface ChatViewController ()
 - (void)setChat:(MCChatChat *)chat;
+- (void)updateTableView;
 - (IBAction)messageFileldAction:(id)sender;
 @end
 
@@ -43,7 +44,9 @@
 
 - (IBAction)messageFileldAction:(id)sender
 {
-    [_chat sendSimpleMessage:messageField.stringValue];
+    if (_chat.state == MCChatChatStateAccepted) {
+        [_chat sendSimpleMessage:messageField.stringValue];
+    }
     messageField.stringValue = @"";
 }
 
@@ -54,32 +57,50 @@
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-    static NSString *simpleIncomeViewIdentifier = @"simpleIncomeMessageCell";
-    static NSString *simpleOutcomeViewIdentifier = @"simpleIncomeMessageCell";
-    
+    static NSString *simpleIncomeViewIdentifier = @"simpleMessageCell";
     NSDictionary *event = chatEvents[row];
-    SimpleMessageTableCellView *cell = (SimpleMessageTableCellView *)[tblView makeViewWithIdentifier:event[kIncome]?simpleIncomeViewIdentifier:simpleOutcomeViewIdentifier owner:self];
+    SimpleMessageTableCellView *cell = (SimpleMessageTableCellView *)[tblView makeViewWithIdentifier:simpleIncomeViewIdentifier owner:self];
     cell.date = event[kDate];
     cell.messageText = event[kMessageText];
+    cell.companionName = event[kCompanionName];
     return cell;
 }
 
 -(void)onSimpleMessageRecieved:(NSString *)message fromCompanion:(MCChatUser *)companion fromChat:(MCChatChat *)chat
 {
-    [tblView beginUpdates];
-    [chatEvents addObject:@{kIncome:@YES, kMessageText:[NSString stringWithFormat:@"%@ > %@", companion.name, message], kDate: [NSDate date]}];
-    [tblView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:[chatEvents count]] withAnimation:NSTableViewAnimationEffectNone];
-    [tblView endUpdates];
-    NSInteger numberOfRows = [tblView numberOfRows];
-    if (numberOfRows > 0)
-        [tblView scrollRowToVisible:numberOfRows - 1];
+    [chatEvents addObject:@{kMessageText: message, kCompanionName: companion.name,  kDate: [NSDate date]}];
+    [self updateTableView];
 }
 
 -(void)onSimpleMessageSent:(NSString *)message fromChat:(MCChatChat *)chat
 {
+    [chatEvents addObject:@{kMessageText: message, kCompanionName: chat.client.myName , kDate: [NSDate date]}];
+    [self updateTableView];
+    
+}
+
+-(void)onCompanion:(MCChatUser *)companion acceptedChat:(MCChatChat *)chat
+{
+    [chatEvents addObject:@{kMessageText: @"Accepted chat", kCompanionName: companion.name , kDate: [NSDate date]}];
+    [self updateTableView];
+}
+
+-(void)onCompanion:(MCChatUser *)companion declinedChat:(MCChatChat *)chat
+{
+    [chatEvents addObject:@{kMessageText: @"Declined chat", kCompanionName: companion.name , kDate: [NSDate date]}];
+    [self updateTableView];
+}
+
+-(void)onCompanion:(MCChatUser *)companion leftChat:(MCChatChat *)chat
+{
+    [chatEvents addObject:@{kMessageText: @"Left chat", kCompanionName: companion.name, kDate: [NSDate date]}];
+    [self updateTableView];
+}
+
+- (void)updateTableView
+{
     [tblView beginUpdates];
-    [chatEvents addObject:@{kMessageText:[NSString stringWithFormat:@"%@ > %@", chat.client.myName , message], kDate: [NSDate date]}];
-    [tblView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:[chatEvents count]] withAnimation:NSTableViewAnimationEffectNone];
+    [tblView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:[tblView numberOfRows]] withAnimation:NSTableViewAnimationEffectNone];
     [tblView endUpdates];
     NSInteger numberOfRows = [tblView numberOfRows];
     if (numberOfRows > 0)
