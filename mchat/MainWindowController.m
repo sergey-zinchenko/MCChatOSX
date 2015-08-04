@@ -24,7 +24,6 @@
 {
     NSWindow *nameSheetWindow, *themeSheetWindow;
     LocationMonitor *locationMonitor;
-    //    NSMutableArray *testClients;
 }
 
 - (void)chatInvitationrecievedNotification:(NSNotification *)notif
@@ -141,12 +140,6 @@
 
 - (void)windowDidLoad {
     [super windowDidLoad];
-//        testClients = [NSMutableArray array];
-//        for (NSUInteger i = 0; i < 5; i++) {
-//            MCChatClient *c = [[MCChatClient alloc] initWithName:[NSString stringWithFormat:@"%ld", (unsigned long)i]];
-//            [testClients addObject:c];
-//            [c connect];
-//        }
     //    NSButton *closeButton = [self.window standardWindowButton:NSWindowCloseButton];
     //    closeButton.enabled = YES;
     self.window.delegate = self;
