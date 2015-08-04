@@ -7,13 +7,14 @@
 //
 
 #import "AcceptChatViewController.h"
+#import "ChatWindowCoordinator.h"
 
 @interface AcceptChatViewController ()
 
 - (IBAction)onAcceptCliecked:(id)sender;
 - (IBAction)onDeclineCliecked:(id)sender;
 - (void)onChatCompanionsChanged;
-- (void)clearChatAndInitiatorAndClose;
+- (void)openChatWindowClearAllAndClose:(BOOL)openWindow;
 - (void)setChat:(MCChatChat *)chat;
 - (void)setChatInitiator:(MCChatUser *)chatInitiator;
 - (void)updateUi;
@@ -51,9 +52,11 @@
     [self updateUi];
 }
 
-- (void)clearChatAndInitiatorAndClose
+- (void)openChatWindowClearAllAndClose:(BOOL)openWindow
 {
     _chat.delegate = nil;
+    if (openWindow)
+        [[ChatWindowCoordinator sharedInstance] displayWindowForChat:_chat];
     _chat = nil;
     _chatInitiator = nil;
     [self.view.window.sheetParent endSheet:self.view.window];
@@ -72,19 +75,19 @@
 - (IBAction)onAcceptCliecked:(id)sender
 {
     [self.chat accept];
-    [self clearChatAndInitiatorAndClose];
+    [self openChatWindowClearAllAndClose:YES];
 }
 
 - (IBAction)onDeclineCliecked:(id)sender
 {
     [self.chat decline];
-    [self clearChatAndInitiatorAndClose];
+    [self openChatWindowClearAllAndClose:NO];
 }
 
 - (void)onChatCompanionsChanged
 {
     if ([self.chat.companions count] == 0) {
-        [self clearChatAndInitiatorAndClose];
+        [self openChatWindowClearAllAndClose:NO];
     } else {
         [self updateUi];
     }
@@ -99,7 +102,6 @@
 - (void)onCompanion:(MCChatUser *)companion
        declinedChat:(MCChatChat *)chat
 {
-
     [self onChatCompanionsChanged];
 }
 

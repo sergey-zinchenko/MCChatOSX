@@ -26,7 +26,9 @@
                                                              bundle:nil];
     ChatViewController *chatViewController = [mainStoryBoard instantiateControllerWithIdentifier:chatViewControllerIdentifier];
     chatViewController.chat = chat;
-    return [NSWindow windowWithContentViewController:chatViewController];
+    NSWindow *chatWindow = [NSWindow windowWithContentViewController:chatViewController];
+    chatWindow.delegate = self;
+    return chatWindow;
 }
 
 - (instancetype)init
@@ -67,6 +69,12 @@
 - (void)closeWindowForChat:(MCChatChat *)chat
 {
     
+}
+
+- (BOOL)windowShouldClose:(id)sender
+{
+    [sender miniaturize:self];
+    return NO;
 }
 
 @end

@@ -9,7 +9,7 @@
 #import "ChatViewController.h"
 
 @interface ChatViewController ()
--(void)setChat:(MCChatChat *)chat;
+- (void)setChat:(MCChatChat *)chat;
 @end
 
 @implementation ChatViewController
@@ -19,9 +19,11 @@
    
 }
 
--(void)setChat:(MCChatChat *)chat
+- (void)setChat:(MCChatChat *)chat
 {
-    
+    _chat = chat;
+    _chat.delegate = self;
+    self.title = chat.theme;
 }
 
 @end

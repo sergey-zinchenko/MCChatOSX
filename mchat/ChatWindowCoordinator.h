@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 #import "MCChatChat.h"
 
-@interface ChatWindowCoordinator : NSObject
+@interface ChatWindowCoordinator : NSObject <NSWindowDelegate>
 
 + (ChatWindowCoordinator *)sharedInstance;
 

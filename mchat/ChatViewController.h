@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "MCChatChat.h"
 
-@interface ChatViewController : NSViewController
+@interface ChatViewController : NSViewController<MCChatChatDelegate>
 
 @property (nonatomic, setter=setChat:) MCChatChat *chat;
 
