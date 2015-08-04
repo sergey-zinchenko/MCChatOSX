@@ -22,6 +22,8 @@
     __weak IBOutlet NSButton *openChatWidowCheckBox;
 }
 
+@synthesize users = _users;
+
 - (void)viewWillAppear {
     NSString *userTemplate = ([self.users count] > 1)? @"users":@"user";
     [label setStringValue:[NSString stringWithFormat:@"You want to start chat with %ld %@....\nWhat is a theme of the discussion?", [self.users count], userTemplate]];

@@ -232,6 +232,8 @@ static NSUUID *publicChatUUID;
     if (chat&&message&&[message length] > 0) {
         if (chat.state != MCChatChatStateAccepted)
             [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat was not started or accepted" userInfo:nil] raise];
+        if ([chat.acceptedCompanions count] == 0)
+            return;
         NSMutableArray *acceptedCompanionsUUIDs = [NSMutableArray array];
         for (MCChatUser *c in chat.acceptedCompanions) {
             [acceptedCompanionsUUIDs addObject:c.uid];

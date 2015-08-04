@@ -461,6 +461,8 @@ void writecb( CFWriteStreamRef stream, CFStreamEventType eventType, void *client
     LOG_SELECTOR()
     if (!(message&&users&&[message isKindOfClass:[NSDictionary class]]&&[users isKindOfClass:[NSArray class]]))
         [[NSException exceptionWithName:ERRONOUS_PARAMETERS reason:@"Invalid parameters passed" userInfo:nil] raise];
+    if ([users count] == 0)
+        return;
     NSMutableArray *strUsers = [[NSMutableArray alloc] init];
     for (NSObject *obj in users) {
         if (![obj isKindOfClass:[NSUUID class]])
