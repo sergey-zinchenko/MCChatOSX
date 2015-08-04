@@ -28,11 +28,14 @@
 #define kChatAcceptedByCompanionNotification @"kChatAcceptedByCompanionNotification"
 #define kChatDeclinedByCompanionNotification @"kChatDeclinedByCompanionNotification"
 #define kChatLeftByCompanionNotification @"kChatLeftByCompanionNotification"
+#define kSimpleMessageRecievedNotification @"kSimpleMessageRecievedNotification"
+#define kSimpleMessageSentNotification @"kSimpleMessageSentNotification"
 
 #define kUserField @"kUserField"
 #define kChatField @"kChatField"
 #define kExceptionField @"kExceptionField"
 #define kReasonField @"kReasonField"
+#define kMessageTextField @"kMessageTextField"
 
 #define MC_CHAT_CLIENT_EXCEPTION @"MCChatClientException"
 

@@ -85,7 +85,7 @@
     [self.client leaveChat:self];
 }
 
-- (void)sendMessage:(NSString *)message
+- (void)sendSimpleMessage:(NSString *)message
 {
     LOG_SELECTOR()
     [self.client sendSimpleMessage:message

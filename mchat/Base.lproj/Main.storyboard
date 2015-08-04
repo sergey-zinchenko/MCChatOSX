@@ -519,6 +519,9 @@ DQ
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <action selector="messageFileldAction:" target="pni-IH-nR7" id="UZM-Gy-a0O"/>
+                                </connections>
                             </textField>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="usS-oo-FHW">
                                 <rect key="frame" x="0.0" y="32" width="480" height="238"/>
@@ -567,6 +570,10 @@ DQ
                                                     </prototypeCellViews>
                                                 </tableColumn>
                                             </tableColumns>
+                                            <connections>
+                                                <outlet property="dataSource" destination="pni-IH-nR7" id="OOg-ag-eIy"/>
+                                                <outlet property="delegate" destination="pni-IH-nR7" id="57y-nR-K91"/>
+                                            </connections>
                                         </tableView>
                                     </subviews>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -591,6 +598,10 @@ DQ
                             <constraint firstItem="usS-oo-FHW" firstAttribute="top" secondItem="XAF-ll-go1" secondAttribute="top" id="lJv-PC-6Uo"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="messageField" destination="aep-Ox-NkG" id="pl2-vE-qwV"/>
+                        <outlet property="tblView" destination="oD4-pa-ALj" id="kfU-jH-srS"/>
+                    </connections>
                 </viewController>
                 <customObject id="VFP-s4-E31" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <tableCellView id="zfi-Rh-l2y">

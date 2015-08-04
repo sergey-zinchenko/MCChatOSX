@@ -25,6 +25,8 @@
 #define kLocationField @"location"
 #define kHiField @"hi"
 #define kHelloField @"hello"
+#define kSimpleMessageField @"simple_message"
+#define kTextField @"text"
 
 #define LOG_SELECTOR()  NSLog(@"%@ > %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 #define VALID_DELEGATE(obj, sel) (obj&&[obj conformsToProtocol:@protocol(MCChatClientDeligate)]&&[obj respondsToSelector:sel])
@@ -227,8 +229,24 @@ static NSUUID *publicChatUUID;
              toChat:(MCChatChat *)chat
 {
     LOG_SELECTOR()
+    if (chat&&message&&[message length] > 0) {
+        if (chat.state != MCChatChatStateAccepted)
+            [[NSException exceptionWithName:MC_CHAT_CLIENT_EXCEPTION reason:@"This chat was not started or accepted" userInfo:nil] raise];
+        NSMutableArray *acceptedCompanionsUUIDs = [NSMutableArray array];
+        for (MCChatUser *c in chat.acceptedCompanions) {
+            [acceptedCompanionsUUIDs addObject:c.uid];
+        }
+        [core sendMessage:@{kLayerFileld: kChatLayer, kSimpleMessageField:[chat.chatId UUIDString], kTextField: message} toUsers:acceptedCompanionsUUIDs];
+        if VALID_CHATS_CHAT_DELEGATE(chat.delegate, @selector(onSimpleMessageSent:fromChat:))
+            [chat.delegate onSimpleMessageSent:message
+                                      fromChat:chat];
+        if (self.useNotifications) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSimpleMessageSentNotification
+                                                                object:self
+                                                              userInfo:@{kChatField:chat, kMessageTextField:message}];
+        }
+    }
 }
-
 
 - (MCChatCoreStatus)getStatus;
 {
@@ -621,6 +639,27 @@ static NSUUID *publicChatUUID;
                     [[NSNotificationCenter defaultCenter] postNotificationName:kChatLeftByCompanionNotification object:self userInfo:@{kUserField:companion, kChatField:chat}];
                 }
                 [self checkChat:chat ifEndedIfNeeded:YES];
+            } else if VALID_MESSAGE_FIELD(message, kSimpleMessageField, NSString) {
+                NSUUID *chatId = [[NSUUID alloc] initWithUUIDString:message[kSimpleMessageField]];
+                if (!chatId)
+                    return;
+                MCChatChat *chat = chats[chatId];
+                if (!chat)
+                    return;
+                MCChatUser *companion = companions[userid];
+                if (!companion)
+                    return;
+                if ([chat.acceptedCompanions indexOfObject:companion] == NSNotFound)
+                    return;
+                if (!VALID_MESSAGE_FIELD(message, kTextField, NSString))
+                    return;
+                if VALID_CHATS_CHAT_DELEGATE(chat.delegate, @selector(onSimpleMessageRecieved:fromCompanion:fromChat:))
+                    [chat.delegate onSimpleMessageRecieved:message[kTextField]
+                                             fromCompanion:companion
+                                                  fromChat:chat];
+                if (self.useNotifications) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kSimpleMessageRecievedNotification object:self userInfo:@{kUserField:companion, kChatField:chat, kMessageTextField: message[kTextField] }];
+                }
             }
         }
     }
