@@ -646,13 +646,13 @@ DQ
                                     <action selector="searchFieldAction:" target="Mo8-L4-fsR" id="2B3-Rd-R2v"/>
                                 </connections>
                             </searchField>
-                            <scrollView autohidesScrollers="YES" horizontalLineScroll="47" horizontalPageScroll="10" verticalLineScroll="47" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V8T-jH-Tw7">
+                            <scrollView autohidesScrollers="YES" horizontalLineScroll="52" horizontalPageScroll="10" verticalLineScroll="52" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V8T-jH-Tw7">
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="265"/>
                                 <clipView key="contentView" id="QeM-du-Qkx">
                                     <rect key="frame" x="1" y="17" width="238" height="117"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="45" viewBased="YES" id="JR5-FG-YFm">
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="50" viewBased="YES" id="JR5-FG-YFm">
                                             <rect key="frame" x="0.0" y="0.0" width="448" height="0.0"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -674,25 +674,14 @@ DQ
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="chatCell" id="8gk-Uv-Q70" customClass="ChatTableCellView">
-                                                            <rect key="frame" x="1" y="1" width="445" height="39"/>
+                                                            <rect key="frame" x="1" y="1" width="445" height="50"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jK1-ML-1fv">
-                                                                    <rect key="frame" x="9" y="7" width="357" height="29"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" constant="29" id="NnC-xk-cca"/>
-                                                                    </constraints>
-                                                                    <textFieldCell key="cell" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" alignment="left" title="Chat Theme" id="fW4-fj-qAb">
-                                                                        <font key="font" metaFont="system" size="21"/>
-                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                    </textFieldCell>
-                                                                </textField>
                                                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="nU7-kJ-Ty2">
-                                                                    <rect key="frame" x="370" y="17" width="74" height="21"/>
+                                                                    <rect key="frame" x="370" y="28" width="74" height="21"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="70" id="sau-0y-PeE"/>
-                                                                        <constraint firstAttribute="height" constant="16" id="wff-Aj-M4N"/>
+                                                                        <constraint firstAttribute="height" constant="16" id="JU6-m2-WF9"/>
+                                                                        <constraint firstAttribute="width" constant="70" id="f3X-c5-ec6"/>
                                                                     </constraints>
                                                                     <buttonCell key="cell" type="bevel" title="Open" bezelStyle="regularSquare" alignment="center" borderStyle="border" inset="2" id="Wbf-ht-zzO">
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -703,9 +692,10 @@ DQ
                                                                     </connections>
                                                                 </button>
                                                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="tLs-hE-TFn">
-                                                                    <rect key="frame" x="370" y="0.0" width="74" height="21"/>
+                                                                    <rect key="frame" x="369" y="1" width="74" height="21"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" constant="16" id="FMZ-CU-iXb"/>
+                                                                        <constraint firstAttribute="width" constant="70" id="6km-ei-cZ1"/>
+                                                                        <constraint firstAttribute="height" constant="16" id="fsD-cq-rKg"/>
                                                                     </constraints>
                                                                     <buttonCell key="cell" type="bevel" title="Left" bezelStyle="regularSquare" alignment="center" borderStyle="border" inset="2" id="W2l-zT-xg8">
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -716,26 +706,39 @@ DQ
                                                                     </connections>
                                                                 </button>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UEz-Lf-bM1">
-                                                                    <rect key="frame" x="10" y="0.0" width="356" height="17"/>
+                                                                    <rect key="frame" x="10" y="3" width="355" height="17"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="17" id="QvT-U9-hgj"/>
+                                                                    </constraints>
                                                                     <textFieldCell key="cell" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" title="Chat Info" id="S0E-ok-1wb">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
+                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jK1-ML-1fv">
+                                                                    <rect key="frame" x="10" y="22" width="356" height="25"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="25" id="NmS-YH-TQp"/>
+                                                                    </constraints>
+                                                                    <textFieldCell key="cell" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" alignment="left" title="Chat Theme" id="fW4-fj-qAb">
+                                                                        <font key="font" metaFont="system" size="21"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                    </textFieldCell>
+                                                                </textField>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstAttribute="trailing" secondItem="tLs-hE-TFn" secondAttribute="trailing" constant="3" id="3fa-L3-2yX"/>
-                                                                <constraint firstItem="tLs-hE-TFn" firstAttribute="width" secondItem="nU7-kJ-Ty2" secondAttribute="width" id="8W7-bF-Ofh"/>
-                                                                <constraint firstItem="UEz-Lf-bM1" firstAttribute="leading" secondItem="8gk-Uv-Q70" secondAttribute="leading" constant="12" id="GTl-qD-aCC"/>
-                                                                <constraint firstItem="nU7-kJ-Ty2" firstAttribute="top" secondItem="8gk-Uv-Q70" secondAttribute="top" constant="3" id="WJ9-nm-mTp"/>
-                                                                <constraint firstAttribute="bottom" secondItem="UEz-Lf-bM1" secondAttribute="bottom" id="ZP2-KA-DyJ"/>
-                                                                <constraint firstItem="jK1-ML-1fv" firstAttribute="leading" secondItem="8gk-Uv-Q70" secondAttribute="leading" constant="11" id="apy-7z-MkW"/>
-                                                                <constraint firstItem="jK1-ML-1fv" firstAttribute="top" secondItem="8gk-Uv-Q70" secondAttribute="top" constant="3" id="bEi-fg-2AQ"/>
-                                                                <constraint firstAttribute="bottom" secondItem="tLs-hE-TFn" secondAttribute="bottom" constant="3" id="gzJ-wd-Czc"/>
-                                                                <constraint firstItem="nU7-kJ-Ty2" firstAttribute="leading" secondItem="jK1-ML-1fv" secondAttribute="trailing" constant="8" id="hdi-tz-Gzr"/>
-                                                                <constraint firstItem="tLs-hE-TFn" firstAttribute="leading" secondItem="UEz-Lf-bM1" secondAttribute="trailing" constant="8" id="v9B-QT-JSh"/>
-                                                                <constraint firstAttribute="trailing" secondItem="nU7-kJ-Ty2" secondAttribute="trailing" constant="3" id="xw2-Kz-DbM"/>
+                                                                <constraint firstAttribute="bottom" secondItem="UEz-Lf-bM1" secondAttribute="bottom" constant="3" id="Ac1-Xu-sCB"/>
+                                                                <constraint firstItem="nU7-kJ-Ty2" firstAttribute="top" secondItem="8gk-Uv-Q70" secondAttribute="top" constant="3" id="Hme-sN-ajo"/>
+                                                                <constraint firstAttribute="trailing" secondItem="nU7-kJ-Ty2" secondAttribute="trailing" constant="3" id="J6F-Us-fcp"/>
+                                                                <constraint firstAttribute="trailing" secondItem="tLs-hE-TFn" secondAttribute="trailing" constant="4" id="KJK-vM-t9Y"/>
+                                                                <constraint firstAttribute="bottom" secondItem="tLs-hE-TFn" secondAttribute="bottom" constant="4" id="LMN-Kq-cuL"/>
+                                                                <constraint firstItem="jK1-ML-1fv" firstAttribute="top" secondItem="8gk-Uv-Q70" secondAttribute="top" constant="3" id="Mgz-0v-FtQ"/>
+                                                                <constraint firstItem="jK1-ML-1fv" firstAttribute="leading" secondItem="8gk-Uv-Q70" secondAttribute="leading" constant="12" id="Sm1-qt-vbU"/>
+                                                                <constraint firstItem="UEz-Lf-bM1" firstAttribute="leading" secondItem="8gk-Uv-Q70" secondAttribute="leading" constant="12" id="auk-Ku-r7p"/>
+                                                                <constraint firstItem="tLs-hE-TFn" firstAttribute="leading" secondItem="UEz-Lf-bM1" secondAttribute="trailing" constant="8" id="biq-OD-B4l"/>
+                                                                <constraint firstItem="nU7-kJ-Ty2" firstAttribute="leading" secondItem="jK1-ML-1fv" secondAttribute="trailing" constant="8" id="v3v-8x-Lab"/>
                                                             </constraints>
                                                             <connections>
                                                                 <outlet property="bottomButton" destination="tLs-hE-TFn" id="8kc-gf-RwK"/>
