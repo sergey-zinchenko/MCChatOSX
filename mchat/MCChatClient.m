@@ -223,7 +223,7 @@ static NSUUID *publicChatUUID;
     }
 }
 
-- (void)sendMessage:(NSString *)message
+- (void)sendSimpleMessage:(NSString *)message
              toChat:(MCChatChat *)chat
 {
     LOG_SELECTOR()

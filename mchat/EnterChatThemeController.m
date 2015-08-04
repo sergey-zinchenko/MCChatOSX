@@ -8,6 +8,7 @@
 
 #import "EnterChatThemeController.h"
 #import "MCChatChat.h"
+#import "ChatWindowCoordinator.h"
 
 @interface EnterChatThemeController ()
 - (IBAction)okClicked:(id)sender;
@@ -34,8 +35,10 @@
 
 - (IBAction)okClicked:(id)sender
 {
-    [MCChatChat startChatWithCompanions:self.users
+    MCChatChat *chat = [MCChatChat startChatWithCompanions:self.users
                               chatTheme:[themeField stringValue]];
+    if (openChatWidowCheckBox.state == NSOnState)
+        [[ChatWindowCoordinator sharedInstance] displayWindowForChat:chat];
     [self.view.window.sheetParent endSheet:self.view.window];
 }
 

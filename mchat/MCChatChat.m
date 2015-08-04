@@ -88,7 +88,7 @@
 - (void)sendMessage:(NSString *)message
 {
     LOG_SELECTOR()
-    [self.client sendMessage:message
+    [self.client sendSimpleMessage:message
                       toChat:self];
 }
 

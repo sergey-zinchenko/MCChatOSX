@@ -101,7 +101,7 @@
 - (void)acceptChat:(MCChatChat *)chat;
 - (void)declineChat:(MCChatChat *)chat;
 - (void)leaveChat:(MCChatChat *)chat;
-- (void)sendMessage:(NSString *)message
+- (void)sendSimpleMessage:(NSString *)message
              toChat:(MCChatChat *)chat;
 - (BOOL)isAcceptedChat:(MCChatChat *)chat;
 - (BOOL)isPendingChat:(MCChatChat *)chat;
