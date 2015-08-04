@@ -199,13 +199,13 @@ DQ
                                     <action selector="searchFieldAction:" target="XfG-lQ-9wD" id="GCC-Gr-KCA"/>
                                 </connections>
                             </searchField>
-                            <scrollView autohidesScrollers="YES" horizontalLineScroll="47" horizontalPageScroll="10" verticalLineScroll="47" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VcJ-XH-uji">
+                            <scrollView autohidesScrollers="YES" horizontalLineScroll="52" horizontalPageScroll="10" verticalLineScroll="52" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VcJ-XH-uji">
                                 <rect key="frame" x="0.0" y="0.0" width="250" height="256"/>
                                 <clipView key="contentView" id="Jtz-Tg-vlU">
                                     <rect key="frame" x="1" y="17" width="238" height="117"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnSelection="YES" columnResizing="NO" autosaveColumns="NO" rowHeight="45" viewBased="YES" id="vh3-UZ-15P">
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnSelection="YES" columnResizing="NO" autosaveColumns="NO" rowHeight="50" viewBased="YES" id="vh3-UZ-15P">
                                             <rect key="frame" x="0.0" y="0.0" width="248" height="0.0"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -227,11 +227,14 @@ DQ
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="companionCell" id="vQI-gK-TSG" customClass="CompanionTableCellView">
-                                                            <rect key="frame" x="1" y="1" width="245" height="45"/>
+                                                            <rect key="frame" x="1" y="1" width="245" height="50"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QSj-wI-tgW">
-                                                                    <rect key="frame" x="10" y="0.0" width="227" height="17"/>
+                                                                    <rect key="frame" x="10" y="5" width="227" height="17"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="17" id="I65-A3-e8n"/>
+                                                                    </constraints>
                                                                     <textFieldCell key="cell" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" title="Location" id="dal-hI-wL3">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
@@ -239,9 +242,9 @@ DQ
                                                                     </textFieldCell>
                                                                 </textField>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Yu-f9-30i">
-                                                                    <rect key="frame" x="9" y="13" width="227" height="29"/>
+                                                                    <rect key="frame" x="10" y="18" width="226" height="29"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" constant="29" id="tUB-Yq-L8B"/>
+                                                                        <constraint firstAttribute="height" constant="29" id="3Yy-2b-6ux"/>
                                                                     </constraints>
                                                                     <textFieldCell key="cell" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" alignment="left" title="User name" id="buP-RI-LqL">
                                                                         <font key="font" metaFont="system" size="21"/>
@@ -251,13 +254,12 @@ DQ
                                                                 </textField>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstAttribute="trailing" secondItem="QSj-wI-tgW" secondAttribute="trailing" constant="10" id="7lg-w0-cRw"/>
-                                                                <constraint firstItem="1Yu-f9-30i" firstAttribute="top" secondItem="vQI-gK-TSG" secondAttribute="top" constant="3" id="9hc-Xd-7YH"/>
-                                                                <constraint firstAttribute="bottom" secondItem="QSj-wI-tgW" secondAttribute="bottom" id="FOB-a0-2fS"/>
-                                                                <constraint firstItem="1Yu-f9-30i" firstAttribute="leading" secondItem="vQI-gK-TSG" secondAttribute="leading" constant="11" id="Or4-QJ-o26"/>
-                                                                <constraint firstAttribute="trailing" secondItem="1Yu-f9-30i" secondAttribute="trailing" constant="11" id="gYS-Ag-FoI"/>
-                                                                <constraint firstItem="QSj-wI-tgW" firstAttribute="leading" secondItem="vQI-gK-TSG" secondAttribute="leading" constant="12" id="hbc-Os-dYc"/>
-                                                                <constraint firstItem="QSj-wI-tgW" firstAttribute="top" secondItem="vQI-gK-TSG" secondAttribute="top" constant="28" id="nP5-TS-e9W"/>
+                                                                <constraint firstItem="1Yu-f9-30i" firstAttribute="top" secondItem="vQI-gK-TSG" secondAttribute="top" constant="3" id="4d7-sG-baf"/>
+                                                                <constraint firstItem="QSj-wI-tgW" firstAttribute="leading" secondItem="vQI-gK-TSG" secondAttribute="leading" constant="12" id="7RO-3z-uTa"/>
+                                                                <constraint firstItem="1Yu-f9-30i" firstAttribute="leading" secondItem="vQI-gK-TSG" secondAttribute="leading" constant="12" id="nSm-ud-077"/>
+                                                                <constraint firstAttribute="bottom" secondItem="QSj-wI-tgW" secondAttribute="bottom" constant="5" id="u8h-QF-dG2"/>
+                                                                <constraint firstAttribute="trailing" secondItem="QSj-wI-tgW" secondAttribute="trailing" constant="10" id="uJE-dU-4GS"/>
+                                                                <constraint firstAttribute="trailing" secondItem="1Yu-f9-30i" secondAttribute="trailing" constant="11" id="wkf-IA-Qtu"/>
                                                             </constraints>
                                                             <connections>
                                                                 <outlet property="locationField" destination="QSj-wI-tgW" id="iTF-xk-5Ry"/>
