@@ -27,6 +27,7 @@
 		A58C54351AA5E25900059106 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A58C54331AA5E25900059106 /* Main.storyboard */; };
 		A58C54411AA5E25A00059106 /* mchatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A58C54401AA5E25A00059106 /* mchatTests.m */; };
 		A59968491B70CCB5001D69F0 /* ChatWindowCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = A59968481B70CCB5001D69F0 /* ChatWindowCoordinator.m */; };
+		A599684C1B70ED0D001D69F0 /* SimpleMessageTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = A599684B1B70ED0D001D69F0 /* SimpleMessageTableCellView.m */; };
 		A59D5B161B42A2E7000383A0 /* NSArray+dif.m in Sources */ = {isa = PBXBuildFile; fileRef = A59D5B151B42A2E7000383A0 /* NSArray+dif.m */; };
 		A5C4E7D71B6FAA4200D7D69D /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5C4E7D61B6FAA4200D7D69D /* ChatViewController.m */; };
 		A5CF33941B480B9B000F8466 /* EnterChatThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5CF33931B480B9B000F8466 /* EnterChatThemeController.m */; };
@@ -82,6 +83,8 @@
 		A58C54401AA5E25A00059106 /* mchatTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mchatTests.m; sourceTree = "<group>"; };
 		A59968471B70CCB5001D69F0 /* ChatWindowCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatWindowCoordinator.h; sourceTree = "<group>"; };
 		A59968481B70CCB5001D69F0 /* ChatWindowCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatWindowCoordinator.m; sourceTree = "<group>"; };
+		A599684A1B70ED0D001D69F0 /* SimpleMessageTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleMessageTableCellView.h; sourceTree = "<group>"; };
+		A599684B1B70ED0D001D69F0 /* SimpleMessageTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleMessageTableCellView.m; sourceTree = "<group>"; };
 		A59D5B141B42A2E7000383A0 /* NSArray+dif.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+dif.h"; sourceTree = "<group>"; };
 		A59D5B151B42A2E7000383A0 /* NSArray+dif.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+dif.m"; sourceTree = "<group>"; };
 		A5C4E7D51B6FAA4200D7D69D /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
@@ -266,6 +269,8 @@
 				A5C4E7D61B6FAA4200D7D69D /* ChatViewController.m */,
 				A59968471B70CCB5001D69F0 /* ChatWindowCoordinator.h */,
 				A59968481B70CCB5001D69F0 /* ChatWindowCoordinator.m */,
+				A599684A1B70ED0D001D69F0 /* SimpleMessageTableCellView.h */,
+				A599684B1B70ED0D001D69F0 /* SimpleMessageTableCellView.m */,
 			);
 			name = "Chat Window";
 			sourceTree = "<group>";
@@ -398,6 +403,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A58C54301AA5E25900059106 /* CompanionsLstViewController.m in Sources */,
+				A599684C1B70ED0D001D69F0 /* SimpleMessageTableCellView.m in Sources */,
 				A58C542D1AA5E25900059106 /* main.m in Sources */,
 				A50F67FA1B333BFA00B75059 /* CompanionTableCellView.m in Sources */,
 				A52CE7B21B1B2AE9005020A5 /* MCChatUser.m in Sources */,
