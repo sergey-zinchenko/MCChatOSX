@@ -7,6 +7,13 @@
 //
 
 #import "ChatViewController.h"
+#import "SimpleMessageTableCellView.h"
+#import "MCChatUser.h"
+#import "MCChatClient.h"
+
+#define kMessageText @"kMessageText"
+#define kIncome @"kIncome"
+#define kDate @"kDate"
 
 @interface ChatViewController ()
 - (void)setChat:(MCChatChat *)chat;
@@ -47,11 +54,30 @@
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-//    static NSString *viewIdentifier = @"chatCell";
-//    ChatTableCellView *cell = (ChatTableCellView *)[tblView makeViewWithIdentifier:viewIdentifier owner:self];
-//    cell.chat = chatsToDisplay[row];
-//    return cell;
-    return nil;
+    static NSString *simpleIncomeViewIdentifier = @"simpleIncomeMessageCell";
+    static NSString *simpleOutcomeViewIdentifier = @"simpleOutcomeMessageCell";
+    
+    NSDictionary *event = chatEvents[row];
+    SimpleMessageTableCellView *cell = (SimpleMessageTableCellView *)[tblView makeViewWithIdentifier:event[kIncome]?simpleIncomeViewIdentifier:simpleOutcomeViewIdentifier owner:self];
+    cell.date = event[kDate];
+    cell.messageText = event[kMessageText];
+    return cell;
+}
+
+-(void)onSimpleMessageRecieved:(NSString *)message fromCompanion:(MCChatUser *)companion fromChat:(MCChatChat *)chat
+{
+    [tblView beginUpdates];
+    [chatEvents addObject:@{kIncome:@YES, kMessageText:[NSString stringWithFormat:@"%@ > %@", companion.name, message], kDate: [NSDate date]}];
+    [tblView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:[chatEvents count]] withAnimation:NSTableViewAnimationSlideRight];
+    [tblView endUpdates];
+}
+
+-(void)onSimpleMessageSent:(NSString *)message fromChat:(MCChatChat *)chat
+{
+    [tblView beginUpdates];
+    [chatEvents addObject:@{kMessageText:[NSString stringWithFormat:@"%@ > %@", chat.client.myName , message], kDate: [NSDate date]}];
+    [tblView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:[chatEvents count]] withAnimation:NSTableViewAnimationSlideLeft];
+    [tblView endUpdates];
 }
 
 @end
