@@ -15,8 +15,8 @@
 
 @implementation SimpleMessageTableCellView
 {
-    __weak IBOutlet NSTextField *messageTextField;
-    __weak IBOutlet NSTextField *dateField;
+     __weak IBOutlet NSTextField *messageTextField;
+     __weak IBOutlet NSTextField *dateField;
 }
 
 @synthesize date = _date, messageText = _messageText;

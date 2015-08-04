@@ -550,78 +550,21 @@ DQ
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="simpleIncomeMessageCell" id="inp-4Z-fWJ" customClass="SimpleMessageTableCellView">
+                                                        <tableCellView identifier="simpleIncomeMessageCell" id="QA1-rm-Lb2" customClass="SimpleMessageTableCellView">
                                                             <rect key="frame" x="1" y="1" width="475" height="50"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="CRC-eN-tup">
-                                                                    <rect key="frame" x="1" y="19" width="473" height="28"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Table View Cell" id="cOI-Mm-dlo">
+                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B6d-QD-oV3">
+                                                                    <rect key="frame" x="0.0" y="33" width="100" height="17"/>
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="DDH-Sl-S78">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="v2t-RG-cgr">
-                                                                    <rect key="frame" x="436" y="3" width="38" height="17"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" constant="17" id="awh-Xg-YyE"/>
-                                                                    </constraints>
-                                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="O9M-eo-JpM">
-                                                                        <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                    </textFieldCell>
-                                                                </textField>
                                                             </subviews>
-                                                            <constraints>
-                                                                <constraint firstAttribute="bottom" secondItem="v2t-RG-cgr" secondAttribute="bottom" constant="3" id="4sS-Nh-1UV"/>
-                                                                <constraint firstAttribute="bottom" secondItem="CRC-eN-tup" secondAttribute="bottom" constant="19" id="Brq-YP-aV9"/>
-                                                                <constraint firstAttribute="trailing" secondItem="CRC-eN-tup" secondAttribute="trailing" constant="3" id="GSO-80-Zsc"/>
-                                                                <constraint firstItem="CRC-eN-tup" firstAttribute="leading" secondItem="inp-4Z-fWJ" secondAttribute="leading" constant="3" id="Mvp-iO-Hx4"/>
-                                                                <constraint firstItem="CRC-eN-tup" firstAttribute="top" secondItem="inp-4Z-fWJ" secondAttribute="top" constant="3" id="T9t-Re-eDf"/>
-                                                                <constraint firstAttribute="trailing" secondItem="v2t-RG-cgr" secondAttribute="trailing" constant="3" id="zuQ-sj-zYZ"/>
-                                                            </constraints>
                                                             <connections>
-                                                                <outlet property="dateField" destination="v2t-RG-cgr" id="6RP-Jo-VRn"/>
-                                                                <outlet property="messageTextField" destination="CRC-eN-tup" id="bfH-2C-ekZ"/>
-                                                            </connections>
-                                                        </tableCellView>
-                                                        <tableCellView identifier="simpleOutcomeMessageCell" id="1nA-oW-ndm" customClass="SimpleMessageTableCellView">
-                                                            <rect key="frame" x="1" y="1" width="475" height="50"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                            <subviews>
-                                                                <textField horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="jsJ-a3-aLf">
-                                                                    <rect key="frame" x="1" y="19" width="473" height="28"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="Table View Cell" id="7gp-mU-9lX">
-                                                                        <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                    </textFieldCell>
-                                                                </textField>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wjh-48-cDF">
-                                                                    <rect key="frame" x="1" y="3" width="38" height="17"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" constant="17" id="uGa-w9-gwx"/>
-                                                                    </constraints>
-                                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="bA8-aR-Gmv">
-                                                                        <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                    </textFieldCell>
-                                                                </textField>
-                                                            </subviews>
-                                                            <constraints>
-                                                                <constraint firstItem="jsJ-a3-aLf" firstAttribute="top" secondItem="1nA-oW-ndm" secondAttribute="top" constant="3" id="JRi-qP-XFj"/>
-                                                                <constraint firstItem="jsJ-a3-aLf" firstAttribute="leading" secondItem="1nA-oW-ndm" secondAttribute="leading" constant="3" id="Jnq-GS-7QK"/>
-                                                                <constraint firstAttribute="trailing" secondItem="Wjh-48-cDF" secondAttribute="trailing" constant="438" id="KW2-nE-D8s"/>
-                                                                <constraint firstAttribute="bottom" secondItem="Wjh-48-cDF" secondAttribute="bottom" constant="3" id="ZSQ-eF-PnD"/>
-                                                                <constraint firstAttribute="trailing" secondItem="jsJ-a3-aLf" secondAttribute="trailing" constant="3" id="f7T-Jz-hHJ"/>
-                                                                <constraint firstAttribute="bottom" secondItem="jsJ-a3-aLf" secondAttribute="bottom" constant="19" id="uzX-t7-hLt"/>
-                                                            </constraints>
-                                                            <connections>
-                                                                <outlet property="dateField" destination="Wjh-48-cDF" id="1dD-fA-WKR"/>
-                                                                <outlet property="messageTextField" destination="jsJ-a3-aLf" id="6gi-eY-xod"/>
+                                                                <outlet property="messageTextField" destination="B6d-QD-oV3" id="LcP-MB-igG"/>
                                                             </connections>
                                                         </tableCellView>
                                                     </prototypeCellViews>
@@ -656,7 +599,7 @@ DQ
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="messageField" destination="aep-Ox-NkG" id="pl2-vE-qwV"/>
+                        <outlet property="messageField" destination="aep-Ox-NkG" id="AsC-Yr-g9Y"/>
                         <outlet property="tblView" destination="oD4-pa-ALj" id="kfU-jH-srS"/>
                     </connections>
                 </viewController>

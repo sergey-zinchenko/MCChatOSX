@@ -55,7 +55,7 @@
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
     static NSString *simpleIncomeViewIdentifier = @"simpleIncomeMessageCell";
-    static NSString *simpleOutcomeViewIdentifier = @"simpleOutcomeMessageCell";
+    static NSString *simpleOutcomeViewIdentifier = @"simpleIncomeMessageCell";
     
     NSDictionary *event = chatEvents[row];
     SimpleMessageTableCellView *cell = (SimpleMessageTableCellView *)[tblView makeViewWithIdentifier:event[kIncome]?simpleIncomeViewIdentifier:simpleOutcomeViewIdentifier owner:self];
@@ -68,16 +68,22 @@
 {
     [tblView beginUpdates];
     [chatEvents addObject:@{kIncome:@YES, kMessageText:[NSString stringWithFormat:@"%@ > %@", companion.name, message], kDate: [NSDate date]}];
-    [tblView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:[chatEvents count]] withAnimation:NSTableViewAnimationSlideRight];
+    [tblView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:[chatEvents count]] withAnimation:NSTableViewAnimationEffectNone];
     [tblView endUpdates];
+    NSInteger numberOfRows = [tblView numberOfRows];
+    if (numberOfRows > 0)
+        [tblView scrollRowToVisible:numberOfRows - 1];
 }
 
 -(void)onSimpleMessageSent:(NSString *)message fromChat:(MCChatChat *)chat
 {
     [tblView beginUpdates];
     [chatEvents addObject:@{kMessageText:[NSString stringWithFormat:@"%@ > %@", chat.client.myName , message], kDate: [NSDate date]}];
-    [tblView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:[chatEvents count]] withAnimation:NSTableViewAnimationSlideLeft];
+    [tblView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:[chatEvents count]] withAnimation:NSTableViewAnimationEffectNone];
     [tblView endUpdates];
+    NSInteger numberOfRows = [tblView numberOfRows];
+    if (numberOfRows > 0)
+        [tblView scrollRowToVisible:numberOfRows - 1];
 }
 
 @end
