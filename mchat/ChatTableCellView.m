@@ -7,6 +7,7 @@
 //
 
 #import "ChatTableCellView.h"
+#import "ChatWindowCoordinator.h"
 
 @interface ChatTableCellView ()
 - (void)setChat:(MCChatChat *)chat;
@@ -63,11 +64,10 @@
 - (IBAction)onTopButtonClicked:(id)sender
 {
     if (_chat.state == MCChatChatStateAccepted) {
-        
+        [[ChatWindowCoordinator sharedInstance] displayWindowForChat:_chat];
     } else {
         [_chat accept];
     }
-        
 }
 
 - (IBAction)onBottomButtonClicked:(id)sender
