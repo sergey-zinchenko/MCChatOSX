@@ -84,6 +84,7 @@
             [_windowCoordinator displayWindowForChat:chat];
         }
     }
+    [center removeDeliveredNotification:notification];
 }
 
 @end
