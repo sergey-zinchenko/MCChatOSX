@@ -75,7 +75,7 @@
 - (IBAction)onAcceptCliecked:(id)sender
 {
     [self.chat accept];
-    [self openChatWindowClearAllAndClose:YES];
+    [self openChatWindowClearAllAndClose:openChatWidowCheckBox.state==NSOnState];
 }
 
 - (IBAction)onDeclineCliecked:(id)sender

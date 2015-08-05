@@ -9,13 +9,20 @@
 #import "ChatWindowCoordinator.h"
 #import "ChatViewController.h"
 
+#define kWindowKey @"kWindowKey"
+#define kChatKey @"kChatKey"
+
 @interface ChatWindowCoordinator ()
 - (NSWindow *)makeNewWindowForChat:(MCChatChat *)chat;
+- (NSWindow *)getWindowForChat:(MCChatChat *)chat;
+- (void)removeWindowForChat:(MCChatChat *)chat;
+- (NSWindow *)addWindowForChat:(MCChatChat *)chat;
+- (MCChatChat *)getChatForWindow:(NSWindow *)window;
 @end
 
 @implementation ChatWindowCoordinator
 {
-    NSMutableDictionary *windows;
+    NSMutableArray *windows;
 }
 
 - (NSWindow *)makeNewWindowForChat:(MCChatChat *)chat
@@ -31,11 +38,45 @@
     return chatWindow;
 }
 
+- (NSWindow *)getWindowForChat:(MCChatChat *)chat
+{
+    for (NSDictionary *d in windows) {
+        if (d[kChatKey] == chat)
+            return d[kWindowKey];
+    }
+    return nil;
+}
+
+- (void)removeWindowForChat:(MCChatChat *)chat
+{
+    for (NSDictionary *d in windows)
+        if (d[kChatKey] == chat) {
+            [windows removeObject:d];
+            return;
+        }
+}
+
+- (NSWindow *)addWindowForChat:(MCChatChat *)chat
+{
+    NSWindow *w = [self makeNewWindowForChat:chat];
+    [windows addObject:@{kChatKey:chat, kWindowKey:w}];
+    return w;
+}
+
+- (MCChatChat *)getChatForWindow:(NSWindow *)window
+{
+    for (NSDictionary *d in windows)
+        if (d[kWindowKey] == window) {
+            return d[kChatKey];
+        }
+    return nil;
+}
+
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        windows = [NSMutableDictionary dictionary];
+        windows = [NSMutableArray array];
     }
     return self;
 }
@@ -52,10 +93,9 @@
 
 - (void)displayWindowForChat:(MCChatChat *)chat
 {
-    NSWindow *chatWindow = windows[chat.chatId];
+    NSWindow *chatWindow = [self getWindowForChat:chat];
     if (!chatWindow) {
-        chatWindow = [self makeNewWindowForChat:chat];
-        windows[chat.chatId] = chatWindow;
+        chatWindow = [self addWindowForChat:chat];
     }
     [chatWindow makeKeyAndOrderFront:self];
     [NSApp activateIgnoringOtherApps:YES];
@@ -63,18 +103,28 @@
 
 - (void)hideWindowForChat:(MCChatChat *)chat
 {
-    
+    NSWindow *chatWindow = [self getWindowForChat:chat];
+    if (chatWindow) {
+        [chatWindow orderOut:self];
+    }
 }
 
 - (void)closeWindowForChat:(MCChatChat *)chat
 {
-    
+    NSWindow *chatWindow = [self getWindowForChat:chat];
+    if (chatWindow) {
+        [chatWindow close];
+        [self removeWindowForChat:chat];
+    }
 }
 
 - (BOOL)windowShouldClose:(id)sender
 {
-    [sender miniaturize:self];
-    return NO;
+    MCChatChat *chat = [self getChatForWindow:sender];
+    if (chat.state == MCChatChatStateUnknown) {
+        [self removeWindowForChat:chat];
+    }
+    return YES;
 }
 
 @end

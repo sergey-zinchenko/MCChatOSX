@@ -10,6 +10,7 @@
 #import "SimpleMessageTableCellView.h"
 #import "MCChatUser.h"
 #import "MCChatClient.h"
+#import "ChatWindowCoordinator.h"
 
 #define kMessageText @"kMessageText"
 #define kDate @"kDate"
@@ -95,6 +96,27 @@
 {
     [chatEvents addObject:@{kMessageText: @"Left chat", kCompanionName: companion.name, kDate: [NSDate date]}];
     [self updateTableView];
+}
+
+-(void)onChatEnded:(MCChatChat *)chat
+{
+    NSAlert *alert = [[NSAlert alloc] init];
+    alert.alertStyle = NSInformationalAlertStyle;
+    alert.messageText = @"This discussion is no longer active";
+    alert.informativeText = @"Do you want to close this window?";
+    [alert addButtonWithTitle:@"Yes"];
+    [alert addButtonWithTitle:@"No"];
+    [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
+        switch (returnCode) {
+            case NSAlertFirstButtonReturn:
+                [[ChatWindowCoordinator sharedInstance] closeWindowForChat:chat];
+                break;
+            case NSAlertSecondButtonReturn:
+                break;
+            default:
+                break;
+        }
+    }];
 }
 
 - (void)updateTableView
