@@ -110,6 +110,8 @@
 - (BOOL)isPendingChat:(MCChatChat *)chat;
 - (BOOL)isUnknownChat:(MCChatChat *)chat;
 
+- (MCChatChat *)chatForUUID:(NSUUID *)uuid;
+
 + (MCChatClient *)sharedInstance;
 
 @property (readonly, assign, getter=getStatus) MCChatCoreStatus status;

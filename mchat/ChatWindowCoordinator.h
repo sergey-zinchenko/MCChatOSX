@@ -17,5 +17,6 @@
 - (void)displayWindowForChat:(MCChatChat *)chat;
 - (void)hideWindowForChat:(MCChatChat *)chat;
 - (void)closeWindowForChat:(MCChatChat *)chat;
+- (BOOL)isWindowVisibleForChat:(MCChatChat *)chat;
 
 @end

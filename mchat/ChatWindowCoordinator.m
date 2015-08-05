@@ -20,12 +20,17 @@
 - (void)removeWindowForChat:(MCChatChat *)chat;
 - (NSWindow *)addWindowForChat:(MCChatChat *)chat;
 - (MCChatChat *)getChatForWindow:(NSWindow *)window;
-- (void)simpleMessageReceivedNotification:(NSNotification *)notif;
 @end
 
 @implementation ChatWindowCoordinator
 {
     NSMutableArray *windows;
+}
+
+- (BOOL)isWindowVisibleForChat:(MCChatChat *)chat
+{
+    NSWindow *w = [self getWindowForChat:chat];
+    return w.visible&&!w.miniaturized;
 }
 
 - (NSWindow *)makeNewWindowForChat:(MCChatChat *)chat
@@ -75,46 +80,11 @@
     return nil;
 }
 
-- (void)simpleMessageReceivedNotification:(NSNotification *)notif
-{
-    MCChatChat *chat = notif.userInfo[kChatField];
-    MCChatUser *user = notif.userInfo[kUserField];
-    NSString *messageText = notif.userInfo[kMessageTextField];
-    
-    NSWindow *chatWindow = [self getWindowForChat:chat];
-    BOOL active = NO;
-    for (NSWindow *ww in [[NSApplication sharedApplication] windows]) {
-        if (ww.visible&&!ww.miniaturized) {
-            active = YES;
-            break;
-        }
-    }
-    if (chatWindow) {
-        if (active) {
-            [SoundEffects playMessageSound];
-            [chatWindow orderFront:self];
-            [NSApp activateIgnoringOtherApps:YES];
-        } else {
-            NSUserNotification *notification = [[NSUserNotification alloc] init];
-            notification.title = [NSString stringWithFormat:@"New message from %@ received", user.name];
-            notification.informativeText = messageText;
-            notification.soundName = @"message-sound.mp3";
-            notification.hasActionButton = YES;
-            notification.actionButtonTitle = @"Open";
-            notification.otherButtonTitle = @"Leave";
-            //notification.userInfo = notif.userInfo;
-            NSUserNotificationCenter *notificationCenter = [NSUserNotificationCenter defaultUserNotificationCenter];
-            [notificationCenter deliverNotification: notification];
-        }
-    }
-}
-
 - (instancetype)init
 {
     self = [super init];
     if (self) {
         windows = [NSMutableArray array];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(simpleMessageReceivedNotification:) name:kSimpleMessageRecievedNotification object:[MCChatClient sharedInstance]];
     }
     return self;
 }

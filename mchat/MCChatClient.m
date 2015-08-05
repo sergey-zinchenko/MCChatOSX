@@ -66,6 +66,11 @@ static NSUUID *publicChatUUID;
     return [chats allValues];
 }
 
+- (MCChatChat *)chatForUUID:(NSUUID *)uuid
+{
+    LOG_SELECTOR()
+    return chats[uuid];
+}
 
 - (NSArray *)getPendingChats
 {

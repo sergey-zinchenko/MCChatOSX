@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "MainWindowController.h"
 #import "MCChatClient.h"
+#import "UserNotificationCoordinator.h"
 
 @interface AppDelegate ()
 - (void)connectAction:(id)sender;
@@ -19,6 +20,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
+    [UserNotificationCoordinator sharedInstance];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
