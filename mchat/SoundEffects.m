@@ -79,4 +79,25 @@
     return sharedInstance;
 }
 
++ (void)playUserSound
+{
+    [[SoundEffects sharedInstance] playUserSound];
+}
+
++ (void)playChatSound
+{
+    [[SoundEffects sharedInstance] playChatSound];
+}
+
++ (void)playChatEventSound
+{
+    [[SoundEffects sharedInstance] playChatEventSound];
+}
+
++ (void)playMessageSound
+{
+    [[SoundEffects sharedInstance] playMessageSound];
+}
+
+
 @end

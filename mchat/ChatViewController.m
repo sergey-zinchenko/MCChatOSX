@@ -11,6 +11,7 @@
 #import "MCChatUser.h"
 #import "MCChatClient.h"
 #import "ChatWindowCoordinator.h"
+#import "SoundEffects.h"
 
 #define kMessageText @"kMessageText"
 #define kDate @"kDate"

@@ -18,4 +18,9 @@
 
 + (SoundEffects *)sharedInstance;
 
++ (void)playUserSound;
++ (void)playChatSound;
++ (void)playChatEventSound;
++ (void)playMessageSound;
+
 @end

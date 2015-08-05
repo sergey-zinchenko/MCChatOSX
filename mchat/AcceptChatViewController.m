@@ -8,6 +8,7 @@
 
 #import "AcceptChatViewController.h"
 #import "ChatWindowCoordinator.h"
+#import "SoundEffects.h"
 
 @interface AcceptChatViewController ()
 
@@ -69,6 +70,7 @@
 - (void)viewWillAppear
 {
     [super viewWillAppear];
+    [SoundEffects playChatSound];
     [self updateUi];
 }
 

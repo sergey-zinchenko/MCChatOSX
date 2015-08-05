@@ -10,9 +10,9 @@
 #import "CompanionTableCellView.h"
 #import "NSArray+dif.h"
 #import "MainWindowController.h"
+#import "SoundEffects.h"
 
 @interface CompanionsLstViewController ()
-- (void)playDingSound;
 - (void)filterAndDispayCompanions;
 - (IBAction)searchFieldAction:(NSSearchField *)sender;
 - (void)startChatAction:(id)sender;
@@ -25,7 +25,6 @@
     
     NSMutableArray *companions;
     NSArray *companionsToDisplay;
-    AVAudioPlayer *player;
     NSPredicate *filterPredicate;
 }
 
@@ -69,7 +68,7 @@
 {
     [companions addObject:user];
     [self filterAndDispayCompanions];
-    [self playDingSound];
+    [SoundEffects playUserSound];
 }
 
 - (void)onUserDisconnected:(MCChatUser *)user
@@ -125,17 +124,6 @@
     if (tblView.numberOfSelectedRows > 0) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kStartChatClickedNotification object:self userInfo:@{kChatUsersArray:[companionsToDisplay objectsAtIndexes:tblView.selectedRowIndexes]}];
     }
-}
-
-- (void)playDingSound
-{
-    NSString *soundFilePath =
-    [[NSBundle mainBundle] pathForResource:@"ding-sound"
-                                    ofType:@"mp3"];
-    NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:soundFilePath];
-    player = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL
-                                           error:nil];
-    [player play];
 }
 
 - (IBAction)searchFieldAction:(NSSearchField *)sender {

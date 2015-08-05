@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import <CoreLocation/CoreLocation.h>
-#import <AVFoundation/AVFoundation.h>
 #import "MCChatClient.h"
 
 @interface CompanionsLstViewController : NSViewController<MCChatClientDeligate, NSTableViewDataSource, NSTableViewDelegate>

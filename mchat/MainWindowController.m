@@ -10,6 +10,7 @@
 #import "MCChatClient.h"
 #import "EnterChatThemeController.h"
 #import "AcceptChatViewController.h"
+#import "SoundEffects.h"
 
 
 @interface MainWindowController ()
