@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		A50496DF1B690EEB00C642EA /* AcceptChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A50496DD1B690EEB00C642EA /* AcceptChatViewController.m */; };
 		A50F67EB1B30405400B75059 /* MCChatChat.m in Sources */ = {isa = PBXBuildFile; fileRef = A50F67EA1B30405400B75059 /* MCChatChat.m */; };
-		A50F67EE1B3051B200B75059 /* ding-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A50F67ED1B3051B200B75059 /* ding-sound.mp3 */; };
+		A50F67EE1B3051B200B75059 /* user-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A50F67ED1B3051B200B75059 /* user-sound.mp3 */; };
 		A50F67F01B30526900B75059 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A50F67EF1B30526900B75059 /* AVFoundation.framework */; };
 		A50F67F31B307E8200B75059 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A50F67F21B307E8200B75059 /* CoreLocation.framework */; };
 		A50F67F71B30C16500B75059 /* LocationMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = A50F67F61B30C16500B75059 /* LocationMonitor.m */; };
@@ -29,8 +29,9 @@
 		A59968491B70CCB5001D69F0 /* ChatWindowCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = A59968481B70CCB5001D69F0 /* ChatWindowCoordinator.m */; };
 		A599684C1B70ED0D001D69F0 /* SimpleMessageTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = A599684B1B70ED0D001D69F0 /* SimpleMessageTableCellView.m */; };
 		A599684E1B71F4DE001D69F0 /* chat-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A599684D1B71F4DE001D69F0 /* chat-sound.mp3 */; };
-		A59968501B71F5FF001D69F0 /* chat-sound-2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A599684F1B71F5FF001D69F0 /* chat-sound-2.mp3 */; };
+		A59968501B71F5FF001D69F0 /* chat-event-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A599684F1B71F5FF001D69F0 /* chat-event-sound.mp3 */; };
 		A59968521B71F642001D69F0 /* message-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A59968511B71F642001D69F0 /* message-sound.mp3 */; };
+		A59968551B71F6B4001D69F0 /* SoundEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = A59968541B71F6B4001D69F0 /* SoundEffects.m */; };
 		A59D5B161B42A2E7000383A0 /* NSArray+dif.m in Sources */ = {isa = PBXBuildFile; fileRef = A59D5B151B42A2E7000383A0 /* NSArray+dif.m */; };
 		A5C4E7D71B6FAA4200D7D69D /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5C4E7D61B6FAA4200D7D69D /* ChatViewController.m */; };
 		A5CF33941B480B9B000F8466 /* EnterChatThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5CF33931B480B9B000F8466 /* EnterChatThemeController.m */; };
@@ -53,7 +54,7 @@
 		A50496DD1B690EEB00C642EA /* AcceptChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AcceptChatViewController.m; sourceTree = "<group>"; };
 		A50F67E91B30405400B75059 /* MCChatChat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCChatChat.h; sourceTree = "<group>"; };
 		A50F67EA1B30405400B75059 /* MCChatChat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCChatChat.m; sourceTree = "<group>"; };
-		A50F67ED1B3051B200B75059 /* ding-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "ding-sound.mp3"; sourceTree = "<group>"; };
+		A50F67ED1B3051B200B75059 /* user-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "user-sound.mp3"; sourceTree = "<group>"; };
 		A50F67EF1B30526900B75059 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		A50F67F21B307E8200B75059 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A50F67F51B30C16500B75059 /* LocationMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationMonitor.h; sourceTree = "<group>"; };
@@ -89,8 +90,10 @@
 		A599684A1B70ED0D001D69F0 /* SimpleMessageTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleMessageTableCellView.h; sourceTree = "<group>"; };
 		A599684B1B70ED0D001D69F0 /* SimpleMessageTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleMessageTableCellView.m; sourceTree = "<group>"; };
 		A599684D1B71F4DE001D69F0 /* chat-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "chat-sound.mp3"; sourceTree = "<group>"; };
-		A599684F1B71F5FF001D69F0 /* chat-sound-2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "chat-sound-2.mp3"; sourceTree = "<group>"; };
+		A599684F1B71F5FF001D69F0 /* chat-event-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "chat-event-sound.mp3"; sourceTree = "<group>"; };
 		A59968511B71F642001D69F0 /* message-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "message-sound.mp3"; sourceTree = "<group>"; };
+		A59968531B71F6B4001D69F0 /* SoundEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundEffects.h; sourceTree = "<group>"; };
+		A59968541B71F6B4001D69F0 /* SoundEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundEffects.m; sourceTree = "<group>"; };
 		A59D5B141B42A2E7000383A0 /* NSArray+dif.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+dif.h"; sourceTree = "<group>"; };
 		A59D5B151B42A2E7000383A0 /* NSArray+dif.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+dif.m"; sourceTree = "<group>"; };
 		A5C4E7D51B6FAA4200D7D69D /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
@@ -137,8 +140,8 @@
 			children = (
 				A58C54311AA5E25900059106 /* Images.xcassets */,
 				A58C54331AA5E25900059106 /* Main.storyboard */,
-				A599684F1B71F5FF001D69F0 /* chat-sound-2.mp3 */,
-				A50F67ED1B3051B200B75059 /* ding-sound.mp3 */,
+				A599684F1B71F5FF001D69F0 /* chat-event-sound.mp3 */,
+				A50F67ED1B3051B200B75059 /* user-sound.mp3 */,
 				A59968511B71F642001D69F0 /* message-sound.mp3 */,
 				A599684D1B71F4DE001D69F0 /* chat-sound.mp3 */,
 			);
@@ -150,6 +153,8 @@
 			children = (
 				A50F67F51B30C16500B75059 /* LocationMonitor.h */,
 				A50F67F61B30C16500B75059 /* LocationMonitor.m */,
+				A59968531B71F6B4001D69F0 /* SoundEffects.h */,
+				A59968541B71F6B4001D69F0 /* SoundEffects.m */,
 			);
 			name = "Common Classes";
 			sourceTree = "<group>";
@@ -375,11 +380,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A50F67EE1B3051B200B75059 /* ding-sound.mp3 in Resources */,
+				A50F67EE1B3051B200B75059 /* user-sound.mp3 in Resources */,
 				A58C54321AA5E25900059106 /* Images.xcassets in Resources */,
 				A59968521B71F642001D69F0 /* message-sound.mp3 in Resources */,
 				A58C54351AA5E25900059106 /* Main.storyboard in Resources */,
-				A59968501B71F5FF001D69F0 /* chat-sound-2.mp3 in Resources */,
+				A59968501B71F5FF001D69F0 /* chat-event-sound.mp3 in Resources */,
 				A599684E1B71F4DE001D69F0 /* chat-sound.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -426,6 +431,7 @@
 				A5CF33941B480B9B000F8466 /* EnterChatThemeController.m in Sources */,
 				A59D5B161B42A2E7000383A0 /* NSArray+dif.m in Sources */,
 				A52CE7AC1B1B01E2005020A5 /* MCChatClient.m in Sources */,
+				A59968551B71F6B4001D69F0 /* SoundEffects.m in Sources */,
 				A50F83E91B61112A00A79DF6 /* ChatListViewController.m in Sources */,
 				A53B85731AA5E7F300C191C2 /* MCChatCore.m in Sources */,
 				A5C4E7D71B6FAA4200D7D69D /* ChatViewController.m in Sources */,
