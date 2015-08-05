@@ -100,6 +100,8 @@
 
 -(void)onChatEnded:(MCChatChat *)chat
 {
+    [chatEvents addObject:@{kMessageText: @"Chat ended", kDate: [NSDate date]}];
+    [self updateTableView];
     NSAlert *alert = [[NSAlert alloc] init];
     alert.alertStyle = NSInformationalAlertStyle;
     alert.messageText = @"This discussion is no longer active";
