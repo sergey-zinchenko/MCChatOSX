@@ -28,6 +28,9 @@
 		A58C54411AA5E25A00059106 /* mchatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A58C54401AA5E25A00059106 /* mchatTests.m */; };
 		A59968491B70CCB5001D69F0 /* ChatWindowCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = A59968481B70CCB5001D69F0 /* ChatWindowCoordinator.m */; };
 		A599684C1B70ED0D001D69F0 /* SimpleMessageTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = A599684B1B70ED0D001D69F0 /* SimpleMessageTableCellView.m */; };
+		A599684E1B71F4DE001D69F0 /* chat-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A599684D1B71F4DE001D69F0 /* chat-sound.mp3 */; };
+		A59968501B71F5FF001D69F0 /* chat-sound-2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A599684F1B71F5FF001D69F0 /* chat-sound-2.mp3 */; };
+		A59968521B71F642001D69F0 /* message-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A59968511B71F642001D69F0 /* message-sound.mp3 */; };
 		A59D5B161B42A2E7000383A0 /* NSArray+dif.m in Sources */ = {isa = PBXBuildFile; fileRef = A59D5B151B42A2E7000383A0 /* NSArray+dif.m */; };
 		A5C4E7D71B6FAA4200D7D69D /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5C4E7D61B6FAA4200D7D69D /* ChatViewController.m */; };
 		A5CF33941B480B9B000F8466 /* EnterChatThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5CF33931B480B9B000F8466 /* EnterChatThemeController.m */; };
@@ -85,6 +88,9 @@
 		A59968481B70CCB5001D69F0 /* ChatWindowCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatWindowCoordinator.m; sourceTree = "<group>"; };
 		A599684A1B70ED0D001D69F0 /* SimpleMessageTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleMessageTableCellView.h; sourceTree = "<group>"; };
 		A599684B1B70ED0D001D69F0 /* SimpleMessageTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleMessageTableCellView.m; sourceTree = "<group>"; };
+		A599684D1B71F4DE001D69F0 /* chat-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "chat-sound.mp3"; sourceTree = "<group>"; };
+		A599684F1B71F5FF001D69F0 /* chat-sound-2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "chat-sound-2.mp3"; sourceTree = "<group>"; };
+		A59968511B71F642001D69F0 /* message-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "message-sound.mp3"; sourceTree = "<group>"; };
 		A59D5B141B42A2E7000383A0 /* NSArray+dif.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+dif.h"; sourceTree = "<group>"; };
 		A59D5B151B42A2E7000383A0 /* NSArray+dif.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+dif.m"; sourceTree = "<group>"; };
 		A5C4E7D51B6FAA4200D7D69D /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
@@ -131,7 +137,10 @@
 			children = (
 				A58C54311AA5E25900059106 /* Images.xcassets */,
 				A58C54331AA5E25900059106 /* Main.storyboard */,
+				A599684F1B71F5FF001D69F0 /* chat-sound-2.mp3 */,
 				A50F67ED1B3051B200B75059 /* ding-sound.mp3 */,
+				A59968511B71F642001D69F0 /* message-sound.mp3 */,
+				A599684D1B71F4DE001D69F0 /* chat-sound.mp3 */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -368,7 +377,10 @@
 			files = (
 				A50F67EE1B3051B200B75059 /* ding-sound.mp3 in Resources */,
 				A58C54321AA5E25900059106 /* Images.xcassets in Resources */,
+				A59968521B71F642001D69F0 /* message-sound.mp3 in Resources */,
 				A58C54351AA5E25900059106 /* Main.storyboard in Resources */,
+				A59968501B71F5FF001D69F0 /* chat-sound-2.mp3 in Resources */,
+				A599684E1B71F4DE001D69F0 /* chat-sound.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
