@@ -78,7 +78,6 @@
 {
     [chatEvents addObject:@{kMessageText: message, kCompanionName: chat.client.myName , kDate: [NSDate date]}];
     [self updateTableView];
-    
 }
 
 -(void)onCompanion:(MCChatUser *)companion acceptedChat:(MCChatChat *)chat
@@ -101,25 +100,29 @@
 
 -(void)onChatEnded:(MCChatChat *)chat
 {
-    [chatEvents addObject:@{kMessageText: @"Chat ended", kDate: [NSDate date]}];
-    [self updateTableView];
-    NSAlert *alert = [[NSAlert alloc] init];
-    alert.alertStyle = NSInformationalAlertStyle;
-    alert.messageText = @"This discussion is no longer active";
-    alert.informativeText = @"Do you want to close this window?";
-    [alert addButtonWithTitle:@"Yes"];
-    [alert addButtonWithTitle:@"No"];
-    [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
-        switch (returnCode) {
-            case NSAlertFirstButtonReturn:
-                [[ChatWindowCoordinator sharedInstance] closeWindowForChat:chat];
-                break;
-            case NSAlertSecondButtonReturn:
-                break;
-            default:
-                break;
-        }
-    }];
+    if (self.view.window.visible&&!self.view.window.miniaturized) {
+        [chatEvents addObject:@{kMessageText: @"Chat ended", kDate: [NSDate date]}];
+        [self updateTableView];
+        NSAlert *alert = [[NSAlert alloc] init];
+        alert.alertStyle = NSInformationalAlertStyle;
+        alert.messageText = @"This discussion is no longer active";
+        alert.informativeText = @"Do you want to close this window?";
+        [alert addButtonWithTitle:@"Yes"];
+        [alert addButtonWithTitle:@"No"];
+        [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
+            switch (returnCode) {
+                case NSAlertFirstButtonReturn:
+                    [[ChatWindowCoordinator sharedInstance] closeWindowForChat:chat];
+                    break;
+                case NSAlertSecondButtonReturn:
+                    break;
+                default:
+                    break;
+            }
+        }];
+    } else {
+        [[ChatWindowCoordinator sharedInstance] closeWindowForChat:chat];
+    }
 }
 
 - (void)updateTableView
