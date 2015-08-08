@@ -31,19 +31,20 @@
 {
     MCChatChat *chat = notif.userInfo[kChatField];
     MCChatUser *initiator = notif.userInfo[kUserField];
-    //    if (!self.window.isMiniaturized/*&&self.window.isKeyWindow*/) {
-    static NSString *storyBoardName = @"Main";
-    static NSString *viewControllerIdentifier = @"AcceptChatController";
-    NSStoryboard *mainStoryBoard = [NSStoryboard storyboardWithName:storyBoardName
-                                                             bundle:nil];
-    AcceptChatViewController *acceptChatViewController = [mainStoryBoard instantiateControllerWithIdentifier:viewControllerIdentifier];
-    acceptChatViewController.chat = chat;
-    acceptChatViewController.chatInitiator = initiator;
-    NSWindow *acceptChatSheetWindow = [NSWindow windowWithContentViewController:acceptChatViewController];
-    [self.window beginSheet:acceptChatSheetWindow completionHandler:^(NSModalResponse returnCode) {
-        [acceptChatSheetWindow orderOut:self];
-    }];
-    //    }
+    [SoundEffects playChatEventSound];
+    if (!self.window.isMiniaturized&&self.window.visible) {
+        static NSString *storyBoardName = @"Main";
+        static NSString *viewControllerIdentifier = @"AcceptChatController";
+        NSStoryboard *mainStoryBoard = [NSStoryboard storyboardWithName:storyBoardName
+                                                                 bundle:nil];
+        AcceptChatViewController *acceptChatViewController = [mainStoryBoard instantiateControllerWithIdentifier:viewControllerIdentifier];
+        acceptChatViewController.chat = chat;
+        acceptChatViewController.chatInitiator = initiator;
+        NSWindow *acceptChatSheetWindow = [NSWindow windowWithContentViewController:acceptChatViewController];
+        [self.window beginSheet:acceptChatSheetWindow completionHandler:^(NSModalResponse returnCode) {
+            [acceptChatSheetWindow orderOut:self];
+        }];
+    }
 }
 
 - (void)connectMenuClickedNotification:(NSNotification*)notif

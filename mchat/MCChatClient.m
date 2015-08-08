@@ -483,6 +483,9 @@ static NSUUID *publicChatUUID;
                 [self.chatsDeligate onChatLeft:c
                                    byCompanion:companion
                                      forClient:self];
+            if VALID_CHATS_CHAT_DELEGATE(c.delegate, @selector(onCompanion:leftChat:))
+                [c.delegate onCompanion:companion
+                               leftChat:c];
             if (self.useNotifications)
                 [[NSNotificationCenter defaultCenter] postNotificationName:kChatLeftByCompanionNotification object:self userInfo:@{kUserField:companion, kChatField:c}];
             [self checkChat:c ifEndedIfNeeded:YES];
