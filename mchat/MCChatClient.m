@@ -210,7 +210,7 @@ static NSUUID *publicChatUUID;
     [core sendMessage:@{kLayerFileld:kChatLayer, kLeftField:[chat.chatId UUIDString]} toUsers:chatCompanionsUids];
     [acceptedChats removeObjectForKey:chat.chatId];
     [chats removeObjectForKey:chat.chatId];
-    if ([chat.chatId isEqualTo:publicChatUUID])
+    if ([chat.chatId isEqual:publicChatUUID])
         _publicChat = nil;
     if VALID_CHATS_DELEGATE(self.chatsDeligate, @selector(onChatLeft:forClient:))
         [self.chatsDeligate onChatLeft:chat
@@ -679,7 +679,7 @@ static NSUUID *publicChatUUID;
   ifEndedIfNeeded:(BOOL)neededToCheck;
 {
     LOG_SELECTOR()
-    if ((![chat.chatId isEqualTo:publicChatUUID]) && (!neededToCheck || [chat.companions count] == 0)) {
+    if ((![chat.chatId isEqual:publicChatUUID]) && (!neededToCheck || [chat.companions count] == 0)) {
         [chats removeObjectForKey:chat.chatId];
         [acceptedChats removeObjectForKey:chat.chatId];
         [pendingChats removeObjectForKey:chat.chatId];
