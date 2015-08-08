@@ -31,8 +31,8 @@
 {
     MCChatChat *chat = notif.userInfo[kChatField];
     MCChatUser *initiator = notif.userInfo[kUserField];
-    [SoundEffects playChatEventSound];
-    if (!self.window.isMiniaturized&&self.window.visible) {
+    [SoundEffects playChatSound];
+    if (!self.window.isMiniaturized) {
         static NSString *storyBoardName = @"Main";
         static NSString *viewControllerIdentifier = @"AcceptChatController";
         NSStoryboard *mainStoryBoard = [NSStoryboard storyboardWithName:storyBoardName
